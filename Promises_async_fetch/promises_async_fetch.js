@@ -35,4 +35,38 @@ async function test() {
         console.log(error)
     }
 }
+test()
 
+// fetch
+// fetch + then
+fetch("https://jsonplaceholder.typicode.com/users")
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    });
+
+// fetch + async/await
+async function getUsers() {
+    const response = await fetch(
+        "https://jsonplaceholder.typicode.com/users"
+    );
+
+    const data = await response.json();
+
+    console.log(data);
+}
+getUsers();
+
+// Обработка ошибок
+async function getUsers() {
+    try {
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/users"
+        );
+
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log("Error:", error);
+    }
+}
