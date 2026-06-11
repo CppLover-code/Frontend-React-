@@ -10,4 +10,11 @@
 
 3. catch() - ловим ошибки
 
-4. async/await
+4. async/await 
+    await - Позволяет ждать результат Promise.
+
+5. try/catch - Для обработки ошибок.
+
+6. Что такое fetch
+    fetch делает HTTP-запросы к серверу.
+
