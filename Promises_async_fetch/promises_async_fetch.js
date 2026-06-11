@@ -1,9 +1,27 @@
 // Promise
 
 const promise = new Promise((resolve, reject) => {
-    resolve("Готово");
+    resolve("Done");
 });
 
 promise.then(result => {
     console.log(result);
 });
+
+// then()
+
+Promise.resolve("Hello")
+    .then(data => {
+        console.log(data);
+    });
+
+// catch()
+
+Promise.reject("Error")
+    .catch(error => {
+        console.log(error);
+    });
+
+// async/await
+
+
