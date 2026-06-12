@@ -1,13 +1,12 @@
 "use strict";
 
-function loadData() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve("Данные загружены");
-        }, 2000)
-    })
-}
+const source = "https://openlibrary.org/search.json?q=python";
 
-loadData().then((result) => {
-    console.log(result)
-})
+async function getBooks() {
+    
+    const response = fetch(source);
+
+    const books = await response.json();
+
+    
+}
