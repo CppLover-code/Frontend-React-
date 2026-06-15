@@ -1,0 +1,37 @@
+React — это JavaScript-библиотека для создания интерфейсов (UI).
+
+*******************************************************
+Без React:
+html
+<button id="btn">0</button>
+
+JavaScript
+const btn = document.getElementById("btn");
+let count = 0;
+
+btn.addEventListener("click", () => {
+    count++;
+    btn.textContent = count;
+});
+
+Мы сами ищем элементы через DOM и меняем их.
+********************************************************
+С React:
+function App() {
+    return <button>0</button>;
+}
+
+React сам обновляет интерфейс при изменении данных.
+*********************************************************
+
+Где React используется?
+
+Практически везде:
+
+Facebook
+Instagram
+Netflix
+Airbnb
+Discord
+многие админки и CRM
+
