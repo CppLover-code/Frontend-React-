@@ -1,0 +1,30 @@
+Установка React
+
+Проверь Node.js:
+Открой терминал: node -v
+
+И: npm -v
+
+Если версии показываются — всё хорошо.
+
+Создаем проект
+Переходим в папку проектов:
+cd Desktop/PythonProjects
+Создаем React-проект через Vite:
+npm create vite@latest react_books -- --template react
+
+Переходим в проект:
+cd react_books
+
+Устанавливаем зависимости:
+npm install
+
+Запускаем:
+npm run dev
+
+Появится примерно:
+
+Local: http://localhost:5173/
+
+Открываешь ссылку в браузере.
+
