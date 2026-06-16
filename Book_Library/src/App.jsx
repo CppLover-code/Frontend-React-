@@ -9,6 +9,9 @@ function App() {
   // И setCount - Функцию изменения значения. Начальное значение: 0
   const [count, setCount] = useState(0);
 
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+
   const [books, setBooks] = useState ([
     {
       id: 1,
@@ -28,6 +31,42 @@ function App() {
 
   ]);
 
+  return (
+    <div>
+
+      <h1>My Book Library</h1>
+
+      {books.map(book => (
+        <Book
+        key={book.id}
+        title={book.title}
+        author={book.author}
+        />
+      ))}
+
+      <label>Book title </label>
+      <input 
+      type="text"
+      value={title}
+      onChange={(event) => setTitle(event.target.value)}
+      />
+      <p>{title}</p>
+
+      <label>Book author </label>
+      <input 
+      type="text"
+      value={author}
+      onChange={(event) => setAuthor(event.target.value)}
+      />
+      <p>{author}</p>
+
+      <button onClick={addBook}>
+        Add book
+      </button>
+
+    </div>
+  );
+  /*
   return (
     <div>
       <h1>My Book Library</h1>
@@ -54,17 +93,23 @@ function App() {
     </div>
 
   );
-
+  */
   function addBook() {
 
-  const newBook = {
-    id:books.length + 1,
-    title: "New Book",
-    author: "Unknown"
-  };
+    if(!title.trim()) {
+      return;
+    }
+    
+    const newBook = {
+      id:books.length + 1,
+      title: title,
+      author: author || "Unknown"
+    };
 
-  setBooks([...books, newBook]) // оператор spread
+    setBooks([...books, newBook]) // оператор spread
 
+    setTitle("");
+    setAuthor("");
   }
 }
  export default App;
