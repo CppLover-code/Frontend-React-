@@ -111,5 +111,12 @@ function App() {
     setTitle("");
     setAuthor("");
   }
+
+  function deleteBook(id) {
+    setBooks(
+      // оставляем все книги, кроме той, что нужно удалить
+      books.filter(book => book.id !==id)
+    );
+  }
 }
  export default App;
