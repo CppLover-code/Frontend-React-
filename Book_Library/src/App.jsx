@@ -4,6 +4,8 @@ import Book from "./components/Book";
 import BookList from "./components/BookList";
 import BookForm from "./components/BookForm";
 
+import { initialBooks } from "./data/books";
+
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
 function App() {
@@ -15,53 +17,8 @@ function App() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
-  const [books, setBooks] = useState ([
-    {
-      id: 1,
-      title: "Python",
-      author: "Will Smith"
-    },
-    {
-      id: 2,
-      title: "Java Script",
-      author: "Michael Jackson"
-    },
-    {
-      id: 3,
-      title: "C++",
-      author: "Jennifer Lopez"
-    }
+  const [books, setBooks] = useState (initialBooks);
 
-  ]);
-
-  /*
-  return (
-    <div>
-      <h1>My Book Library</h1>
-
-      {books.map(book => (
-        <Book
-        key={book.id}
-        title={book.title}
-        author={book.author}
-        />
-      ))}
-
-      <button onClick={addBook}>
-        Add book
-      </button>
-
-      <h1>Counter</h1>
-
-      <p>{count}</p>
-
-      <button onClick={() => setCount(count + 1)}>
-        +
-      </button>
-    </div>
-
-  );
-  */
   function addBook() {
 
     if(!title.trim()) {
