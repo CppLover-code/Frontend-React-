@@ -1,5 +1,8 @@
-import Book from "./components/Book";
 import { useState } from "react";
+
+import Book from "./components/Book";
+import BookList from "./components/BookList";
+import BookForm from "./components/BookForm";
 
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
@@ -31,41 +34,6 @@ function App() {
 
   ]);
 
-  return (
-    <div>
-
-      <h1>My Book Library</h1>
-
-      {books.map(book => (
-        <Book
-        key={book.id}
-        title={book.title}
-        author={book.author}
-        />
-      ))}
-
-      <label>Book title </label>
-      <input 
-      type="text"
-      value={title}
-      onChange={(event) => setTitle(event.target.value)}
-      />
-      <p>{title}</p>
-
-      <label>Book author </label>
-      <input 
-      type="text"
-      value={author}
-      onChange={(event) => setAuthor(event.target.value)}
-      />
-      <p>{author}</p>
-
-      <button onClick={addBook}>
-        Add book
-      </button>
-
-    </div>
-  );
   /*
   return (
     <div>
@@ -118,5 +86,26 @@ function App() {
       books.filter(book => book.id !==id)
     );
   }
+
+  return (
+    <div>
+
+      <h1>My Book Library</h1>
+
+      <BookForm
+        title={title}
+        setTitle={setTitle}
+        author={author}
+        setAuthor={setAuthor}
+        addBook={addBook}
+      />
+
+      <BookList
+        books={books}
+        deleteBook={deleteBook}
+      />
+
+    </div>
+  );
 }
  export default App;
