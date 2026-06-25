@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 
 import Book from "./components/Book";
 import BookList from "./components/BookList";
@@ -9,7 +10,7 @@ import { initialBooks } from "./data/books";
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
 function App() {
-
+  console.log("App вызвался");
   // React создаёт count - Текущее значение.
   // И setCount - Функцию изменения значения. Начальное значение: 0
   const [count, setCount] = useState(0);
@@ -18,6 +19,10 @@ function App() {
   const [author, setAuthor] = useState("");
 
   const [books, setBooks] = useState (initialBooks);
+
+  useEffect(() => {
+    console.log("useEffect сработал");
+  });
 
   function addBook() {
 
