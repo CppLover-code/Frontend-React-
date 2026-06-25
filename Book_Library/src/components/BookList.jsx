@@ -1,6 +1,6 @@
 import Book from "./Book";
 
-function BookList({ books, deleteBook}) {
+function BookList({ books, deleteBook, updateBook}) {
     return (
         <>
             {books.map(book => (
@@ -12,6 +12,10 @@ function BookList({ books, deleteBook}) {
 
                     <button onClick={() => deleteBook(book.id)}>
                         Delete
+                    </button>
+
+                    <button onClick={() => updateBook(book.id)}>
+                        Update
                     </button>
                 </div>
             ))}

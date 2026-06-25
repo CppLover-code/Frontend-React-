@@ -44,6 +44,25 @@ function App() {
     );
   }
 
+  function updateBook(id) {
+    setBooks(
+      books.map(book => {
+
+        if(book.id === id){
+
+            return {
+                ...book,
+                title: `${book.title} (Updated)`
+            }
+
+        }
+
+      return book;
+
+      })
+    );
+  }
+
   return (
     <div>
 
@@ -60,6 +79,7 @@ function App() {
       <BookList
         books={books}
         deleteBook={deleteBook}
+        updateBook={updateBook}
       />
 
     </div>
