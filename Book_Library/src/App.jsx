@@ -17,7 +17,18 @@ function App() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
-  const [books, setBooks] = useState (initialBooks);
+  const [books, setBooks] = useState(() => {
+
+    const savedBooks = localStorage.getItem("books");
+
+    if(savedBooks)
+      {
+        return JSON.parse(savedBooks);
+      }
+
+    return initialBooks;
+    
+  });
 
   // каждый раз, когда меняется books, книги сохраняются
   useEffect(() => {
