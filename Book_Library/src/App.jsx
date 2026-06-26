@@ -20,9 +20,15 @@ function App() {
 
   const [books, setBooks] = useState (initialBooks);
 
+  // каждый раз, когда меняется books, книги сохраняются
   useEffect(() => {
-    console.log("useEffect сработал");
-  });
+
+    localStorage.setItem(
+      "books",
+      JSON.stringify(books)
+    );
+
+  }, [books]);
 
   function addBook() {
 
