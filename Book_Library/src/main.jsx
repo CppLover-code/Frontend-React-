@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter> // начинает следить за адресной строкой браузера
+    <BrowserRouter>
        <App />
     </BrowserRouter>
   </StrictMode>,

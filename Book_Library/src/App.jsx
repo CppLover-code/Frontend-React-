@@ -7,6 +7,12 @@ import BookForm from "./components/BookForm";
 
 import { initialBooks } from "./data/books";
 
+import { Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import Books from "./pages/Books";
+import About from "./pages/About";
+
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
 function App() {
@@ -89,25 +95,24 @@ function App() {
   }
 
   return (
-    <div>
+  <Routes>
 
-      <h1>My Book Library</h1>
+    <Route
+      path="/"
+      element={<Home />}
+    />
 
-      <BookForm
-        title={title}
-        setTitle={setTitle}
-        author={author}
-        setAuthor={setAuthor}
-        addBook={addBook}
-      />
+    <Route
+      path="/books"
+      element={<Books />}
+    />
 
-      <BookList
-        books={books}
-        deleteBook={deleteBook}
-        updateBook={updateBook}
-      />
+    <Route
+      path="/about"
+      element={<About />}
+    />
 
-    </div>
-  );
+  </Routes>
+);
 }
  export default App;
