@@ -17,6 +17,10 @@ function App() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
+  // при первом взапуске приложения реакт проверяет состояния - состояния нет,
+  // поэтому вызывает функцию и берет ее результат как начальное значение
+  // при втором запуске - состояние уже есть, поэтому реакт будет игнорировать эту функцию
+  // и просто возвращает сохраненное состояние
   const [books, setBooks] = useState(() => {
 
     const savedBooks = localStorage.getItem("books");
@@ -27,7 +31,7 @@ function App() {
       }
 
     return initialBooks;
-    
+
   });
 
   // каждый раз, когда меняется books, книги сохраняются
