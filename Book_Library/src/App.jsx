@@ -10,7 +10,6 @@ import { initialBooks } from "./data/books";
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
 function App() {
-  console.log("App вызвался");
   // React создаёт count - Текущее значение.
   // И setCount - Функцию изменения значения. Начальное значение: 0
   const [count, setCount] = useState(0);
