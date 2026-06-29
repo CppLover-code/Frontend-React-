@@ -1,21 +1,25 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Header()
 {
     return (
         <header>
 
-            <h1>📚 Book Store</h1>
+            <Link to="/">📚 Book Store</Link>
 
-            <NavLink to="/">Home</NavLink>
+            <nav>
 
-            <NavLink to="/books">Books</NavLink>
+                <NavLink to="/">Home</NavLink>
 
-            <NavLink to="/about">About</NavLink>
+                <NavLink to="/books">Books</NavLink>
 
-            <NavLink to="/login">Login</NavLink>
-            
-            <NavLink to="/cart">Cart</NavLink>
+                <NavLink to="/about">About</NavLink>
+
+                <NavLink to="/login">Login</NavLink>
+                
+                <NavLink to="/cart">Cart</NavLink>
+
+            </nav>
 
         </header>
     );

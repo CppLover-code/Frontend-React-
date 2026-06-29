@@ -12,8 +12,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Books from "./pages/Books";
 import About from "./pages/About";
-import Login from "./pages/Cart";
-import Cart from ".pages/Login";
+import Login from "./pages/Login";
+import Cart from "./pages/Cart";
 import MainLayout from "./layouts/MainLayout";
 
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
