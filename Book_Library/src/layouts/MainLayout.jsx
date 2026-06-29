@@ -8,7 +8,9 @@ function MainLayout()
         <>
             <Header />
 
-            <Outlet />
+            <main>
+                <Outlet />
+            </main>
 
             <Footer />
 

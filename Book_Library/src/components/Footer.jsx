@@ -1,7 +1,7 @@
 function Footer()
 {
     return(
-        <h1>Footer</h1>
+        <h4>© 2026 Book Store</h4>
     );
 }
 
