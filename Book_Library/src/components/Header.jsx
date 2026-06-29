@@ -1,13 +1,14 @@
 import { Link, NavLink } from "react-router-dom";
+import styles from "./Header.module.css";
 
 function Header()
 {
     return (
-        <header>
+        <header className={styles.header}>
 
-            <Link to="/">📚 Book Store</Link>
+            <Link to="/" className={styles.logo}>📚 Book Store</Link>
 
-            <nav>
+            <nav className={styles.navigation}>
 
                 <NavLink to="/">Home</NavLink>
 

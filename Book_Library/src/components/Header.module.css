@@ -1,0 +1,14 @@
+.header {
+    background-color: rgb(18 138 125);
+    display: flex;
+}
+.logo {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.navigation {
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
