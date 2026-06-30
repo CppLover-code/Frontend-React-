@@ -10,6 +10,7 @@ function BookForm({
         event.preventDefault();
         addBook();
     }
+
     return (
         <form onSubmit={handleSubmit}>
             <label>Book title</label>
