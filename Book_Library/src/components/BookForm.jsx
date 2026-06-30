@@ -1,5 +1,3 @@
-import Book from "./Book";
-
 function BookForm({
     title,
     setTitle,
@@ -7,8 +5,13 @@ function BookForm({
     setAuthor,
     addBook
 }) {
+    function handleSubmit(event) 
+    {
+        event.preventDefault();
+        addBook();
+    }
     return (
-        <>
+        <form onSubmit={handleSubmit}>
             <label>Book title</label>
 
             <input
@@ -35,10 +38,8 @@ function BookForm({
             <br/>
             <br/>
 
-            <button onClick={addBook}>
-                Add Book
-            </button>
-        </>
+            <button type="submit">Add Book</button>
+        </form>
     );
 }
 
