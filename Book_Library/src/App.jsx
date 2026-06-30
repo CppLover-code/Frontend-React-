@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { initialBooks } from "./data/books";
 
@@ -14,7 +13,8 @@ import MainLayout from "./layouts/MainLayout";
 
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
-function App() {
+function App() 
+{
   // при первом взапуске приложения реакт проверяет состояния - состояния нет,
   // поэтому вызывает функцию и берет ее результат как начальное значение
   // при втором запуске - состояние уже есть, поэтому реакт будет игнорировать эту функцию
@@ -23,10 +23,7 @@ function App() {
 
     const savedBooks = localStorage.getItem("books");
 
-    if(savedBooks)
-      {
-        return JSON.parse(savedBooks);
-      }
+    if(savedBooks) return JSON.parse(savedBooks);
 
     return initialBooks;
 
@@ -42,32 +39,30 @@ function App() {
 
   }, [books]);
 
-  function addBook(title, author) {
-
-    if(!title.trim()) {
-      return;
-    }
+  function addBook(title, author) 
+  {
+    if(!title.trim()) return;
     
-    const newBook = {
+    const newBook = 
+    {
       id:books.length + 1,
       title: title,
       author: author || "Unknown"
     };
 
     setBooks([...books, newBook]) // оператор spread
-
-    setTitle("");
-    setAuthor("");
   }
 
-  function deleteBook(id) {
+  function deleteBook(id) 
+  {
     setBooks(
       // оставляем все книги, кроме той, что нужно удалить
       books.filter(book => book.id !==id)
     );
   }
 
-  function updateBook(id) {
+  function updateBook(id) 
+  {
     setBooks(
       books.map(book => {
 
