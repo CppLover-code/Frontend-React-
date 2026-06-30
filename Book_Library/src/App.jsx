@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
-import Book from "./components/Book";
-import BookList from "./components/BookList";
-import BookForm from "./components/BookForm";
-
 import { initialBooks } from "./data/books";
 
 import { Routes, Route } from "react-router-dom";
@@ -19,13 +15,6 @@ import MainLayout from "./layouts/MainLayout";
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
 function App() {
-  // React создаёт count - Текущее значение.
-  // И setCount - Функцию изменения значения. Начальное значение: 0
-  const [count, setCount] = useState(0);
-
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-
   // при первом взапуске приложения реакт проверяет состояния - состояния нет,
   // поэтому вызывает функцию и берет ее результат как начальное значение
   // при втором запуске - состояние уже есть, поэтому реакт будет игнорировать эту функцию
@@ -53,7 +42,7 @@ function App() {
 
   }, [books]);
 
-  function addBook() {
+  function addBook(title, author) {
 
     if(!title.trim()) {
       return;

@@ -1,14 +1,17 @@
-function BookForm({
-    title,
-    setTitle,
-    author,
-    setAuthor,
-    addBook
-}) {
+import  { useState } from "react"
+
+function BookForm({ addBook}) 
+{
+    const [title, setTitle] = useState("");
+    const [author, setAuthor] = useState("");
+
     function handleSubmit(event) 
     {
         event.preventDefault();
         addBook();
+
+        setTitle("");
+        setAuthor("");
     }
 
     return (
