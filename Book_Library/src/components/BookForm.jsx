@@ -8,7 +8,7 @@ function BookForm({ addBook})
     function handleSubmit(event) 
     {
         event.preventDefault();
-        addBook();
+        addBook(title, author);
 
         setTitle("");
         setAuthor("");
