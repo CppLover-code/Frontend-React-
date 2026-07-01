@@ -1,6 +1,6 @@
 import Book from "./Book";
 
-function BookList(books, deleteBook, updateBook) 
+function BookList({books, deleteBook, updateBook}) 
 {
     return (
         <>

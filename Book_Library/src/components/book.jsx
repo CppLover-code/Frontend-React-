@@ -1,4 +1,4 @@
-function Book(book, deleteBook, updateBook) 
+function Book({book, deleteBook, updateBook}) 
 {
     const {
         id,
@@ -12,7 +12,7 @@ function Book(book, deleteBook, updateBook)
 
     return (
         <article>
-            
+
             <h2>Book title: {title}</h2>
 
             <p>Author: {author}</p>

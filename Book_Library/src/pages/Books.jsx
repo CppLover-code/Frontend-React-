@@ -1,6 +1,6 @@
 import BookList from "../components/BookList";
 
-function Books(books, deleteBook, updateBook)
+function Books({books, deleteBook, updateBook})
 {
     return(
         <>
