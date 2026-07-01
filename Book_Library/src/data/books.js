@@ -26,5 +26,12 @@ export const initialBooks = [
         authors: ["Sally Hopgood"],
         price: 23.55,
         category: "Children's Books"
+    },
+    {
+        id: 5,
+        title: "Broken Country",
+        authors: ["Clare Leslie Hall", "Hattie Morahan", "Simon & Schuster Audio"],
+        price: 23.55,
+        category: "Literature & Fiction"
     }
 ];
