@@ -3,7 +3,7 @@ function Book({book, deleteBook, updateBook})
     const {
         id,
         title,
-        author,
+        authors,
         category,
         price
     } = book;
@@ -13,9 +13,9 @@ function Book({book, deleteBook, updateBook})
     return (
         <article>
 
-            <h2>Book title: {title}</h2>
+            <h3>Title: {title}</h3>
 
-            <p>Author: {author}</p>
+            <p>Author: {authors.join(",")}</p>
 
             <p>Category: {category}</p>
 

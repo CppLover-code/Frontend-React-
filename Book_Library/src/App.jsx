@@ -39,7 +39,7 @@ function App()
 
   }, [books]);
 
-  function addBook(title, author, category, price) 
+  function addBook(title, authors, category, price) 
   {
     if(!title.trim()) return;
     
@@ -47,9 +47,9 @@ function App()
     {
       id:books.length + 1,
       title: title,
-      author: author || "Unknown",
-      category: category,
-      price: price
+      authors: authors || "Unknown",
+      category: category || "Unknown",
+      price: price || 0.00
     };
 
     setBooks([...books, newBook]) // оператор spread
@@ -105,6 +105,7 @@ function App()
       </Route>
 
     </Routes>
-);
+  );
 }
- export default App;
+
+export default App;

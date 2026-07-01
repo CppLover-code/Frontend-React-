@@ -1,30 +1,30 @@
 export const initialBooks = [
     {
         id: 1,
-        title: "Программируем на Python",
-        author: "Доусон Майкл",
+        title: "ython Crash Course, 3rd Edition: A Hands-On, Project-Based Introduction to Programming",
+        authors: ["Eric Matthes"],
         price: 25.30,
-        category: "Программирование"
+        category: "Programming"
     },
     {
         id: 2,
-        title: "Программирование на JavaScript с удовольствием",
-        author: "Луис Атенсио",
+        title: "AI Agents in Action: Build, orchestrate, and deploy autonomous multi-agent systems",
+        authors: ["Micheal Lanham"],
         price: 21.50,
-        category: "Программирование"
+        category: "Programming"
     },
     {
         id: 3,
-        title: "Изучаем C++ через программирование игр",
-        author: "Доусон Майкл",
+        title: "Mastering PyTorch",
+        authors: ["Ashish Ranjan Jha"],
         price: 36.99,
-        category: "Программирование"
+        category: "Programming"
     }, 
     {
         id: 4,
-        title: "Мирный воин. Книга, которая меняет жизнь",
-        author: "Миллмэн Дэн",
+        title: "See You Later, Alligator",
+        authors: ["Sally Hopgood"],
         price: 23.55,
-        category: "Художественная литература"
+        category: "Children's Books"
     }
 ];
