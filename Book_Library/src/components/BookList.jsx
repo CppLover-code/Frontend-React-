@@ -5,10 +5,9 @@ function BookList({ books, deleteBook, updateBook})
     return (
         <>
             {books.map(book => (
-                <div key={book.id}>
+                
                     <Book
-                        title={book.title}
-                        author={book.author}
+                        book={book}
                     />
 
                     <button onClick={() => deleteBook(book.id)}>
@@ -18,7 +17,6 @@ function BookList({ books, deleteBook, updateBook})
                     <button onClick={() => updateBook(book.id)}>
                         Update
                     </button>
-                </div>
             ))}
         </>
     );

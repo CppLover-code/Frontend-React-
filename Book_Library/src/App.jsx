@@ -54,32 +54,32 @@ function App()
   }
 
   function deleteBook(id) 
-  {
-    setBooks(
-      // оставляем все книги, кроме той, что нужно удалить
-      books.filter(book => book.id !==id)
-    );
-  }
+    {
+        setBooks(
+        // оставляем все книги, кроме той, что нужно удалить
+        books.filter(book => book.id !==id)
+        );
+    }
 
   function updateBook(id) 
-  {
-    setBooks(
-      books.map(book => {
+    {
+        setBooks(
+        books.map(book => {
 
-        if(book.id === id){
+            if(book.id === id){
 
-            return {
-                ...book,
-                title: `${book.title} (Updated)`
+                return {
+                    ...book,
+                    title: `${book.title} (Updated)`
+                }
+
             }
 
-        }
+        return book;
 
-      return book;
-
-      })
-    );
-  }
+        })
+        );
+    }
 
   return (
     <Routes>

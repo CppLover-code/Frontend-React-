@@ -6,7 +6,7 @@ function Book({book})
         price,
         category
     } = book;
-
+    
     return (
         <article>
             <h2>Book title: {title}</h2>
@@ -20,6 +20,10 @@ function Book({book})
             <button>Details</button>
 
             <button>Add to Cart</button>
+
+            <button>Delete</button>
+
+            <button>Update</button>
 
         </article>
     );
