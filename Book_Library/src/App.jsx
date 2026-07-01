@@ -62,24 +62,23 @@ function App()
     }
 
   function updateBook(id) 
-    {
-        setBooks(
-        books.map(book => {
+  {
+    setBooks(
+      books.map(book => {
 
-            if(book.id === id){
-
-                return {
-                    ...book,
-                    title: `${book.title} (Updated)`
-                }
-
+        if(book.id === id)
+          {
+            return {
+              ...book,
+              title: `${book.title} (Updated)`
             }
+          }
 
         return book;
 
-        })
-        );
-    }
+      })
+   );
+  }
 
   return (
     <Routes>

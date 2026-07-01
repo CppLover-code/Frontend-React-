@@ -1,12 +1,15 @@
-function Book({book}) 
+function Book({book, deleteBook, updateBook}) 
 {
     const {
+        id,
         title,
         author,
         price,
         category
     } = book;
-    
+
+
+
     return (
         <article>
             <h2>Book title: {title}</h2>
@@ -21,9 +24,9 @@ function Book({book})
 
             <button>Add to Cart</button>
 
-            <button>Delete</button>
+            <button onClick={() => deleteBook(id)}>Delete</button>
 
-            <button>Update</button>
+            <button onClick={() => updateBook(id)}>Update</button>
 
         </article>
     );

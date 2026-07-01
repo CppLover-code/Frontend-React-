@@ -4,19 +4,13 @@ function BookList({ books, deleteBook, updateBook})
 {
     return (
         <>
-            {books.map(book => (
-                
-                    <Book
-                        book={book}
-                    />
-
-                    <button onClick={() => deleteBook(book.id)}>
-                        Delete
-                    </button>
-
-                    <button onClick={() => updateBook(book.id)}>
-                        Update
-                    </button>
+            { books.map(book => (
+                <Book 
+                    key={book.id}
+                    book={book}
+                    deleteBook={deleteBook}
+                    updateBook={updateBook}
+                />
             ))}
         </>
     );
