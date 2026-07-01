@@ -87,7 +87,12 @@ function App()
 
         <Route path="/" element={<Home />}/>
 
-        <Route path="/books" element={<Books />}/>
+        <Route path="/books" element={<Books
+                                            books={books}
+                                            deleteBook={deleteBook}
+                                            updateBook={updateBook}
+                                            />}
+         />
 
         <Route path="/about" element={<About />}/>
 

@@ -1,10 +1,10 @@
 import Book from "./Book";
 
-function BookList({ books, deleteBook, updateBook}) 
+function BookList(books, deleteBook, updateBook) 
 {
     return (
         <>
-            { books.map(book => (
+            {books.map(book => (
                 <Book 
                     key={book.id}
                     book={book}
