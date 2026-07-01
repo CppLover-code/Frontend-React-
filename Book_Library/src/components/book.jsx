@@ -4,8 +4,8 @@ function Book({book, deleteBook, updateBook})
         id,
         title,
         author,
-        price,
-        category
+        category,
+        price
     } = book;
 
 

@@ -4,16 +4,13 @@ function Books({books, deleteBook, updateBook})
 {
     return(
         <>
-            <h1>Books Page</h1>
-
-            <BookList>
+            <BookList
                 books={books}
                 deleteBook={deleteBook}
                 updateBook={updateBook}
-            </BookList>
-        
+            />
         </>
-);
+    );
 }
 
 export default Books;
