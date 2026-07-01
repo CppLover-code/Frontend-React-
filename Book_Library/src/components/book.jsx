@@ -15,7 +15,7 @@ function Book({book, deleteBook, updateBook})
 
             <h3>Title: {title}</h3>
 
-            <p>Author: {authors.join(",")}</p>
+            <p>Author: {authors.join(", ")}</p>
 
             <p>Category: {category}</p>
 
