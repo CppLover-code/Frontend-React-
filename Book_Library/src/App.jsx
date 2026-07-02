@@ -30,6 +30,8 @@ function App()
 
   });
 
+  const [cart, setCart] = useState([]);
+
   // каждый раз, когда меняется books, книги сохраняются
   useEffect(() => {
 
@@ -81,6 +83,50 @@ function App()
 
       })
    );
+  }
+
+  function addToCart(book)
+  {
+    const { id,
+            title,
+            authors,
+            category,
+            price,
+            description
+    } = book;
+
+    const existingBook = cart.find(item => item.id === id);
+
+    if(!existingBook)
+    {
+      setCart([...cart,
+              {
+                id,
+                title,
+                authors,
+                category,
+                price,
+                description,
+                quantity: 1
+              }
+            ]);
+        return;
+    }
+
+    setCart(
+      cart.map(item => 
+      {
+          if(item.id === id)
+          {
+            return {
+              ...item,
+              quantity: item.quantity + 1
+            }
+          }
+
+        return item;
+      })
+    );
   }
 
   return (
