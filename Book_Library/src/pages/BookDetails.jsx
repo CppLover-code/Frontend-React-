@@ -34,6 +34,8 @@ function BookDetails({books})
 
             <h3>Description:</h3>
             <p>{description}</p>
+
+            <button>Add to Cart</button>
         </>
     );
 }
