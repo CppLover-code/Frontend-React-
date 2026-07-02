@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Book({book, deleteBook, updateBook}) 
 {
     const {
@@ -21,7 +23,7 @@ function Book({book, deleteBook, updateBook})
 
             <p>Price: ${price}</p>
 
-            <button>Details</button>
+            <<Link to={`/books/${id}`}>Details</Link>
 
             <button>Add to Cart</button>
 
