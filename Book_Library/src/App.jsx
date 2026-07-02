@@ -9,6 +9,7 @@ import Books from "./pages/Books";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
+import BookDetails from "./pages/BookDetails";
 import MainLayout from "./layouts/MainLayout";
 
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
@@ -95,6 +96,8 @@ function App()
                                             updateBook={updateBook}
                                             />}
          />
+
+        <Route path="/books/:id" element={<BookDetails />}/>
 
         <Route path="/about" element={<About />}/>
 
