@@ -23,7 +23,7 @@ function Book({book, deleteBook, updateBook})
 
             <p>Price: ${price}</p>
 
-            <<Link to={`/books/${id}`}>Details</Link>
+            <Link to={`/books/${id}`}>Details</Link>
 
             <button>Add to Cart</button>
 
