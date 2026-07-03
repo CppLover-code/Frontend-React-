@@ -87,36 +87,20 @@ function App()
 
   function addToCart(book)
   {
-    const { id,
-            title,
-            authors,
-            category,
-            price,
-            description
-    } = book;
 
-    const existingBook = cart.find(item => item.id === id);
+    const existingBook = cart.find(item => item.id === book.id);
 
     if(!existingBook)
     {
-      setCart([...cart,
-              {
-                id,
-                title,
-                authors,
-                category,
-                price,
-                description,
-                quantity: 1
-              }
-            ]);
-        return;
+      setCart([...cart, {...book, quantity: 1}]);
+
+      return;
     }
 
     setCart(
       cart.map(item => 
       {
-          if(item.id === id)
+          if(item.id === book.id)
           {
             return {
               ...item,
@@ -140,10 +124,11 @@ function App()
                                             books={books}
                                             deleteBook={deleteBook}
                                             updateBook={updateBook}
+                                            addToCart={addToCart}
                                             />}
          />
 
-        <Route path="/books/:id" element={<BookDetails books={books} />}/>
+        <Route path="/books/:id" element={<BookDetails books={books} addToCart={addToCart} />}/>
 
         <Route path="/about" element={<About />}/>
 

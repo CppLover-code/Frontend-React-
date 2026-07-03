@@ -1,6 +1,6 @@
 import BookList from "../components/BookList";
 
-function Books({books, deleteBook, updateBook})
+function Books({books, deleteBook, updateBook, addToCart})
 {
     return(
         <>
@@ -8,6 +8,7 @@ function Books({books, deleteBook, updateBook})
                 books={books}
                 deleteBook={deleteBook}
                 updateBook={updateBook}
+                addToCart={addToCart}
             />
         </>
     );

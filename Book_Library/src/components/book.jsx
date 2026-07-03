@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Book({book, deleteBook, updateBook}) 
+function Book({book, deleteBook, updateBook, addToCart}) 
 {
     const {
         id,
@@ -25,7 +25,7 @@ function Book({book, deleteBook, updateBook})
 
             <Link to={`/books/${id}`}>Details</Link>
 
-            <button>Add to Cart</button>
+            <button onClick={() => addToCart(book)}>Add to Cart</button>
 
             <button onClick={() => deleteBook(id)}>Delete</button>
 
