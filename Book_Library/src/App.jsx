@@ -134,7 +134,7 @@ function App()
 
         <Route path="/login" element={<Login />}/>
 
-        <Route path="/cart" element={<Cart />}/>
+        <Route path="/cart" element={<Cart cart={cart} />}/>
       
       </Route>
 

@@ -1,6 +1,32 @@
-function CartItem(item)
+import { Link } from "react-router-dom";
+
+function CartItem({item})
 {
-    return(<h3>CartItem</h3>);  
+    const { 
+        id,
+        title,
+        authors,
+        price,
+        quantity  
+    }   = item;
+
+    const subtotal = quantity * price;
+
+    return(
+        <article>
+
+            <Link to={`/books/${id}`}>{title}</Link>
+
+            <p>Authors: {authors.join(", ")}</p>
+
+            <p>Price: ${price}</p>
+
+            <p>Quantity: {quantity}</p>
+
+            <p>Subtotal: ${subtotal}</p>
+
+        </article>
+    );  
 }
 
 export default CartItem;

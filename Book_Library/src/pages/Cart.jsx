@@ -1,6 +1,14 @@
-function Cart() 
+import CartList from "../components/CartList";
+
+function Cart({cart}) 
 {
-    return <h1>Cart</h1>;
+    return (
+        <>
+            <CartList
+                cart={cart}
+            />
+        </>
+    );
 }
 
 export default Cart;
