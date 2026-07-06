@@ -9,9 +9,8 @@ function Cart({cart})
 
     return (
         <>
-            <CartList
-                cart={cart}
-            />
+            <CartList cart={cart} />
+            
             <p>Total: ${total.toFixed(2)}</p>
         </>
     );
