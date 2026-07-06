@@ -25,6 +25,8 @@ function CartItem({item})
 
             <p>Subtotal: ${subtotal.toFixed(2)}</p>
 
+            <button onClick={() => removeFromCart(id)}>Remove</button>
+
         </article>
     );  
 }

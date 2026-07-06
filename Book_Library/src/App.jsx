@@ -113,6 +113,11 @@ function App()
     );
   }
 
+  function removeFromCart(id)
+  {
+      setCart(cart.filter(item => item.id !== id));
+  }
+
   return (
     <Routes>
 
@@ -134,7 +139,10 @@ function App()
 
         <Route path="/login" element={<Login />}/>
 
-        <Route path="/cart" element={<Cart cart={cart} />}/>
+        <Route path="/cart" element={<Cart 
+                                          cart={cart}
+                                          removeFromCart={removeFromCart}
+                                          />}/>
       
       </Route>
 
