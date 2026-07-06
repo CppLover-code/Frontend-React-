@@ -133,7 +133,10 @@ function App()
                                             />}
          />
 
-        <Route path="/books/:id" element={<BookDetails books={books} addToCart={addToCart} />}/>
+        <Route path="/books/:id" element={<BookDetails 
+                                                      books={books} 
+                                                      addToCart={addToCart} 
+                                                      />}/>
 
         <Route path="/about" element={<About />}/>
 

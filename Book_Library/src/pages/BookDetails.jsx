@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-function BookDetails({books})
+function BookDetails({books, addToCart})
 {
     const {id} = useParams();
 
