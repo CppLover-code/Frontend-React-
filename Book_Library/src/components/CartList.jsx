@@ -1,6 +1,6 @@
 import CartItem from "./CartItem";
 
-function CartList({cart})
+function CartList({cart, removeFromCart})
 {
     return(
         <>
@@ -11,6 +11,7 @@ function CartList({cart})
                 <CartItem
                     key={item.id}
                     item={item}
+                    removeFromCart={removeFromCart}
                 />
 
             ))}

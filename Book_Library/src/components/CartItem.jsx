@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function CartItem({item})
+function CartItem({item, removeFromCart})
 {
     const { 
         id,
