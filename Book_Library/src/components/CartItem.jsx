@@ -1,6 +1,6 @@
 function CartItem(item)
 {
-    return(<h1>CartItem</h1>);  
+    return(<h3>CartItem</h3>);  
 }
 
 export default CartItem;
