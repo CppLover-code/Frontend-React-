@@ -12,7 +12,7 @@ function CartList({cart})
                     key={item.id}
                     item={item}
                 />
-                
+
             ))}
         </>
     );  

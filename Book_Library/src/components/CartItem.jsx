@@ -23,7 +23,7 @@ function CartItem({item})
 
             <p>Quantity: {quantity}</p>
 
-            <p>Subtotal: ${subtotal}</p>
+            <p>Subtotal: ${subtotal.toFixed(2)}</p>
 
         </article>
     );  
