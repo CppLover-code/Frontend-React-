@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 function CartList({cart, removeFromCart, decreaseQuantity, increaseQuantity})
 {
-    if(cart.length < 1)
+    if(cart.length === 0)
     {
         return(
-            <>
+            <>польно
                 <h2>🛒 Your cart is empty</h2>
-                <Link to={`/books`}>Start to choose books</Link>
+                <Link to="/books">Browse books</Link>
             </>
         );
     }
