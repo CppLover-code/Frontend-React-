@@ -16,7 +16,7 @@ function Cart({cart, removeFromCart, decreaseQuantity, increaseQuantity})
                     increaseQuantity={increaseQuantity}
                     />
 
-            <p>Total: ${total.toFixed(2)}</p>
+            <h2>Total: ${total.toFixed(2)}</h2>
         </>
     );
 }
