@@ -1,6 +1,6 @@
 import CartItem from "./CartItem";
 
-function CartList({cart, removeFromCart})
+function CartList({cart, removeFromCart, decreaseQuantity, increaseQuantity})
 {
     return(
         <>
@@ -12,6 +12,8 @@ function CartList({cart, removeFromCart})
                     key={item.id}
                     item={item}
                     removeFromCart={removeFromCart}
+                    decreaseQuantity={decreaseQuantity}
+                    increaseQuantity={increaseQuantity}
                 />
 
             ))}
