@@ -118,6 +118,33 @@ function App()
       setCart(cart.filter(item => item.id !== id));
   }
 
+  function decreaseQuantity(id)
+  {
+    const decItem = cart.find(item => item.id === id)
+
+    if(decItem.quantity === 1)
+    {
+        removeFromCart(decItem.id)
+    }
+    else
+    {
+        setCart(
+          cart.map(item => 
+          {
+              if(item.id === decItem.id)
+              {
+                return {
+                  ...item,
+                  quantity: item.quantity - 1
+                }
+              }
+
+            return item;
+          })
+        );
+    }
+  }
+
   return (
     <Routes>
 
