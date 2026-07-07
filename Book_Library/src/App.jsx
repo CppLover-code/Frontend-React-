@@ -187,6 +187,8 @@ function App()
         <Route path="/cart" element={<Cart 
                                           cart={cart}
                                           removeFromCart={removeFromCart}
+                                          decreaseQuantity={decreaseQuantity}
+                                          increaseQuantity={increaseQuantity}
                                           />}/>
       
       </Route>

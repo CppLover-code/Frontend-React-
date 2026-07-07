@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function CartItem({item, removeFromCart})
+function CartItem({item, removeFromCart, decreaseQuantity, increaseQuantity})
 {
     const { 
         id,
@@ -26,6 +26,10 @@ function CartItem({item, removeFromCart})
             <p>Subtotal: ${subtotal.toFixed(2)}</p>
 
             <button onClick={() => removeFromCart(id)}>Remove</button>
+
+            <button onClick={() => increaseQuantity(id)}>+</button>
+
+            <button onClick={() => decreaseQuantity(id)}>-</button>
 
         </article>
     );  
