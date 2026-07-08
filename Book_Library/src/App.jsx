@@ -30,8 +30,6 @@ function App()
 
   });
 
-  const [cart, setCart] = useState([]);
-
   // каждый раз, когда меняется books, книги сохраняются
   useEffect(() => {
 
