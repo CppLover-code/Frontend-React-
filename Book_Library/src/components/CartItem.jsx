@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import useCart from "../hooks/useCart";
 
-function CartItem({item, removeFromCart, decreaseQuantity, increaseQuantity})
+function CartItem({item})
 {
     const { 
         id,
@@ -9,6 +10,12 @@ function CartItem({item, removeFromCart, decreaseQuantity, increaseQuantity})
         price,
         quantity  
     }   = item;
+
+    const {
+        removeFromCart,
+        decreaseQuantity,
+        increaseQuantity
+    } = useCart();
 
     const subtotal = quantity * price;
 

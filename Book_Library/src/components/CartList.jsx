@@ -1,8 +1,11 @@
 import CartItem from "./CartItem";
 import { Link } from "react-router-dom";
+import useCart from "../hooks/useCart";
 
-function CartList({cart, removeFromCart, decreaseQuantity, increaseQuantity})
+function CartList()
 {
+    const { cart } = useCart();
+
     if(cart.length === 0)
     {
         return(
@@ -21,9 +24,6 @@ function CartList({cart, removeFromCart, decreaseQuantity, increaseQuantity})
                 <CartItem
                     key={item.id}
                     item={item}
-                    removeFromCart={removeFromCart}
-                    decreaseQuantity={decreaseQuantity}
-                    increaseQuantity={increaseQuantity}
                 />
 
             ))}

@@ -94,25 +94,16 @@ function App()
                                             books={books}
                                             deleteBook={deleteBook}
                                             updateBook={updateBook}
-                                            addToCart={addToCart}
                                             />}
          />
 
-        <Route path="/books/:id" element={<BookDetails 
-                                                      books={books} 
-                                                      addToCart={addToCart} 
-                                                      />}/>
+        <Route path="/books/:id" element={<BookDetails books={books} />}/>
 
         <Route path="/about" element={<About />}/>
 
         <Route path="/login" element={<Login />}/>
 
-        <Route path="/cart" element={<Cart 
-                                          cart={cart}
-                                          removeFromCart={removeFromCart}
-                                          decreaseQuantity={decreaseQuantity}
-                                          increaseQuantity={increaseQuantity}
-                                          />}/>
+        <Route path="/cart" element={<Cart />}/>
       
       </Route>
 

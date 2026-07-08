@@ -1,7 +1,10 @@
 import CartList from "../components/CartList";
+import useCart from "../hooks/useCart";
 
-function Cart({cart, removeFromCart, decreaseQuantity, increaseQuantity}) 
+function Cart() 
 {
+    const { cart } = useCart();
+
     const total = cart.reduce((acc, item) => {
         const {price, quantity} = item;
         return acc + price * quantity;
@@ -9,12 +12,7 @@ function Cart({cart, removeFromCart, decreaseQuantity, increaseQuantity})
 
     return (
         <>
-            <CartList 
-                    cart={cart} 
-                    removeFromCart={removeFromCart}
-                    decreaseQuantity={decreaseQuantity}
-                    increaseQuantity={increaseQuantity}
-                    />
+            <CartList />
 
             <h2>Total: ${total.toFixed(2)}</h2>
         </>

@@ -1,6 +1,6 @@
 import Book from "./Book";
 
-function BookList({books, deleteBook, updateBook, addToCart}) 
+function BookList({books, deleteBook, updateBook}) 
 {
     return (
         <> 
@@ -12,7 +12,6 @@ function BookList({books, deleteBook, updateBook, addToCart})
                     book={book}
                     deleteBook={deleteBook}
                     updateBook={updateBook}
-                    addToCart={addToCart}
                 />
             ))}
         </>
