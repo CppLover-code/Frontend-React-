@@ -7,7 +7,27 @@ const CartContext = createContext();
 // <CartContext.Provider> Это специальный компонент, который React автоматически создаёт после вызова createContext();
 // Через prop value Provider передает данные всем компонентам внутри {children}.
 function CartProvider({ children }) {
-    const [cart, setCart] = useState([]);
+
+    const [cart, setCart] = useState(() => {
+    
+        const savedCart = localStorage.getItem("cart");
+    
+        if(savedCart) return JSON.parse(savedCart);
+    
+        return [];
+    
+      });
+
+    // Каждый раз, когда меняется cart,
+    // корзина сохраняется в localStorage.
+      useEffect(() => {
+    
+        localStorage.setItem(
+          "cart",
+          JSON.stringify(cart)
+        );
+    
+      }, [cart]);
 
     function addToCart(book) {
 
@@ -76,8 +96,16 @@ function CartProvider({ children }) {
         );
     }
     return (
-        <CartContext.Provider value={null}>
+        <CartContext.Provider value={
+                {cart,
+                addToCart,
+                removeFromCart,
+                decreaseQuantity,
+                increaseQuantity}
+            }>
+
             {children}
+
         </CartContext.Provider>
     );
 }
