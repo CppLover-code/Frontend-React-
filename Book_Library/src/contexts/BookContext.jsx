@@ -83,6 +83,9 @@ function BookProvider({ children }) {
     ? searchedBooks
     : searchedBooks.filter(book => book.category === selectedCategory);
 
+    const categories = books.map(book => book.category);
+    const allCategories = ["All", ...new Set(categories)];
+
     const visibleBooks = categoryBooks;
 
 // ****************************************
@@ -99,6 +102,7 @@ function BookProvider({ children }) {
                     setSearchQuery,
                     selectedCategory,
                     setSelectedCategory,
+                    allCategories,
                     visibleBooks
                 }
             }>

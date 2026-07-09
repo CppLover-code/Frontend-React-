@@ -1,14 +1,13 @@
 import useBook from "../hooks/useBook";
 
 function CategoryFilter() {
-    const { selectedCategory, setSelectedCategory } = useBook();
+    const { selectedCategory, setSelectedCategory, allCategories } = useBook();
 
     return (
         <>
-            <p>Search:</p>
-            <input
-                type="text"
-                value={searchQuery}
+            <p>Category:</p>
+            <select
+                value={allCategories.map()}
                 onChange={(event) =>
                     setSearchQuery(event.target.value)
                 } />
