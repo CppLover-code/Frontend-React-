@@ -4,7 +4,6 @@ import { initialBooks } from "../data/books";
 const BookContext = createContext();
 
 function BookProvider({ children }) {
-    console.log("BookProvider");
     // при первом взапуске приложения реакт проверяет состояния - состояния нет,
     // поэтому вызывает функцию и берет ее результат как начальное значение
     // при втором запуске - состояние уже есть, поэтому реакт будет игнорировать эту функцию
@@ -67,6 +66,11 @@ function BookProvider({ children }) {
             })
         );
     }
+
+    const [searchQuery, setSearchQuery] = useState("");
+    const normalizedSearch = searchQuery.trim().toLowerCase();
+    const visibleBooks = books.filter(book.title.trim().toLowerCase().includes(normalizedSearch))
+
     return (
         <BookContext.Provider
             value={
@@ -74,7 +78,9 @@ function BookProvider({ children }) {
                     books,
                     addBook,
                     updateBook,
-                    deleteBook
+                    deleteBook,
+                    searchQuery,
+                    setSearchQuery
                 }
             }>
 

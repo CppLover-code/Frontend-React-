@@ -11,7 +11,7 @@ import MainLayout from "./layouts/MainLayout";
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
 function App() {
-  console.log("App");
+
   return (
     <Routes>
 
