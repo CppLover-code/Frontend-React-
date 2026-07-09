@@ -9,7 +9,7 @@ function CartList()
     if(cart.length === 0)
     {
         return(
-            <>польно
+            <>
                 <h2>🛒 Your cart is empty</h2>
                 <Link to="/books">Browse books</Link>
             </>

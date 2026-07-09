@@ -1,7 +1,9 @@
 import  { useState } from "react"
+import useBook from "../hooks/useBook";
 
-function BookForm({ addBook}) 
+function BookForm() 
 {
+    const {addBook} = useBook();
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
 

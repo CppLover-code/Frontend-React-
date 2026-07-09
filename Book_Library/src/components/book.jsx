@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
+import useBook from "../hooks/useBook";
 
-function Book({book, deleteBook, updateBook}) 
+function Book({book}) 
 {
+    const {deleteBook, updateBook} = useBook();
+    const {addToCart} = useCart();
+
     const {
         id,
         title,
@@ -10,9 +14,6 @@ function Book({book, deleteBook, updateBook})
         category,
         price
     } = book;
-
-    const {addToCart} = useCart();
-
 
     return (
         <article>

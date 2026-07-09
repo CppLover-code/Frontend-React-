@@ -1,16 +1,8 @@
 import BookList from "../components/BookList";
 
-function Books({books, deleteBook, updateBook})
+function Books()
 {
-    return(
-        <>
-            <BookList
-                books={books}
-                deleteBook={deleteBook}
-                updateBook={updateBook}
-            />
-        </>
-    );
+    return( <BookList /> );
 }
 
 export default Books;

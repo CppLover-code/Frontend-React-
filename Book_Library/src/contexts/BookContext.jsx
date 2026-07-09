@@ -1,8 +1,10 @@
 import { createContext, useState, useEffect } from "react";
+import { initialBooks } from "../data/books";
 
 const BookContext = createContext();
 
 function BookProvider({ children }) {
+    console.log("BookProvider");
     // при первом взапуске приложения реакт проверяет состояния - состояния нет,
     // поэтому вызывает функцию и берет ее результат как начальное значение
     // при втором запуске - состояние уже есть, поэтому реакт будет игнорировать эту функцию
@@ -65,4 +67,21 @@ function BookProvider({ children }) {
             })
         );
     }
+    return (
+        <BookContext.Provider
+            value={
+                {
+                    books,
+                    addBook,
+                    updateBook,
+                    deleteBook
+                }
+            }>
+
+            {children}
+
+        </BookContext.Provider>
+    );
 }
+
+export { BookContext, BookProvider }

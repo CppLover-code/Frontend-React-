@@ -1,7 +1,10 @@
 import Book from "./Book";
+import useBook from "../hooks/useBook";
 
-function BookList({books, deleteBook, updateBook}) 
+function BookList() 
 {
+    const {books} = useBook();
+
     return (
         <> 
             <h1>Books Page</h1>
@@ -10,8 +13,6 @@ function BookList({books, deleteBook, updateBook})
                 <Book 
                     key={book.id}
                     book={book}
-                    deleteBook={deleteBook}
-                    updateBook={updateBook}
                 />
             ))}
         </>

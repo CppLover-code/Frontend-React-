@@ -1,7 +1,12 @@
 import { useParams } from "react-router-dom";
+import useCart from "../hooks/useCart";
+import useBook from "../hooks/useBook";
 
-function BookDetails({books, addToCart})
+function BookDetails()
 {
+    const {addToCart} = useCart();
+    const {books} = useBook();
+    
     const {id} = useParams();
 
     const book = books.find(book => book.id === Number(id));

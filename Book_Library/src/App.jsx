@@ -1,7 +1,3 @@
-import { useState, useEffect } from "react";
-
-import { initialBooks } from "./data/books";
-
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -14,32 +10,25 @@ import MainLayout from "./layouts/MainLayout";
 
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
-function App() 
-{
-  
-
+function App() {
+  console.log("App");
   return (
     <Routes>
 
       <Route element={<MainLayout />}>
 
-        <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Home />} />
 
-        <Route path="/books" element={<Books
-                                            books={books}
-                                            deleteBook={deleteBook}
-                                            updateBook={updateBook}
-                                            />}
-         />
+        <Route path="/books" element={<Books />} />
 
-        <Route path="/books/:id" element={<BookDetails books={books} />}/>
+        <Route path="/books/:id" element={<BookDetails />} />
 
-        <Route path="/about" element={<About />}/>
+        <Route path="/about" element={<About />} />
 
-        <Route path="/login" element={<Login />}/>
+        <Route path="/login" element={<Login />} />
 
-        <Route path="/cart" element={<Cart />}/>
-      
+        <Route path="/cart" element={<Cart />} />
+
       </Route>
 
     </Routes>
