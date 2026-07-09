@@ -66,17 +66,26 @@ function BookProvider({ children }) {
             })
         );
     }
-
+// ****************************************
     const [searchQuery, setSearchQuery] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("All");
 
     const normalizedSearch = searchQuery.trim().toLowerCase();
 
-    const visibleBooks = !normalizedSearch
+    const searchedBooks = !normalizedSearch
     ? books
     : books.filter(book => {
         const normalizedTitle = book.title.trim().toLowerCase();
         return normalizedTitle.includes(normalizedSearch);
     });
+
+    const categoryBooks = selectedCategory === "All"
+    ? searchedBooks
+    : searchedBooks.filter(book => book.category === selectedCategory);
+
+    const visibleBooks = categoryBooks;
+
+// ****************************************
 
     return (
         <BookContext.Provider
@@ -88,6 +97,8 @@ function BookProvider({ children }) {
                     deleteBook,
                     searchQuery,
                     setSearchQuery,
+                    selectedCategory,
+                    setSelectedCategory,
                     visibleBooks
                 }
             }>
