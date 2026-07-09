@@ -7,10 +7,20 @@ function CategoryFilter() {
         <>
             <p>Category:</p>
             <select
-                value={allCategories.map()}
+                value={selectedCategory}
                 onChange={(event) =>
-                    setSearchQuery(event.target.value)
-                } />
+                    setSelectedCategory(event.target.value)
+                }>
+
+                {allCategories.map(category => (
+                    <option 
+                        key={category}
+                        value={category}
+                        >
+                            {category}
+                    </option>
+                ))}
+            </select>
         </>
     );
 
