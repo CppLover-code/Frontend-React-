@@ -1,8 +1,14 @@
 import BookList from "../components/BookList";
+import SearchBar from "../components/SearchBar";
 
 function Books()
 {
-    return( <BookList /> );
+    return( 
+        <>
+            <SearchBar />
+            <BookList /> 
+        </>
+    );
 }
 
 export default Books;

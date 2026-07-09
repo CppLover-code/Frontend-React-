@@ -3,13 +3,13 @@ import useBook from "../hooks/useBook";
 
 function BookList() 
 {
-    const {books} = useBook();
+    const {visibleBooks} = useBook();
 
     return (
         <> 
             <h1>Books Page</h1>
             
-            {books.map(book => (
+            {visibleBooks.map(book => (
                 <Book 
                     key={book.id}
                     book={book}
