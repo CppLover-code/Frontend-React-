@@ -8,6 +8,10 @@ function BookProvider({ children }) {
     // поэтому вызывает функцию и берет ее результат как начальное значение
     // при втором запуске - состояние уже есть, поэтому реакт будет игнорировать эту функцию
     // и просто возвращает сохраненное состояние
+
+    // --------------------------------------------------
+    // STATE
+    // --------------------------------------------------
     const [books, setBooks] = useState(() => {
 
         const savedBooks = localStorage.getItem("books");
@@ -17,7 +21,71 @@ function BookProvider({ children }) {
         return initialBooks;
 
     });
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("All");
+    const [selectedSort, setSelectedSort] = useState("default");
 
+    // --------------------------------------------------
+    // OPTIONS
+    // --------------------------------------------------
+    // Search
+    const normalizedSearch = searchQuery.trim().toLowerCase();
+    const searchedBooks = !normalizedSearch
+        ? books
+        : books.filter(book => {
+            const normalizedTitle = book.title.trim().toLowerCase();
+            return normalizedTitle.includes(normalizedSearch);
+        });
+
+
+    // Filter  
+    const categoryBooks = selectedCategory === "All"
+        ? searchedBooks
+        : searchedBooks.filter(book => book.category === selectedCategory);
+
+    const categories = books.map(book => book.category);
+    const categoryOptions = ["All", ...new Set(categories)];
+
+    // Sort 
+    const sortOptions = [
+        { value: "default", label: "Default" },
+        { value: "title-asc", label: "Title (A-Z)" },
+        { value: "title-desc", label: "Title (Z-A)" },
+        { value: "price-asc", label: "Price (Low → High)" },
+        { value: "price-desc", label: "Price (High → Low)" }
+    ];
+    const sortedBooks = [...categoryBooks];
+
+    switch (selectedSort) {
+        case "title-asc":
+            sortedBooks.sort((a, b) =>
+                a.title.localeCompare(b.title));
+            break;
+
+        case "title-desc":
+            sortedBooks.sort((a, b) =>
+                b.title.localeCompare(a.title));
+            break;
+
+        case "price-asc":
+            sortedBooks.sort((a, b) =>
+                a.price - b.price);
+            break;
+
+        case "price-desc":
+            sortedBooks.sort((a, b) =>
+                b.price - a.price);
+            break;
+
+        case "default":
+            break;
+    }
+
+    const visibleBooks = sortedBooks;
+
+    // --------------------------------------------------
+    // PERSISTENCE
+    // --------------------------------------------------
     // каждый раз, когда меняется books, книги сохраняются
     useEffect(() => {
 
@@ -28,6 +96,9 @@ function BookProvider({ children }) {
 
     }, [books]);
 
+    // --------------------------------------------------
+    // CRUD
+    // --------------------------------------------------
     function addBook(title, authors, category, price) {
         if (!title.trim()) return;
 
@@ -66,66 +137,10 @@ function BookProvider({ children }) {
             })
         );
     }
-// ****************************************
-    // Поиск
-    const [searchQuery, setSearchQuery] = useState("");
-    const normalizedSearch = searchQuery.trim().toLowerCase();
-    const searchedBooks = !normalizedSearch
-    ? books
-    : books.filter(book => {
-        const normalizedTitle = book.title.trim().toLowerCase();
-        return normalizedTitle.includes(normalizedSearch);
-    });
 
-    // Фильтрация
-    const [selectedCategory, setSelectedCategory] = useState("All");
-    const categoryBooks = selectedCategory === "All"
-    ? searchedBooks
-    : searchedBooks.filter(book => book.category === selectedCategory);
-
-    const categories = books.map(book => book.category);
-    const categoryOptions = ["All", ...new Set(categories)];
-
-    // Сортировка
-    const [selectedSort, setSelectedSort] = useState("default");
-    const sortOptions = [
-        { value: "default", label: "Default" },
-        { value: "title-asc", label: "Title (A-Z)" },
-        { value: "title-desc", label: "Title (Z-A)" },
-        { value: "price-asc", label: "Price (Low → High)" },
-        { value: "price-desc", label: "Price (High → Low)" }
-    ];
-    const sortedBooks = [...categoryBooks];
-
-    switch(selectedSort)
-    {
-        case "title-asc":
-            sortedBooks.sort((a, b) => 
-                a.title.localeCompare(b.title));
-            break;
-        
-        case "title-desc":
-            sortedBooks.sort((a, b) => 
-                b.title.localeCompare(a.title));
-            break;
-
-        case "price-asc":
-            sortedBooks.sort((a,b) =>
-                a.price - b.price);
-            break;
-
-        case "price-desc":
-            sortedBooks.sort((a,b) =>
-                b.price - a.price);
-            break;      
-            
-        case "default":
-            break;
-    }
-
-    const visibleBooks = sortedBooks;
-
-// ****************************************
+    // --------------------------------------------------
+    // Provider
+    // --------------------------------------------------
 
     return (
         <BookContext.Provider
