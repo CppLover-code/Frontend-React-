@@ -67,11 +67,9 @@ function BookProvider({ children }) {
         );
     }
 // ****************************************
+    // Поиск
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("All");
-
     const normalizedSearch = searchQuery.trim().toLowerCase();
-
     const searchedBooks = !normalizedSearch
     ? books
     : books.filter(book => {
@@ -79,6 +77,8 @@ function BookProvider({ children }) {
         return normalizedTitle.includes(normalizedSearch);
     });
 
+    // Фильтрация
+    const [selectedCategory, setSelectedCategory] = useState("All");
     const categoryBooks = selectedCategory === "All"
     ? searchedBooks
     : searchedBooks.filter(book => book.category === selectedCategory);
@@ -86,7 +86,44 @@ function BookProvider({ children }) {
     const categories = books.map(book => book.category);
     const allCategories = ["All", ...new Set(categories)];
 
-    const visibleBooks = categoryBooks;
+    // Сортировка
+    const [selectedSort, setSelectedSort] = useState("default");
+    const sortOptions = [
+        { value: "default", label: "Default" },
+        { value: "title-asc", label: "Title (A-Z)" },
+        { value: "title-desc", label: "Title (Z-A)" },
+        { value: "price-asc", label: "Price (Low → High)" },
+        { value: "price-desc", label: "Price (High → Low)" }
+    ];
+    const sortedBooks = [...categoryBooks];
+
+    switch(selectedSort)
+    {
+        case "title-asc":
+            sortedBooks.sort((a, b) => 
+                a.title.localeCompare(b.title));
+            break;
+        
+        case "title-desc":
+            sortedBooks.sort((a, b) => 
+                b.title.localeCompare(a.title));
+            break;
+
+        case "price-asc":
+            sortedBooks.sort((a,b) =>
+                a.price - b.price);
+            break;
+
+        case "price-desc":
+            sortedBooks.sort((a,b) =>
+                b.price - a.price);
+            break;      
+            
+        case "default":
+            break;
+    }
+
+    const visibleBooks = sortedBooks;
 
 // ****************************************
 
@@ -98,11 +135,17 @@ function BookProvider({ children }) {
                     addBook,
                     updateBook,
                     deleteBook,
+
                     searchQuery,
                     setSearchQuery,
+
                     selectedCategory,
                     setSelectedCategory,
                     allCategories,
+
+                    selectedSort,
+                    setSelectedSort,
+
                     visibleBooks
                 }
             }>

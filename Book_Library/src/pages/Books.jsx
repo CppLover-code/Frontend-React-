@@ -1,6 +1,7 @@
 import BookList from "../components/BookList";
 import SearchBar from "../components/SearchBar";
 import CategoryFilter from "../components/CategoryFilter";
+import SortSelect from "../components/SortSelect";
 
 function Books()
 {
@@ -8,6 +9,7 @@ function Books()
         <>
             <SearchBar />
             <CategoryFilter />
+            <SortSelect />
             <BookList /> 
         </>
     );
