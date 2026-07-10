@@ -28,6 +28,18 @@ function BookProvider({ children }) {
     // --------------------------------------------------
     // OPTIONS
     // --------------------------------------------------
+    const categoryOptions = ["All", ...new Set(books.map(book => book.category))];
+    const sortOptions = [
+        { value: "default", label: "Default" },
+        { value: "title-asc", label: "Title (A-Z)" },
+        { value: "title-desc", label: "Title (Z-A)" },
+        { value: "price-asc", label: "Price (Low → High)" },
+        { value: "price-desc", label: "Price (High → Low)" }
+    ];
+
+    // --------------------------------------------------
+    // DERIVED STATE
+    // --------------------------------------------------
     // Search
     const normalizedSearch = searchQuery.trim().toLowerCase();
     const searchedBooks = !normalizedSearch
@@ -36,24 +48,15 @@ function BookProvider({ children }) {
             const normalizedTitle = book.title.trim().toLowerCase();
             return normalizedTitle.includes(normalizedSearch);
         });
-
+    // --------------------------------------------------
 
     // Filter  
     const categoryBooks = selectedCategory === "All"
         ? searchedBooks
         : searchedBooks.filter(book => book.category === selectedCategory);
-
-    const categories = books.map(book => book.category);
-    const categoryOptions = ["All", ...new Set(categories)];
+    // --------------------------------------------------
 
     // Sort 
-    const sortOptions = [
-        { value: "default", label: "Default" },
-        { value: "title-asc", label: "Title (A-Z)" },
-        { value: "title-desc", label: "Title (Z-A)" },
-        { value: "price-asc", label: "Price (Low → High)" },
-        { value: "price-desc", label: "Price (High → Low)" }
-    ];
     const sortedBooks = [...categoryBooks];
 
     switch (selectedSort) {
@@ -82,7 +85,9 @@ function BookProvider({ children }) {
     }
 
     const visibleBooks = sortedBooks;
+    // --------------------------------------------------
 
+    
     // --------------------------------------------------
     // PERSISTENCE
     // --------------------------------------------------
@@ -147,9 +152,7 @@ function BookProvider({ children }) {
             value={
                 {
                     books,
-                    addBook,
-                    updateBook,
-                    deleteBook,
+                    visibleBooks,
 
                     searchQuery,
                     setSearchQuery,
@@ -162,7 +165,9 @@ function BookProvider({ children }) {
                     setSelectedSort,
                     sortOptions,
 
-                    visibleBooks
+                    addBook,
+                    updateBook,
+                    deleteBook
                 }
             }>
 
