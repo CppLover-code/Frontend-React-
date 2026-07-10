@@ -145,6 +145,7 @@ function BookProvider({ children }) {
 
                     selectedSort,
                     setSelectedSort,
+                    sortOptions,
 
                     visibleBooks
                 }
