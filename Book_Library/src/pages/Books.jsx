@@ -1,17 +1,13 @@
 import BookList from "../components/BookList";
-import SearchBar from "../components/SearchBar";
-import CategoryFilter from "../components/CategoryFilter";
-import SortSelect from "../components/SortSelect";
+import BookControls from "../components/BookControls";
 
 function Books()
 {
     return( 
-        <>
-            <SearchBar />
-            <CategoryFilter />
-            <SortSelect />
+        <div className="book-controls">
+            <BookControls />
             <BookList /> 
-        </>
+        </div>
     );
 }
 
