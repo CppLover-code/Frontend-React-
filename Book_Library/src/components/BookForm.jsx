@@ -5,7 +5,7 @@ function BookForm()
 {
     const {addBook} = useBook();
     const [title, setTitle] = useState("");
-    const [author, setAuthor] = useState("");
+    const [authors, setAuthor] = useState("");
 
     function handleSubmit(event) 
     {
