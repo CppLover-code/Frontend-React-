@@ -1,5 +1,6 @@
-import {SearchBar, CategoryFilter, SortSelect} from "../components"
-
+import SearchBar from "./SearchBar";
+import CategoryFilter from "./CategoryFilter";
+import SortSelect from "./SortSelect";
 function BookControls()
 {
     return (
