@@ -1,7 +1,7 @@
 import useBook from "../hooks/useBook";
 
 function CategoryFilter() {
-    const { selectedCategory, setSelectedCategory, allCategories } = useBook();
+    const { selectedCategory, setSelectedCategory, categoryOptions } = useBook();
 
     return (
         <>
@@ -12,7 +12,7 @@ function CategoryFilter() {
                     setSelectedCategory(event.target.value)
                 }>
 
-                {allCategories.map(category => (
+                {categoryOptions.map(category => (
                     <option 
                         key={category}
                         value={category}

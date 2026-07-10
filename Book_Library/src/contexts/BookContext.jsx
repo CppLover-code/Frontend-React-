@@ -84,7 +84,7 @@ function BookProvider({ children }) {
     : searchedBooks.filter(book => book.category === selectedCategory);
 
     const categories = books.map(book => book.category);
-    const allCategories = ["All", ...new Set(categories)];
+    const categoryOptions = ["All", ...new Set(categories)];
 
     // Сортировка
     const [selectedSort, setSelectedSort] = useState("default");
@@ -141,7 +141,7 @@ function BookProvider({ children }) {
 
                     selectedCategory,
                     setSelectedCategory,
-                    allCategories,
+                    categoryOptions,
 
                     selectedSort,
                     setSelectedSort,
