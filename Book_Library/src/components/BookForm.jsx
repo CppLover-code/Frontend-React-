@@ -4,41 +4,69 @@ import useBook from "../hooks/useBook";
 function BookForm() 
 {
     const {addBook} = useBook();
-    const [title, setTitle] = useState("");
-    const [authors, setAuthor] = useState("");
+    const [formData, setFormData] = useState({
+        title: "",
+        authors: "",
+        category: "",
+        price: ""
+    });
 
     function handleSubmit(event) 
     {
         event.preventDefault();
-        addBook(title, author);
-
-        setTitle("");
-        setAuthor("");
+        addBook(formData);
+    }
+    function handleChange(event)
+    {
+        const { name, value } = event.target;
+        setFormData({...formData, [name]: value});
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <label>Book title</label>
+            <label>Book title: </label>
 
             <input
             type="text"
-            value={title}
-            onChange={(event) =>
-                setTitle(event.target.value)
-            }
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
             />
 
             <br/>
             <br/>
 
-            <label>Book author</label>
+            <label>Authors: </label>
 
             <input
             type="text"
-            value={author}
-            onChange={(event) =>
-                setAuthor(event.target.value)
-            }
+            name="authors"
+            value={formData.authors}
+            onChange={handleChange}
+            />
+
+            <br/>
+            <br/>
+
+            <label>Category: </label>
+
+            <input
+            type="text"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            />
+
+            <br/>
+            <br/>
+
+            <label>Price: </label>
+
+            <input
+            type="text"
+            name="price"
+            value={formData.category}
+            onChange={handleChange}
             />
 
             <br/>

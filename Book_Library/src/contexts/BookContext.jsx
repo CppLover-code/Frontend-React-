@@ -104,8 +104,16 @@ function BookProvider({ children }) {
     // --------------------------------------------------
     // CRUD
     // --------------------------------------------------
-    function addBook(title, authors, category, price) {
-        if (!title.trim()) return;
+    function addBook(formData) {
+
+        const {
+            title,
+            authors,
+            category,
+            price
+        } = formData;
+
+        if (!formData.title.trim()) return;
 
         const newBook =
         {
