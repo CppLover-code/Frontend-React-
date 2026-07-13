@@ -8,6 +8,13 @@ const initialFormData = {
     price: ""
 };
 
+const [errors, setErrors] = useState({
+    title: "",
+    authors: "",
+    category: "",
+    price: ""
+});
+
 function BookForm() 
 {
     const {addBook} = useBook();
@@ -18,7 +25,7 @@ function BookForm()
         event.preventDefault();
 
         if (!formData.title.trim()) return;
-        
+
         addBook(formData);
         setFormData(initialFormData);
     }
