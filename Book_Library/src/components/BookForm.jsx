@@ -1,5 +1,6 @@
 import  { useState } from "react"
 import useBook from "../hooks/useBook";
+import "../styles/BookForm.css"
 
 const initialFormData = {
     title: "",
@@ -16,6 +17,8 @@ const initialErrors = {
 
 const [errors, setErrors] = useState(initialErrors);
 
+const priceRegex = /^\d+(\.\d{1,2})?$/;
+
 function validateForm()
 {
     const newErrors = {
@@ -25,18 +28,25 @@ function validateForm()
     if (!formData.title.trim()) {
         newErrors.title = "Title is required";
     }
+
     if (!formData.authors.trim()) {
         newErrors.authors = "Authors are required";
     }
+
     if (!formData.category.trim()) {
         newErrors.category = "Category is required";
     }
 
-
-
+    if(!formData.price.trim()) {
+        newErrors.price = "Price is required";
+    }
+    else if(!priceRegex.test(formData.price)) {
+        newErrors.price = "Price must be a valid number";
+    }
 
     setErrors(newErrors);
-    return;
+
+    return !Object.values(newErrors).some(error => error);
 }
 
 function BookForm() 
@@ -47,6 +57,10 @@ function BookForm()
     function handleSubmit(event) 
     {
         event.preventDefault();
+
+        if(!validateForm()) {
+            return;
+        }
 
         addBook(formData);
         setFormData(initialFormData);
@@ -67,6 +81,11 @@ function BookForm()
             value={formData.title}
             onChange={handleChange}
             />
+            {errors.title && (
+                <p classname="error-message">
+                    {errors.title}
+                </p>
+            )}
 
             <br/>
             <br/>
@@ -79,6 +98,11 @@ function BookForm()
             value={formData.authors}
             onChange={handleChange}
             />
+            {errors.title && (
+                <p classname="error-message">
+                    {errors.authors}
+                </p>
+            )}
 
             <br/>
             <br/>
@@ -91,6 +115,11 @@ function BookForm()
             value={formData.category}
             onChange={handleChange}
             />
+            {errors.title && (
+                <p classname="error-message">
+                    {errors.category}
+                </p>
+            )}
 
             <br/>
             <br/>
@@ -103,6 +132,11 @@ function BookForm()
             value={formData.category}
             onChange={handleChange}
             />
+            {errors.title && (
+                <p classname="error-message">
+                    {errors.price}
+                </p>
+            )}
 
             <br/>
             <br/>
