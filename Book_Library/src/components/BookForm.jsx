@@ -7,13 +7,31 @@ const initialFormData = {
     category: "",
     price: ""
 };
-
-const [errors, setErrors] = useState({
+const initialErrors = {
     title: "",
     authors: "",
     category: "",
     price: ""
-});
+};
+
+const [errors, setErrors] = useState(initialErrors);
+
+function validateForm()
+{
+    const newErrors = {
+        ...initialErrors
+    };
+
+    if (!formData.title.trim()) newErrors.title = "Title is required";
+    if (!formData.authors.trim()) newErrors.authors = "Authors are required";
+    if (!formData.category.trim()) newErrors.category = "Category is required";
+    
+
+
+
+    setErrors(newErrors);
+    return;
+}
 
 function BookForm() 
 {
@@ -23,8 +41,6 @@ function BookForm()
     function handleSubmit(event) 
     {
         event.preventDefault();
-
-        if (!formData.title.trim()) return;
 
         addBook(formData);
         setFormData(initialFormData);
