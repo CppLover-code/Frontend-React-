@@ -16,6 +16,9 @@ function BookForm()
     function handleSubmit(event) 
     {
         event.preventDefault();
+
+        if (!formData.title.trim()) return;
+        
         addBook(formData);
         setFormData(initialFormData);
     }

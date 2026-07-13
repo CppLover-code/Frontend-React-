@@ -113,8 +113,6 @@ function BookProvider({ children }) {
             price
         } = formData;
 
-        if (!formData.title.trim()) return;
-
         const newBook =
         {
             id: books.length + 1,
