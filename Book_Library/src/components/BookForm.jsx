@@ -22,10 +22,16 @@ function validateForm()
         ...initialErrors
     };
 
-    if (!formData.title.trim()) newErrors.title = "Title is required";
-    if (!formData.authors.trim()) newErrors.authors = "Authors are required";
-    if (!formData.category.trim()) newErrors.category = "Category is required";
-    
+    if (!formData.title.trim()) {
+        newErrors.title = "Title is required";
+    }
+    if (!formData.authors.trim()) {
+        newErrors.authors = "Authors are required";
+    }
+    if (!formData.category.trim()) {
+        newErrors.category = "Category is required";
+    }
+
 
 
 
