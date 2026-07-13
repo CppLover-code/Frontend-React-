@@ -1,20 +1,23 @@
 import  { useState } from "react"
 import useBook from "../hooks/useBook";
 
+const initialFormData = {
+    title: "",
+    authors: "",
+    category: "",
+    price: ""
+};
+
 function BookForm() 
 {
     const {addBook} = useBook();
-    const [formData, setFormData] = useState({
-        title: "",
-        authors: "",
-        category: "",
-        price: ""
-    });
+    const [formData, setFormData] = useState(initialFormData);
 
     function handleSubmit(event) 
     {
         event.preventDefault();
         addBook(formData);
+        setFormData(initialFormData);
     }
     function handleChange(event)
     {
