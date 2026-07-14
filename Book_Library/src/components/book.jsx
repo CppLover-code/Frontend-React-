@@ -11,7 +11,7 @@ function Book({book})
         id,
         title,
         authors,
-        category,
+        categories,
         price,
         stock,
         description
@@ -24,7 +24,7 @@ function Book({book})
 
             <p>Authors: {authors}</p>
 
-            <p>Category: {category}</p>
+            <p>Category: {categories}</p>
 
             <p>Price: ${price}</p>
 

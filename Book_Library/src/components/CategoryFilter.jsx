@@ -12,12 +12,12 @@ function CategoryFilter() {
                     setSelectedCategory(event.target.value)
                 }>
 
-                {categoryOptions.map(category => (
+                {categoryOptions.map(categories => (
                     <option 
-                        key={category}
-                        value={category}
+                        key={categories}
+                        value={categories}
                         >
-                            {category}
+                            {categories}
                     </option>
                 ))}
             </select>

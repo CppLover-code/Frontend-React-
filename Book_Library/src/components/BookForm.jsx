@@ -5,7 +5,7 @@ import "../styles/BookForm.css"
 const initialFormData = {
     title: "",
     authors: "",
-    category: "",
+    categories: "",
     price: "",
     stock: "",
     description: "",
@@ -14,7 +14,7 @@ const initialFormData = {
 const initialErrors = {
     title: "",
     authors: "",
-    category: "",
+    categories: "",
     price: "",
     stock: "",
     description: ""
@@ -41,8 +41,8 @@ function BookForm() {
             newErrors.authors = "Authors are required";
         }
 
-        if (!formData.category.trim()) {
-            newErrors.category = "Category is required";
+        if (!formData.categories.trim()) {
+            newErrors.categories = "Category is required";
         }
 
         if (!formData.price.trim()) {
@@ -129,14 +129,14 @@ function BookForm() {
 
             <input
                 type="text"
-                name="category"
-                value={formData.category}
+                name="categories"
+                value={formData.categories}
                 onChange={handleChange}
-                className={errors.category ? "error" : ""}
+                className={errors.categories ? "error" : ""}
             />
-            {errors.category && (
+            {errors.categories && (
                 <p className="error-message">
-                    {errors.category}
+                    {errors.categories}
                 </p>
             )}
 

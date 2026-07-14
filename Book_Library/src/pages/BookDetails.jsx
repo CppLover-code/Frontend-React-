@@ -16,7 +16,7 @@ function BookDetails()
     const {
         title,
         authors,
-        category,
+        categories,
         price,
         description
     } = book;
@@ -32,7 +32,7 @@ function BookDetails()
             <p>{authors.join(", ")}</p>
 
             <h3>Category:</h3>
-            <p>{category}</p>
+            <p>{categories}</p>
 
             <h3>Price:</h3>
             <p>${price}</p>

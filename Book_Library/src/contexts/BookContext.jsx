@@ -28,7 +28,7 @@ function BookProvider({ children }) {
     // --------------------------------------------------
     // OPTIONS
     // --------------------------------------------------
-    const categoryOptions = ["All", ...new Set(books.map(book => book.category))];
+    const categoryOptions = ["All", ...new Set(books.map(book => book.categories))];
     const sortOptions = [
         { value: "default", label: "Default" },
         { value: "title-asc", label: "Title (A-Z)" },
@@ -53,7 +53,7 @@ function BookProvider({ children }) {
     // Filter  
     const categoryBooks = selectedCategory === "All"
         ? searchedBooks
-        : searchedBooks.filter(book => book.category === selectedCategory);
+        : searchedBooks.filter(book => book.categories === selectedCategory);
     // --------------------------------------------------
 
     // Sort 
@@ -109,7 +109,7 @@ function BookProvider({ children }) {
         const {
             title,
             authors,
-            category,
+            categories,
             price,
             stock,
             description,
@@ -121,7 +121,7 @@ function BookProvider({ children }) {
             id: books.length + 1,
             title,
             authors,
-            category,
+            categories,
             price: Number(price),
             stock: Number(stock),
             description,
