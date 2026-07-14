@@ -37,9 +37,16 @@ function BookForm() {
             newErrors.title = "Title is required";
         }
 
-        if (!formData.authors.trim()) {
-            newErrors.authors = "Authors are required";
+        if (formData.authors.some(author => author.trim() === "")) {
+            newErrors.authors = "All author fields must be filled";
         }
+        const normalizedAuthors = formData.authors.map(author => 
+            author.trim().toLowerCase());
+        
+        if (normalizedAuthors.length !== new Set(normalizedAuthors).size){
+            newErrors.authors = "Duplicate authors are not allowed"
+        }
+
 
         if (!formData.categories.trim()) {
             newErrors.categories = "Category is required";
@@ -53,16 +60,16 @@ function BookForm() {
         }
 
         const stock = Number(formData.stock);
-        if(!formData.stock.trim()) {
+        if (!formData.stock.trim()) {
             newErrors.stock = "Stock is required"
         }
-        else if(Number.isNaN(stock)){
+        else if (Number.isNaN(stock)) {
             newErrors.stock = "Stock must be a number"
         }
         else if (!Number.isInteger(stock)) {
             newErrors.stock = "Stock must be an integer"
         }
-        else if(stock < 0) {
+        else if (stock < 0) {
             newErrors.stock = "Stock cannot be negative"
         }
 
@@ -89,14 +96,20 @@ function BookForm() {
 
     function handleAuthorChange(index, value) {
         const updatedAuthors = [...formData.authors];
-        updatedAuthors[index] = value;
-        setFormData({...formData, authors: updatedAuthors})
+        updatedAuthors[index] = value.replace(/\s+/g," ");
+        setFormData({ ...formData, authors: updatedAuthors })
     }
 
     function addAuthor() {
         const updatedAuthors = [...formData.authors];
         updatedAuthors.push("");
-        setFormData({...formData, authors: updatedAuthors})
+        setFormData({ ...formData, authors: updatedAuthors })
+    }
+
+    function removeAuthor(index) {
+        const updatedAuthors = [...formData.authors];
+        updatedAuthors.splice(index, 1);
+        setFormData({ ...formData, authors: updatedAuthors })
     }
     return (
         <form onSubmit={handleSubmit}>
@@ -121,29 +134,41 @@ function BookForm() {
             <label>Authors: </label>
 
             {formData.authors.map((author, index) => (
-                <input
-                key={index}
-                    type="text"
-                    name="authors"
-                    value={author}
-                    onChange={(event) =>
-                        handleAuthorChange(index, event.target.value)
-                    }
-                    className={errors.authors ? "error" : ""}
-                />
+                <div key={index}>
+                    <input
+                        type="text"
+                        name="authors"
+                        value={author}
+                        onChange={(event) =>
+                            handleAuthorChange(index, event.target.value)
+                        }
+                        className={errors.authors ? "error" : ""}
+                    />
+                    {formData.authors.length > 1 && (
+                        <button
+                            type="button"
+                            onClick={() => removeAuthor(index)}
+                        >
+                            Remove
+                        </button>
+                    )}
+
+                </div>
             ))}
+
+            <button
+                type="button"
+                onClick={addAuthor}
+            >
+                + Add Author
+            </button>
+
             {errors.authors && (
                 <p className="error-message">
                     {errors.authors}
                 </p>
             )}
-            <button
-            type="button"
-            onClick={addAuthor}
-            >
-                + Add Author
-            </button>
-            
+
 
             <br />
             <br />
