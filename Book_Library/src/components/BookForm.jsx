@@ -52,8 +52,18 @@ function BookForm() {
             newErrors.price = "Price must be a valid number";
         }
 
+        const stock = Number(formData.stock);
         if(!formData.stock.trim()) {
             newErrors.stock = "Stock is required"
+        }
+        else if(Number.isNaN(stock)){
+            newErrors.stock = "Stock must be a number"
+        }
+        else if (!Number.isInteger(stock)) {
+            newErrors.stock = "Stock must be an integer"
+        }
+        else if(stock < 0) {
+            newErrors.stock = "Stock cannot be negative"
         }
 
         setErrors(newErrors);
@@ -150,6 +160,42 @@ function BookForm() {
 
             <br />
             <br />
+
+            <label>Stock: </label>
+
+            <input
+                type="text"
+                name="stock"
+                value={formData.stock}
+                onChange={handleChange}
+                className={errors.stock ? "error" : ""}
+            />
+            {errors.stock && (
+                <p className="error-message">
+                    {errors.stock}
+                </p>
+            )}
+
+            <br />
+            <br />
+
+            <label>Description: </label>
+
+            <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                className={errors.description ? "error" : ""}
+            />
+            {errors.description && (
+                <p className="error-message">
+                    {errors.description}
+                </p>
+            )}
+
+            <br />
+            <br />
+
 
             <button type="submit">Add Book</button>
         </form>
