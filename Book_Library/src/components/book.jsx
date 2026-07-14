@@ -24,7 +24,7 @@ function Book({book})
 
             <p>Authors: {authors}</p>
 
-            <p>Category: {categories}</p>
+            <p>Categories: {categories}</p>
 
             <p>Price: ${price}</p>
 

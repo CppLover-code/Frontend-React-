@@ -4,7 +4,7 @@ import "../styles/BookForm.css"
 
 const initialFormData = {
     title: "",
-    authors: "",
+    authors: [""],
     categories: "",
     price: "",
     stock: "",
@@ -109,18 +109,22 @@ function BookForm() {
 
             <label>Authors: </label>
 
-            <input
-                type="text"
-                name="authors"
-                value={formData.authors}
-                onChange={handleChange}
-                className={errors.authors ? "error" : ""}
-            />
+            {formData.authors.map((author, index) => (
+                <input
+                key={index}
+                    type="text"
+                    name="authors"
+                    value={author}
+                    onChange={handleChange}
+                    className={errors.authors ? "error" : ""}
+                />
+            ))}
             {errors.authors && (
                 <p className="error-message">
                     {errors.authors}
                 </p>
             )}
+            
 
             <br />
             <br />
