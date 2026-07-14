@@ -110,16 +110,22 @@ function BookProvider({ children }) {
             title,
             authors,
             category,
-            price
+            price,
+            stock,
+            description,
+            cover
         } = formData;
 
         const newBook =
         {
             id: books.length + 1,
-            title: title,
-            authors: authors || "Unknown",
-            category: category || "Unknown",
-            price: price || 0.00
+            title,
+            authors,
+            category,
+            price: Number(price),
+            stock: Number(stock),
+            description,
+            cover
         };
 
         setBooks([...books, newBook]) // оператор spread

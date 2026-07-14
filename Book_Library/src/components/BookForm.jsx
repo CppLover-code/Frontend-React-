@@ -1,4 +1,4 @@
-import  { useState } from "react"
+import { useState } from "react"
 import useBook from "../hooks/useBook";
 import "../styles/BookForm.css"
 
@@ -6,69 +6,75 @@ const initialFormData = {
     title: "",
     authors: "",
     category: "",
-    price: ""
+    price: "",
+    stock: "",
+    description: "",
+    cover: ""
 };
 const initialErrors = {
     title: "",
     authors: "",
     category: "",
-    price: ""
+    price: "",
+    stock: "",
+    description: ""
 };
 
-const [errors, setErrors] = useState(initialErrors);
 
 const priceRegex = /^\d+(\.\d{1,2})?$/;
 
-function validateForm()
-{
-    const newErrors = {
-        ...initialErrors
-    };
-
-    if (!formData.title.trim()) {
-        newErrors.title = "Title is required";
-    }
-
-    if (!formData.authors.trim()) {
-        newErrors.authors = "Authors are required";
-    }
-
-    if (!formData.category.trim()) {
-        newErrors.category = "Category is required";
-    }
-
-    if(!formData.price.trim()) {
-        newErrors.price = "Price is required";
-    }
-    else if(!priceRegex.test(formData.price)) {
-        newErrors.price = "Price must be a valid number";
-    }
-
-    setErrors(newErrors);
-
-    return !Object.values(newErrors).some(error => error);
-}
-
-function BookForm() 
-{
-    const {addBook} = useBook();
+function BookForm() {
+    const { addBook } = useBook();
     const [formData, setFormData] = useState(initialFormData);
+    const [errors, setErrors] = useState(initialErrors);
 
-    function handleSubmit(event) 
-    {
+    function validateForm() {
+        const newErrors = {
+            ...initialErrors
+        };
+
+        if (!formData.title.trim()) {
+            newErrors.title = "Title is required";
+        }
+
+        if (!formData.authors.trim()) {
+            newErrors.authors = "Authors are required";
+        }
+
+        if (!formData.category.trim()) {
+            newErrors.category = "Category is required";
+        }
+
+        if (!formData.price.trim()) {
+            newErrors.price = "Price is required";
+        }
+        else if (!priceRegex.test(formData.price)) {
+            newErrors.price = "Price must be a valid number";
+        }
+
+        if(!formData.stock.trim()) {
+            newErrors.stock = "Stock is required"
+        }
+
+        setErrors(newErrors);
+
+        return !Object.values(newErrors).some(error => error);
+    }
+
+    function handleSubmit(event) {
         event.preventDefault();
 
-        if(!validateForm()) {
+        if (!validateForm()) {
             return;
         }
 
         addBook(formData);
         setFormData(initialFormData);
     }
-    function handleChange(event)
-    {
+
+    function handleChange(event) {
         const { name, value } = event.target;
-        setFormData({...formData, [name]: value});
+        setFormData({ ...formData, [name]: value });
     }
 
     return (
@@ -76,70 +82,74 @@ function BookForm()
             <label>Book title: </label>
 
             <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                className={errors.title ? "error" : ""}
             />
             {errors.title && (
-                <p classname="error-message">
+                <p className="error-message">
                     {errors.title}
                 </p>
             )}
 
-            <br/>
-            <br/>
+            <br />
+            <br />
 
             <label>Authors: </label>
 
             <input
-            type="text"
-            name="authors"
-            value={formData.authors}
-            onChange={handleChange}
+                type="text"
+                name="authors"
+                value={formData.authors}
+                onChange={handleChange}
+                className={errors.authors ? "error" : ""}
             />
-            {errors.title && (
-                <p classname="error-message">
+            {errors.authors && (
+                <p className="error-message">
                     {errors.authors}
                 </p>
             )}
 
-            <br/>
-            <br/>
+            <br />
+            <br />
 
             <label>Category: </label>
 
             <input
-            type="text"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
+                type="text"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className={errors.category ? "error" : ""}
             />
-            {errors.title && (
-                <p classname="error-message">
+            {errors.category && (
+                <p className="error-message">
                     {errors.category}
                 </p>
             )}
 
-            <br/>
-            <br/>
+            <br />
+            <br />
 
             <label>Price: </label>
 
             <input
-            type="text"
-            name="price"
-            value={formData.category}
-            onChange={handleChange}
+                type="text"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                className={errors.price ? "error" : ""}
             />
-            {errors.title && (
-                <p classname="error-message">
+            {errors.price && (
+                <p className="error-message">
                     {errors.price}
                 </p>
             )}
 
-            <br/>
-            <br/>
+            <br />
+            <br />
 
             <button type="submit">Add Book</button>
         </form>

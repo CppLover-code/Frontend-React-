@@ -12,7 +12,9 @@ function Book({book})
         title,
         authors,
         category,
-        price
+        price,
+        stock,
+        description
     } = book;
 
     return (
@@ -20,11 +22,15 @@ function Book({book})
 
             <h3>Title: {title}</h3>
 
-            <p>Authors: {authors.join(", ")}</p>
+            <p>Authors: {authors}</p>
 
             <p>Category: {category}</p>
 
             <p>Price: ${price}</p>
+
+            <p>Stock: {stock}</p>
+
+            <p>Description: {description}</p>
 
             <Link to={`/books/${id}`}>Details</Link>
 
