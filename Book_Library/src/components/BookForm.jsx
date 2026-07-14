@@ -87,6 +87,17 @@ function BookForm() {
         setFormData({ ...formData, [name]: value });
     }
 
+    function handleAuthorChange(index, value) {
+        const updatedAuthors = [...formData.authors];
+        updatedAuthors[index] = value;
+        setFormData({...formData, authors: updatedAuthors})
+    }
+
+    function addAuthor() {
+        const updatedAuthors = [...formData.authors];
+        updatedAuthors.push("");
+        setFormData({...formData, authors: updatedAuthors})
+    }
     return (
         <form onSubmit={handleSubmit}>
             <label>Book title: </label>
@@ -115,7 +126,9 @@ function BookForm() {
                     type="text"
                     name="authors"
                     value={author}
-                    onChange={handleChange}
+                    onChange={(event) =>
+                        handleAuthorChange(index, event.target.value)
+                    }
                     className={errors.authors ? "error" : ""}
                 />
             ))}
@@ -124,6 +137,12 @@ function BookForm() {
                     {errors.authors}
                 </p>
             )}
+            <button
+            type="button"
+            onClick={addAuthor}
+            >
+                + Add Author
+            </button>
             
 
             <br />
