@@ -33,7 +33,7 @@ function BookProvider({ children }) {
     // --------------------------------------------------
     // OPTIONS
     // --------------------------------------------------
-    const categoryOptions = ["All", ...new Set(books.map(book => book.categories))];
+    const categoryOptions = [{id: 0, name: "All"}, ...categories];
     const sortOptions = [
         { value: "default", label: "Default" },
         { value: "title-asc", label: "Title (A-Z)" },
@@ -43,6 +43,22 @@ function BookProvider({ children }) {
     ];
 
     // --------------------------------------------------
+
+    //Преобразование книги, вместо id будут храниться объекты
+    function resolveBook(book) {
+
+        const resolvedAuthors = book.authorIds.map(authorId => 
+            authors.find(author => author.id === authorId));
+
+        const resolvedCategories = book.categoryIds.map(categoryId => 
+            categories.find(category => category.id === categoryId));
+
+        return {
+            ...book,
+            authors: resolvedAuthors,
+            categories: resolvedCategories
+        }
+    }
     // DERIVED STATE
     // --------------------------------------------------
     // Search
@@ -56,9 +72,9 @@ function BookProvider({ children }) {
     // --------------------------------------------------
 
     // Filter  
-    const categoryBooks = selectedCategory === "All"
+    const categoryBooks = selectedCategoryId === 0
         ? searchedBooks
-        : searchedBooks.filter(book => book.categories === selectedCategory);
+        : searchedBooks.filter(book => book.categoryIds.includes(selectedCategoryId));
     // --------------------------------------------------
 
     // Sort 
@@ -89,7 +105,7 @@ function BookProvider({ children }) {
             break;
     }
 
-    const visibleBooks = sortedBooks;
+    const visibleBooks = sortedBooks.map(book => resolveBook(book));
     // --------------------------------------------------
 
     
@@ -180,8 +196,8 @@ function BookProvider({ children }) {
                     searchQuery,
                     setSearchQuery,
 
-                    selectedCategory,
-                    setSelectedCategory,
+                    selectedCategoryId,
+                    setSelectedCategoryId,
                     categoryOptions,
 
                     selectedSort,
