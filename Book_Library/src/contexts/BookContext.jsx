@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { initialBooks } from "../data/books";
+import { initialAuthors } from "../data/authors";
+import { initialCategories } from "../data/categories";
 
 const BookContext = createContext();
 
@@ -22,8 +24,11 @@ function BookProvider({ children }) {
 
     });
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("All");
+    const [selectedCategoryId, setSelectedCategoryId] = useState(0);
     const [selectedSort, setSelectedSort] = useState("default");
+
+    const [authors, setAuthors] = useState(initialAuthors);
+    const [categories, setCategories] = useState(initialCategories);
 
     // --------------------------------------------------
     // OPTIONS
@@ -108,8 +113,8 @@ function BookProvider({ children }) {
 
         const {
             title,
-            authors,
-            categories,
+            authorIds,
+            categoryIds,
             price,
             stock,
             description,
@@ -120,8 +125,8 @@ function BookProvider({ children }) {
         {
             id: books.length + 1,
             title,
-            authors,
-            categories,
+            authorIds,
+            categoryIds,
             price: Number(price),
             stock: Number(stock),
             description,
@@ -165,6 +170,12 @@ function BookProvider({ children }) {
                 {
                     books,
                     visibleBooks,
+
+                    authors,
+                    setAuthors,
+
+                    categories,
+                    setCategories,
 
                     searchQuery,
                     setSearchQuery,
