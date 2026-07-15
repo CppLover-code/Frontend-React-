@@ -4,8 +4,8 @@ import "../styles/BookForm.css"
 
 const initialFormData = {
     title: "",
-    authors: [""],
-    categories: "",
+    authorIds: [],
+    categoryIds: [],
     price: "",
     stock: "",
     description: "",
@@ -24,7 +24,7 @@ const initialErrors = {
 const priceRegex = /^\d+(\.\d{1,2})?$/;
 
 function BookForm() {
-    const { addBook } = useBook();
+    const { addBook, authors, categories } = useBook();
     const [formData, setFormData] = useState(initialFormData);
     const [errors, setErrors] = useState(initialErrors);
 
@@ -110,6 +110,21 @@ function BookForm() {
         const updatedAuthors = [...formData.authors];
         updatedAuthors.splice(index, 1);
         setFormData({ ...formData, authors: updatedAuthors })
+    }
+
+    function toggleAuthor(authorId) {
+
+        if (!formData.authorIds.includes(authorId)) {
+            const updatedAuthorIds = [...formData.authorIds];
+            updatedAuthorIds.push(authorId);
+            setFormData({ ...formData, authorIds: updatedAuthorIds })
+        }
+        else {
+            const updatedAuthorIds = [...formData.authorIds]
+                .filter(currentAuthorId => currentAuthorId !== authorId)
+
+            setFormData({ ...formData, authorIds: updatedAuthorIds })
+        }
     }
     return (
         <form onSubmit={handleSubmit}>
