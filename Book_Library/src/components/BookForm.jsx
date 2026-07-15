@@ -106,12 +106,6 @@ function BookForm() {
         setFormData({ ...formData, authors: updatedAuthors })
     }
 
-    function removeAuthor(index) {
-        const updatedAuthors = [...formData.authors];
-        updatedAuthors.splice(index, 1);
-        setFormData({ ...formData, authors: updatedAuthors })
-    }
-
     function toggleAuthor(authorId) {
 
         if (!formData.authorIds.includes(authorId)) {
@@ -124,6 +118,21 @@ function BookForm() {
                 .filter(currentAuthorId => currentAuthorId !== authorId)
 
             setFormData({ ...formData, authorIds: updatedAuthorIds })
+        }
+    }
+
+    function toggleCategory(categoryId) {
+
+        if (!formData.categoryIds.includes(categoryId)) {
+            const updatedCategoryIds = [...formData.categoryIds];
+            updatedCategoryIds.push(categoryId);
+            setFormData({ ...formData, categoryIds: updatedCategoryIds })
+        }
+        else {
+            const updatedCategoryIds = [...formData.categoryIds]
+                .filter(currentCategoryId => currentCategoryId !== categoryId)
+
+            setFormData({ ...formData, categoryIds: updatedCategoryIds })
         }
     }
     return (
@@ -148,60 +157,38 @@ function BookForm() {
 
             <label>Authors: </label>
 
-            {formData.authors.map((author, index) => (
-                <div key={index}>
+            {authors.map((author) => (
+                <div key={author.id}>
                     <input
-                        type="text"
-                        name="authors"
-                        value={author}
-                        onChange={(event) =>
-                            handleAuthorChange(index, event.target.value)
-                        }
-                        className={errors.authors ? "error" : ""}
+                        type="checkbox"
+                        checked={formData.authorIds.includes(author.id)}
+                        onChange={() => toggleAuthor(author.id)}
                     />
-                    {formData.authors.length > 1 && (
-                        <button
-                            type="button"
-                            onClick={() => removeAuthor(index)}
-                        >
-                            Remove
-                        </button>
-                    )}
+                    <label htmlFor={`author-${author.id}`}>
+                        {author.name}
+                    </label>
 
                 </div>
             ))}
-
-            <button
-                type="button"
-                onClick={addAuthor}
-            >
-                + Add Author
-            </button>
-
-            {errors.authors && (
-                <p className="error-message">
-                    {errors.authors}
-                </p>
-            )}
-
 
             <br />
             <br />
 
             <label>Category: </label>
 
-            <input
-                type="text"
-                name="categories"
-                value={formData.categories}
-                onChange={handleChange}
-                className={errors.categories ? "error" : ""}
-            />
-            {errors.categories && (
-                <p className="error-message">
-                    {errors.categories}
-                </p>
-            )}
+            {categories.map((category) => (
+                <div key={category.id}>
+                    <input
+                        type="checkbox"
+                        checked={formData.categoryIds.includes(category.id)}
+                        onChange={() => toggleCategory(category.id)}
+                    />
+                    <label htmlFor={`category-${category.id}`}>
+                        {category.name}
+                    </label>
+
+                </div>
+            ))}
 
             <br />
             <br />
