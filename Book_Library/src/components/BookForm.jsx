@@ -37,19 +37,12 @@ function BookForm() {
             newErrors.title = "Title is required";
         }
 
-        if (formData.authors.some(author => author.trim() === "")) {
-            newErrors.authors = "All author fields must be filled";
-        }
-        const normalizedAuthors = formData.authors.map(author => 
-            author.trim().toLowerCase());
-        
-        if (normalizedAuthors.length !== new Set(normalizedAuthors).size){
-            newErrors.authors = "Duplicate authors are not allowed"
+        if (formData.authorIds.length === 0) {
+            newErrors.authors = "Select at least one author";
         }
 
-
-        if (!formData.categories.trim()) {
-            newErrors.categories = "Category is required";
+        if (formData.categoryIds.length === 0) {
+            newErrors.categories = "Select at least one category";
         }
 
         if (!formData.price.trim()) {
@@ -92,18 +85,6 @@ function BookForm() {
     function handleChange(event) {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
-    }
-
-    function handleAuthorChange(index, value) {
-        const updatedAuthors = [...formData.authors];
-        updatedAuthors[index] = value.replace(/\s+/g," ");
-        setFormData({ ...formData, authors: updatedAuthors })
-    }
-
-    function addAuthor() {
-        const updatedAuthors = [...formData.authors];
-        updatedAuthors.push("");
-        setFormData({ ...formData, authors: updatedAuthors })
     }
 
     function toggleAuthor(authorId) {
@@ -160,6 +141,7 @@ function BookForm() {
             {authors.map((author) => (
                 <div key={author.id}>
                     <input
+                        id={`author-${author.id}`}
                         type="checkbox"
                         checked={formData.authorIds.includes(author.id)}
                         onChange={() => toggleAuthor(author.id)}
@@ -179,6 +161,7 @@ function BookForm() {
             {categories.map((category) => (
                 <div key={category.id}>
                     <input
+                        id={`category-${category.id}`}
                         type="checkbox"
                         checked={formData.categoryIds.includes(category.id)}
                         onChange={() => toggleCategory(category.id)}
