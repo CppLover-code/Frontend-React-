@@ -1,23 +1,28 @@
 import useBook from "../hooks/useBook";
 
 function CategoryFilter() {
-    const { selectedCategory, setSelectedCategory, categoryOptions } = useBook();
+    const {
+        selectedCategoryId,
+        setSelectedCategoryId,
+        categoryOptions
+    } = useBook();
 
     return (
         <>
             <p>Category:</p>
             <select
-                value={selectedCategory}
+                value={selectedCategoryId}
                 onChange={(event) =>
-                    setSelectedCategory(event.target.value)
-                }>
+                    setSelectedCategoryId(
+                        Number(event.target.value)
+                    )}>
 
-                {categoryOptions.map(categories => (
-                    <option 
-                        key={categories}
-                        value={categories}
-                        >
-                            {categories}
+                {categoryOptions.map(category => (
+                    <option
+                        key={category.id}
+                        value={category.id}
+                    >
+                        {category.name}
                     </option>
                 ))}
             </select>
