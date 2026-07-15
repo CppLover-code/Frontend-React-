@@ -17,14 +17,16 @@ function Book({book})
         description
     } = book;
 
+    const authorNames = authors.map(author => author.name).join(", ");
+    const categoryNames = categories.map(category => category.name).join(", ");
     return (
         <article>
 
             <h3>Title: {title}</h3>
 
-            <p>Authors: {authors}</p>
+            <p>Authors: {authorNames}</p>
 
-            <p>Categories: {categories}</p>
+            <p>Categories: {categoryNames}</p>
 
             <p>Price: ${price}</p>
 
