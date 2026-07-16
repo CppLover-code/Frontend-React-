@@ -13,8 +13,8 @@ const initialFormData = {
 };
 const initialErrors = {
     title: "",
-    authors: "",
-    categories: "",
+    authorIds: "",
+    categoryIds: "",
     price: "",
     stock: "",
     description: ""
@@ -38,11 +38,11 @@ function BookForm() {
         }
 
         if (formData.authorIds.length === 0) {
-            newErrors.authors = "Select at least one author";
+            newErrors.authorIds = "Select at least one author";
         }
 
         if (formData.categoryIds.length === 0) {
-            newErrors.categories = "Select at least one category";
+            newErrors.categoryIds = "Select at least one category";
         }
 
         if (!formData.price.trim()) {
@@ -152,6 +152,11 @@ function BookForm() {
 
                 </div>
             ))}
+            {errors.authorIds && (
+                <p className="error-message">
+                    {errors.authorIds}
+                </p>
+            )}
 
             <br />
             <br />
@@ -172,6 +177,11 @@ function BookForm() {
 
                 </div>
             ))}
+            {errors.categoryIds && (
+                <p className="error-message">
+                    {errors.categoryIds}
+                </p>
+            )}
 
             <br />
             <br />
