@@ -5,7 +5,7 @@ function useBook()
 {
     const context = useContext(BookContext);
     if (!context) {
-        throw new Error("useCart must be used within CartProvider");
+        throw new Error("useBook must be used within BookProvider");
     }
 
     return context;

@@ -243,7 +243,7 @@ function BookProvider({ children }) {
                 name: normalizedName
             };
 
-            setAuthors([...categories, newCategory]);
+            setCategories([...categories, newCategory]);
 
             return newCategory;
         }

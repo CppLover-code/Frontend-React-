@@ -26,13 +26,25 @@ const initialErrors = {
 const priceRegex = /^\d+(\.\d{1,2})?$/;
 
 function BookForm() {
+
+    // --------------------------------------------------
+    // CONTEXT
+    // --------------------------------------------------
     const { addBook, authors, categories, addAuthor, addCategory } = useBook();
 
+
+    // --------------------------------------------------
+    // STATE
+    // --------------------------------------------------
     const [formData, setFormData] = useState(initialFormData);
     const [errors, setErrors] = useState(initialErrors);
     const [newAuthorName, setNewAuthorName] = useState("");
     const [newCategoryName, setNewCategoryName] = useState("");
 
+
+    // --------------------------------------------------
+    // VALIDATION
+    // --------------------------------------------------
     function validateForm() {
         const newErrors = {
             ...initialErrors
@@ -76,6 +88,10 @@ function BookForm() {
         return !Object.values(newErrors).some(error => error);
     }
 
+
+    // --------------------------------------------------
+    // FORM HANDLERS
+    // --------------------------------------------------
     function handleSubmit(event) {
         event.preventDefault();
 
@@ -85,6 +101,8 @@ function BookForm() {
 
         addBook(formData);
         setFormData(initialFormData);
+        setNewAuthorName("");
+        setNewCategoryName("");
     }
 
     function handleChange(event) {
@@ -92,6 +110,9 @@ function BookForm() {
         setFormData({ ...formData, [name]: value });
     }
 
+    // --------------------------------------------------
+    // AUTHOR MANAGEMENT
+    // --------------------------------------------------
     function toggleAuthor(authorId) {
 
         if (!formData.authorIds.includes(authorId)) {
@@ -107,6 +128,28 @@ function BookForm() {
         }
     }
 
+    function handleAddAuthor() {
+
+        if (!newAuthorName.trim()) {
+            setErrors({
+                ...errors,
+                newAuthorName: "New author name is required"
+            })
+            return;
+        }
+
+        const author = addAuthor(newAuthorName);
+
+        toggleAuthor(author.id);
+
+        setNewAuthorName("");
+        setErrors({ ...errors, newAuthorName: "" });
+    }
+
+
+    // --------------------------------------------------
+    // CATEGORY MANAGEMENT
+    // --------------------------------------------------
     function toggleCategory(categoryId) {
 
         if (!formData.categoryIds.includes(categoryId)) {
@@ -122,39 +165,27 @@ function BookForm() {
         }
     }
 
-    function handleAddAuthor() {
-
-        if (!newAuthorName.trim()) {
-            setErrors({
-                ...errors,
-                newAuthorName: "New author name is required"})
-            return;
-        }
-
-        const author = addAuthor(newAuthorName);
-
-        toggleAuthor(author.id);
-
-        setNewAuthorName("");
-        setErrors({...errors, newAuthorName: ""});
-    }
-
     function handleAddCategory() {
 
         if (!newCategoryName.trim()) {
             setErrors({
                 ...errors,
-                newCategoryName: "New category name is required"})
+                newCategoryName: "New category name is required"
+            })
             return;
         }
 
         const category = addCategory(newCategoryName);
 
         toggleCategory(category.id);
-        
+
         setNewCategoryName("");
-        setErrors({...errors, newCategoryName: ""});
+        setErrors({ ...errors, newCategoryName: "" });
     }
+
+    // --------------------------------------------------
+    // RENDER
+    // --------------------------------------------------
     return (
         <form onSubmit={handleSubmit}>
             <label>Book title: </label>
