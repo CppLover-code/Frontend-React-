@@ -21,14 +21,29 @@ function BookProvider({ children }) {
         if (savedBooks) return JSON.parse(savedBooks);
 
         return initialBooks;
-
     });
+
+    const [authors, setAuthors] = useState(() => {
+
+        const savedAuthors = localStorage.getItem("authors");
+
+        if (savedAuthors) return JSON.parse(savedAuthors);
+
+        return initialAuthors;
+    });
+
+    const [categories, setCategories] = useState(() => {
+
+        const savedCategories = localStorage.getItem("categories");
+
+        if (savedCategories) return JSON.parse(savedCategories);
+
+        return initialCategories;
+    });
+
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategoryId, setSelectedCategoryId] = useState(0);
     const [selectedSort, setSelectedSort] = useState("default");
-
-    const [authors, setAuthors] = useState(initialAuthors);
-    const [categories, setCategories] = useState(initialCategories);
 
     // --------------------------------------------------
     // OPTIONS
@@ -112,7 +127,7 @@ function BookProvider({ children }) {
     // --------------------------------------------------
     // PERSISTENCE
     // --------------------------------------------------
-    // каждый раз, когда меняется books, книги сохраняются
+    // каждый раз, когда меняется books, authors, categories, данные сохраняются
     useEffect(() => {
 
         localStorage.setItem(
@@ -121,6 +136,22 @@ function BookProvider({ children }) {
         );
 
     }, [books]);
+
+    useEffect(() => {
+
+        localStorage.setItem(
+            "authors",
+            JSON.stringify(authors)
+        );
+    }, [authors]);
+
+    useEffect(() => {
+
+        localStorage.setItem(
+            "categories",
+            JSON.stringify(categories)
+        );
+    }, [categories]);
 
     // --------------------------------------------------
     // CRUD
@@ -176,6 +207,48 @@ function BookProvider({ children }) {
         );
     }
 
+    function addAuthor(name) {
+
+        const normalizedName = name.trim();
+
+        const existingAuthor = authors.find(
+            author => author.name.toLowerCase() === normalizedName.toLowerCase()
+        );
+
+        if (existingAuthor) return existingAuthor;
+        else {
+            const newAuthor = {
+                id: authors.length + 1,
+                name: normalizedName
+            };
+
+            setAuthors([...authors, newAuthor]);
+
+            return newAuthor;
+        }
+    }
+
+    function addCategory(name) {
+
+        const normalizedName = name.trim();
+
+        const existingCategory = categories.find(
+            category => category.name.toLowerCase() === normalizedName.toLowerCase()
+        );
+
+        if (existingCategory) return existingCategory;
+        else {
+            const newCategory = {
+                id: categories.length + 1,
+                name: normalizedName
+            };
+
+            setAuthors([...categories, newCategory]);
+
+            return newCategory;
+        }
+    }
+
     // --------------------------------------------------
     // Provider
     // --------------------------------------------------
@@ -206,7 +279,10 @@ function BookProvider({ children }) {
 
                     addBook,
                     updateBook,
-                    deleteBook
+                    deleteBook,
+
+                    addAuthor,
+                    addCategory
                 }
             }>
 

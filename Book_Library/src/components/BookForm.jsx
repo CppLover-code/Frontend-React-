@@ -17,16 +17,21 @@ const initialErrors = {
     categoryIds: "",
     price: "",
     stock: "",
-    description: ""
+    description: "",
+    newAuthorName: "",
+    newCategoryName: ""
 };
 
 
 const priceRegex = /^\d+(\.\d{1,2})?$/;
 
 function BookForm() {
-    const { addBook, authors, categories } = useBook();
+    const { addBook, authors, categories, addAuthor, addCategory } = useBook();
+
     const [formData, setFormData] = useState(initialFormData);
     const [errors, setErrors] = useState(initialErrors);
+    const [newAuthorName, setNewAuthorName] = useState("");
+    const [newCategoryName, setNewCategoryName] = useState("");
 
     function validateForm() {
         const newErrors = {
@@ -116,6 +121,40 @@ function BookForm() {
             setFormData({ ...formData, categoryIds: updatedCategoryIds })
         }
     }
+
+    function handleAddAuthor() {
+
+        if (!newAuthorName.trim()) {
+            setErrors({
+                ...errors,
+                newAuthorName: "New author name is required"})
+            return;
+        }
+
+        const author = addAuthor(newAuthorName);
+
+        toggleAuthor(author.id);
+
+        setNewAuthorName("");
+        setErrors({...errors, newAuthorName: ""});
+    }
+
+    function handleAddCategory() {
+
+        if (!newCategoryName.trim()) {
+            setErrors({
+                ...errors,
+                newCategoryName: "New category name is required"})
+            return;
+        }
+
+        const category = addCategory(newCategoryName);
+
+        toggleCategory(category.id);
+        
+        setNewCategoryName("");
+        setErrors({...errors, newCategoryName: ""});
+    }
     return (
         <form onSubmit={handleSubmit}>
             <label>Book title: </label>
@@ -158,6 +197,18 @@ function BookForm() {
                 </p>
             )}
 
+            <input
+                type="text"
+                value={newAuthorName}
+                onChange={(event) => setNewAuthorName(event.target.value)}
+            />
+            <button
+                type="button"
+                onClick={handleAddAuthor}
+            >
+                Add author
+            </button>
+
             <br />
             <br />
 
@@ -182,6 +233,18 @@ function BookForm() {
                     {errors.categoryIds}
                 </p>
             )}
+
+            <input
+                type="text"
+                value={newCategoryName}
+                onChange={(event) => setNewCategoryName(event.target.value)}
+            />
+            <button
+                type="button"
+                onClick={handleAddCategory}
+            >
+                Add category
+            </button>
 
             <br />
             <br />
