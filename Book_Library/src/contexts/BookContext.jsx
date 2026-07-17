@@ -74,6 +74,16 @@ function BookProvider({ children }) {
             categories: resolvedCategories
         }
     }
+
+    // функция поиска по id и отправка преобразованной книги
+    function getBook(id) {
+
+        const book = books.find(book => book.id === Number(id));
+
+        if (!book) return null;
+
+        return resolveBook(book);
+    }
     // DERIVED STATE
     // --------------------------------------------------
     // Search
@@ -259,6 +269,7 @@ function BookProvider({ children }) {
                 {
                     books,
                     visibleBooks,
+                    getBook,
 
                     authors,
                     setAuthors,

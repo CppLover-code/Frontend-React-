@@ -4,17 +4,19 @@ import useBook from "../hooks/useBook";
 
 function BookDetails()
 {
-    const {addToCart} = useCart();
-    const {books} = useBook();
+    const { addToCart } = useCart();
+    const { getBook } = useBook();
     
     const {id} = useParams();
 
-    const book = books.find(book => book.id === Number(id));
+    const book = getBook(id);
 
     if(!book) return (<h2>Book not found!</h2>)
 
     const {
         title,
+        authorIds,
+        categoryIds,
         authors,
         categories,
         price,
@@ -29,10 +31,16 @@ function BookDetails()
             <p>{title}</p>
 
             <h3>Authors:</h3>
-            <p>{authors.join(", ")}</p>
+            <p>{authors
+                    .map(author => author.name)
+                    .join(", ")}
+            </p>
 
             <h3>Category:</h3>
-            <p>{categories}</p>
+            <p>{categories
+                .map(category => category.name)
+                .join(", ")}
+            </p>
 
             <h3>Price:</h3>
             <p>${price}</p>

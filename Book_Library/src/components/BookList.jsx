@@ -1,4 +1,4 @@
-import Book from "./Book";
+import BookCard from "./BookCard";
 import useBook from "../hooks/useBook";
 
 function BookList() 
@@ -10,7 +10,7 @@ function BookList()
             <h1>Books Page</h1>
             
             {visibleBooks.map(book => (
-                <Book 
+                <BookCard 
                     key={book.id}
                     book={book}
                 />
