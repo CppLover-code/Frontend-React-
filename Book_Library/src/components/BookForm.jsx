@@ -25,7 +25,7 @@ const initialErrors = {
 
 const priceRegex = /^\d+(\.\d{1,2})?$/;
 
-function BookForm( {mode = "create"}) {
+function BookForm( {mode = "create", book = null}) {
 
     // --------------------------------------------------
     // CONTEXT
