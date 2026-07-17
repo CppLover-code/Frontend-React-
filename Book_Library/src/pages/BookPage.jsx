@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useBook from "../hooks/useBook";
 
-function BookDetails()
+function BookPage()
 {
     const { addToCart } = useCart();
     const { getBook } = useBook();
@@ -25,7 +25,7 @@ function BookDetails()
 
     return (
         <>
-            <h1>Book Details</h1>
+            <h1>Book Page</h1>
 
             <h3>Title:</h3>
             <p>{title}</p>
@@ -53,4 +53,4 @@ function BookDetails()
     );
 }
 
-export default BookDetails;
+export default BookPage;

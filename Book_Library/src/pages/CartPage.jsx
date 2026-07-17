@@ -1,7 +1,7 @@
 import CartList from "../components/CartList";
 import useCart from "../hooks/useCart";
 
-function Cart() 
+function CartPage() 
 {
     const { cart } = useCart();
 
@@ -19,4 +19,4 @@ function Cart()
     );
 }
 
-export default Cart;
+export default CartPage;

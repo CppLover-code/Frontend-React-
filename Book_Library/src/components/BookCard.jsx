@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useBook from "../hooks/useBook";
 
-function Book({book}) 
+function BookCard({book}) 
 {
     const {deleteBook, updateBook} = useBook();
     const {addToCart} = useCart();
@@ -47,4 +47,4 @@ function Book({book})
     );
 }
 
-export default Book;
+export default BookCard;
