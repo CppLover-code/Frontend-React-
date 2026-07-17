@@ -31,7 +31,7 @@ function BookForm( {mode = "create", book = null}) {
     // --------------------------------------------------
     // CONTEXT
     // --------------------------------------------------
-    const { addBook, authors, categories, addAuthor, addCategory } = useBook();
+    const { addBook, updateBook, authors, categories, addAuthor, addCategory } = useBook();
 
 
     // --------------------------------------------------
