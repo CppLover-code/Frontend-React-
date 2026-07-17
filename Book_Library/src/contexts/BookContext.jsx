@@ -201,21 +201,19 @@ function BookProvider({ children }) {
     }
 
     function updateBook(id, formData) {
-        setBooks(
-            books.map(book => {
+        setBooks(prevBooks =>
+            prevBooks.map(book => {
 
                 if (book.id === id) {
                     return {
                         ...book,
-                        ...FormData
+                        ...formData
                     };
                 }
 
-                return {
-                    ...book,
-                    ...formData
-                };
-            }));
+                return book;
+            })
+        );
     }
 
     function addAuthor(name) {

@@ -6,6 +6,7 @@ import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
 import BookPage from "./pages/BookPage";
+import EditBook from "./pages/EditBook";
 import MainLayout from "./layouts/MainLayout";
 
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
@@ -22,6 +23,8 @@ function App() {
         <Route path="/books" element={<Books />} />
 
         <Route path="/books/:id" element={<BookPage />} />
+
+        <Route path="/books/:id/edit" element={<EditBook />} />
 
         <Route path="/about" element={<AboutPage />} />
 

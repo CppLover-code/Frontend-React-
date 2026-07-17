@@ -40,7 +40,10 @@ function BookForm( {mode = "create", book = null}) {
     const [formData, setFormData] = useState(() => {
         if (mode === "edit" && book) {
             return {
-                ...book};
+                ...book,
+                price: String(book.price),
+                stock: String(book.stock)
+            };
         }
 
         return initialFormData;
@@ -107,10 +110,24 @@ function BookForm( {mode = "create", book = null}) {
             return;
         }
 
-        addBook(formData);
-        setFormData(initialFormData);
-        setNewAuthorName("");
-        setNewCategoryName("");
+        if (mode === "create") {
+            addBook({
+                ...formData,
+                price: Number(formData.price),
+                stock: Number(formData.stock)
+            });
+            setFormData(initialFormData);
+            setNewAuthorName("");
+            setNewCategoryName("");
+        }
+        else {
+            updateBook(formData.id, {
+                ...formData,
+                price: Number(formData.price),
+                stock: Number(formData.stock)
+            });
+        }
+
     }
 
     function handleChange(event) {

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useBook from "../hooks/useBook";
 
@@ -15,8 +15,6 @@ function BookPage()
 
     const {
         title,
-        authorIds,
-        categoryIds,
         authors,
         categories,
         price,
@@ -49,6 +47,10 @@ function BookPage()
             <p>{description}</p>
 
             <button onClick={() => addToCart(book)}>Add to Cart</button>
+
+            <Link to={`/books/${id}/edit`}>
+                <button>Edit</button>
+            </Link>
         </>
     );
 }
