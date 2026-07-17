@@ -211,10 +211,11 @@ function BookProvider({ children }) {
                     };
                 }
 
-                return book;
-
-            })
-        );
+                return {
+                    ...book,
+                    ...formData
+                };
+            }));
     }
 
     function addAuthor(name) {
