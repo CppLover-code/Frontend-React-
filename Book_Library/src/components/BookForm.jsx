@@ -1,6 +1,7 @@
 import { useState } from "react"
 import useBook from "../hooks/useBook";
 import "../styles/BookForm.css"
+import { initialBooks } from "../data/books";
 
 const initialFormData = {
     title: "",
@@ -36,7 +37,14 @@ function BookForm( {mode = "create", book = null}) {
     // --------------------------------------------------
     // STATE
     // --------------------------------------------------
-    const [formData, setFormData] = useState(initialFormData);
+    const [formData, setFormData] = useState(() => {
+        if (mode === "edit" && book) {
+            return {
+                ...book};
+        }
+
+        return initialFormData;
+    });
     const [errors, setErrors] = useState(initialErrors);
     const [newAuthorName, setNewAuthorName] = useState("");
     const [newCategoryName, setNewCategoryName] = useState("");

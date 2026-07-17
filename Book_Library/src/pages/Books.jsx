@@ -7,7 +7,7 @@ function Books()
     return( 
         <div className="book-controls">
             <BookControls />
-            <BookForm />
+            <BookForm  mode="create"/>
             <BookList />  
         </div>
     );

@@ -200,15 +200,15 @@ function BookProvider({ children }) {
         );
     }
 
-    function updateBook(id) {
+    function updateBook(id, formData) {
         setBooks(
             books.map(book => {
 
                 if (book.id === id) {
                     return {
                         ...book,
-                        title: `${book.title} (Updated)`
-                    }
+                        ...FormData
+                    };
                 }
 
                 return book;
