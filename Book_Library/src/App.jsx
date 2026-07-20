@@ -18,8 +18,16 @@ function App() {
 
   return (
     <>
-      <Notification />
-      
+      {
+        notification && (
+          <Notification
+            message={notification.message}
+            type={notification.type}
+            onClose={() => setNotification(null)}
+          />
+        )
+      }
+
       <Routes>
 
         <Route element={<MainLayout />}>
