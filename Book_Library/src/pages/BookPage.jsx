@@ -5,7 +5,7 @@ import useBook from "../hooks/useBook";
 function BookPage()
 {
     const { addToCart } = useCart();
-    const { getBook } = useBook();
+    const { getBook, deleteBook } = useBook();
     
     const {id} = useParams();
 
@@ -21,6 +21,20 @@ function BookPage()
         description
     } = book;
 
+    function handleDelete() {
+
+        const confirmed = window.confirm (
+            "Are you sure you want to delete this book?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        deleteBook(book.id);
+        Navigate("/books");
+    }
+    
     return (
         <>
             <h1>Book Page</h1>
@@ -47,6 +61,8 @@ function BookPage()
             <p>{description}</p>
 
             <button onClick={() => addToCart(book)}>Add to Cart</button>
+
+            <button onClick={() => handleDelete(book.id)}>Delete</button>
 
             <Link to={`/books/${id}/edit`}>
                 <button>Edit</button>

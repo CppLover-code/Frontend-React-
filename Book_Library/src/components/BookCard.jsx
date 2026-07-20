@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
-import useBook from "../hooks/useBook";
 
 function BookCard({book}) 
 {
-    const {deleteBook, updateBook} = useBook();
     const {addToCart} = useCart();
 
     const {
@@ -37,11 +35,6 @@ function BookCard({book})
             <Link to={`/books/${id}`}>Details</Link>
 
             <button onClick={() => addToCart(book)}>Add to Cart</button>
-
-            <button onClick={() => deleteBook(id)}>Delete</button>
-
-            <button onClick={() => updateBook(id)}>Update</button>
-
 
         </article>
     );
