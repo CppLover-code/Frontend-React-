@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
 import HomePage from "./pages/HomePage";
 import Books from "./pages/Books";
@@ -13,28 +14,35 @@ import MainLayout from "./layouts/MainLayout";
 // App - это компонент.
 function App() {
 
+  const [notification, setNotification] = useState(null);
+
   return (
-    <Routes>
+    <>
+      <Notification />
+      
+      <Routes>
 
-      <Route element={<MainLayout />}>
+        <Route element={<MainLayout />}>
 
-        <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
 
-        <Route path="/books" element={<Books />} />
+          <Route path="/books" element={<Books />} />
 
-        <Route path="/books/:id" element={<BookPage />} />
+          <Route path="/books/:id" element={<BookPage />} />
 
-        <Route path="/books/:id/edit" element={<EditBook />} />
+          <Route path="/books/:id/edit" element={<EditBook />} />
 
-        <Route path="/about" element={<AboutPage />} />
+          <Route path="/about" element={<AboutPage />} />
 
-        <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
 
-        <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={<CartPage />} />
 
-      </Route>
+        </Route>
 
-    </Routes>
+      </Routes>
+    </>
+
   );
 }
 
