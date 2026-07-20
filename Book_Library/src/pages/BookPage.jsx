@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useBook from "../hooks/useBook";
 
@@ -8,6 +8,8 @@ function BookPage()
     const { getBook, deleteBook } = useBook();
     
     const {id} = useParams();
+
+    const navigate = useNavigate();
 
     const book = getBook(id);
 
@@ -32,9 +34,9 @@ function BookPage()
         }
 
         deleteBook(book.id);
-        Navigate("/books");
+        navigate("/books");
     }
-    
+
     return (
         <>
             <h1>Book Page</h1>
@@ -62,7 +64,7 @@ function BookPage()
 
             <button onClick={() => addToCart(book)}>Add to Cart</button>
 
-            <button onClick={() => handleDelete(book.id)}>Delete</button>
+            <button onClick={() => handleDelete()}>Delete</button>
 
             <Link to={`/books/${id}/edit`}>
                 <button>Edit</button>
