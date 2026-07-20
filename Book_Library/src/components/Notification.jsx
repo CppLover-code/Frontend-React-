@@ -16,7 +16,7 @@ function Notification({ message, type, onClose }) {
     return (
         <>
             <p>{message}</p>
-            <button onClick={()=> onClose}>✖</button>
+            <button onClick={() => onClose()}>✖</button>
         </>
     );
 }

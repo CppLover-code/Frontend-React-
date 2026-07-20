@@ -9,6 +9,7 @@ import CartPage from "./pages/CartPage";
 import BookPage from "./pages/BookPage";
 import EditBook from "./pages/EditBook";
 import MainLayout from "./layouts/MainLayout";
+import Notification from "./components/Notification";
 
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
@@ -36,7 +37,8 @@ function App() {
 
           <Route path="/books" element={<Books />} />
 
-          <Route path="/books/:id" element={<BookPage />} />
+          <Route path="/books/:id" element={<BookPage 
+                                                      setNotification={setNotification}/>} />
 
           <Route path="/books/:id/edit" element={<EditBook />} />
 
