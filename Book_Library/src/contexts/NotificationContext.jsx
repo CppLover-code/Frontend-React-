@@ -6,14 +6,22 @@ function NotificationProvider({ children }) {
 
     const [notification, setNotification] = useState(null);
 
-    
+    const showNotification = (newNotification) => {
+
+        setNotification(newNotification);
+    };
+
+    const hideNotification = () => {
+
+        setNotification(null);
+    };
+
     return (
-        <NotificationContext.Provider value={
-                {   
-                    notification,
-                    setNotification
-                }
-            }>
+        <NotificationContext.Provider value={{
+            notification,
+            showNotification,
+            hideNotification
+        }}>
 
             {children}
 

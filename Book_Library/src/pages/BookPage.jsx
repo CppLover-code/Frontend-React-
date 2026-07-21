@@ -3,8 +3,9 @@ import useCart from "../hooks/useCart";
 import useBook from "../hooks/useBook";
 import useNotification from "../hooks/useNotification";
 
-function BookPage({setNotification})
+function BookPage()
 {
+    const { showNotification } = useNotification();
     const { addToCart } = useCart();
     const { getBook, deleteBook } = useBook();
     
@@ -35,7 +36,7 @@ function BookPage({setNotification})
         }
 
         deleteBook(book.id);
-        setNotification({
+        showNotification({
             message: "Book deleted successfully!", 
             type: "success"});
         navigate("/books");

@@ -1,30 +1,35 @@
 import { useEffect } from "react";
+import useNotification from "../hooks/useNotification";
 import "../styles/Notification.css"
 
-function Notification({ message, type, onClose }) {
+function Notification() {
+
+    const { notification, hideNotification } = useNotification();
+
+    if(!notification) return null;
 
     useEffect(() => {
 
         const timer = setTimeout(() => {
-            onClose();
+            hideNotification();
         }, 3000);
 
         return () => {
             clearTimeout(timer);
         }
-    }, [onClose]);
+    }, [hideNotification]);
 
     const className = 
-        type === "success"
+        notification.type === "success"
         ? "notification success"
-        : type === "error"
+        : notification.type === "error"
         ? "notification error"
         : "notification warning";
 
     return (
         <div className={className}>
-            <p>{message}</p>
-            <button onClick={() => onClose()}>✖</button>
+            <p>{notification.message}</p>
+            <button onClick={hideNotification}>✖</button>
         </div>
     );
 }

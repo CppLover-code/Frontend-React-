@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
 
 import HomePage from "./pages/HomePage";
 import Books from "./pages/Books";
@@ -17,15 +16,7 @@ function App() {
 
   return (
     <>
-      {
-        notification && (
-          <Notification
-            message={notification.message}
-            type={notification.type}
-            onClose={() => setNotification(null)}
-          />
-        )
-      }
+      <Notification />
 
       <Routes>
 

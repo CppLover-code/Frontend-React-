@@ -5,13 +5,16 @@ import App from './App.jsx'
 import { BrowserRouter } from "react-router-dom"
 import { CartProvider} from './contexts/CartContext'
 import { BookProvider} from './contexts/BookContext'
+import { NotificationProvider } from './contexts/NotificationContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <CartProvider>
         <BookProvider>
-            <App />
+          <NotificationProvider>
+                        <App />
+          </NotificationProvider>
         </BookProvider>
       </CartProvider>
     </BrowserRouter>
