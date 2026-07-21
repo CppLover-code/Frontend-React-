@@ -6,10 +6,10 @@ function Notification() {
 
     const { notification, hideNotification } = useNotification();
 
-    if(!notification) return null;
-
     useEffect(() => {
 
+ if (!notification) return;
+    
         const timer = setTimeout(() => {
             hideNotification();
         }, 3000);
@@ -17,14 +17,16 @@ function Notification() {
         return () => {
             clearTimeout(timer);
         }
-    }, [hideNotification]);
+    }, [notification, hideNotification]);
 
-    const className = 
+    if (!notification) return null;
+
+    const className =
         notification.type === "success"
-        ? "notification success"
-        : notification.type === "error"
-        ? "notification error"
-        : "notification warning";
+            ? "notification success"
+            : notification.type === "error"
+                ? "notification error"
+                : "notification warning";
 
     return (
         <div className={className}>
