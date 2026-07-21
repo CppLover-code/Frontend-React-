@@ -15,8 +15,6 @@ import Notification from "./components/Notification";
 // App - это компонент.
 function App() {
 
-  const [notification, setNotification] = useState(null);
-
   return (
     <>
       {
@@ -37,8 +35,7 @@ function App() {
 
           <Route path="/books" element={<Books />} />
 
-          <Route path="/books/:id" element={<BookPage 
-                                                      setNotification={setNotification}/>} />
+          <Route path="/books/:id" element={<BookPage />} />
 
           <Route path="/books/:id/edit" element={<EditBook />} />
 

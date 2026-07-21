@@ -1,6 +1,7 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useBook from "../hooks/useBook";
+import useNotification from "../hooks/useNotification";
 
 function BookPage({setNotification})
 {
@@ -34,7 +35,9 @@ function BookPage({setNotification})
         }
 
         deleteBook(book.id);
-        setNotification({message: "Book deleted successfully!", type: "success"});
+        setNotification({
+            message: "Book deleted successfully!", 
+            type: "success"});
         navigate("/books");
     }
 
