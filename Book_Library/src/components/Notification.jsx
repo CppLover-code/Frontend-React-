@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import "../styles/Notification.css"
 
 function Notification({ message, type, onClose }) {
 
@@ -13,11 +14,18 @@ function Notification({ message, type, onClose }) {
         }
     }, [onClose]);
 
+    const className = 
+        type === "success"
+        ? "notification success"
+        : type === "error"
+        ? "notification error"
+        : "notification warning";
+
     return (
-        <>
+        <div className={className}>
             <p>{message}</p>
             <button onClick={() => onClose()}>✖</button>
-        </>
+        </div>
     );
 }
 
