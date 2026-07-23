@@ -19,6 +19,12 @@ class BookAdmin(admin.ModelAdmin):
          'stock',
          ]
 
+    search_fields = [
+         'title',
+         'authors__name',
+         'categories__name',
+    ]
+
     @admin.display(description="Authors")
     def get_authors(self, obj):
         return ", ".join(author.name for author in obj.authors.all())
@@ -26,3 +32,5 @@ class BookAdmin(admin.ModelAdmin):
     @admin.display(description="Categories")
     def get_categories(self, obj):
             return ", ".join(category.name for category in obj.categories.all())
+
+    
