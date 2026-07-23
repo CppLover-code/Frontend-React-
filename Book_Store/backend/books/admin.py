@@ -25,6 +25,20 @@ class BookAdmin(admin.ModelAdmin):
          'categories__name',
     ]
 
+    list_filter = [
+         'categories',
+    ]
+
+    ordering = [
+         'title',
+         '-title',
+         'price',
+         '-price',
+         'stock',
+         '-stock',
+
+    ]
+
     @admin.display(description="Authors")
     def get_authors(self, obj):
         return ", ".join(author.name for author in obj.authors.all())
