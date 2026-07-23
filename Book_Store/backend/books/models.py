@@ -20,9 +20,9 @@ class Book(models.Model):
     title = models.CharField(max_length=250)
     authors = models.ManyToManyField(Author)
     categories = models.ManyToManyField(Category)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    cover = models.CharField(max_length=250)
+    cover = models.CharField(max_length=250, blank=True)
     stock = models.PositiveIntegerField()
 
     def __str__(self):

@@ -11,7 +11,18 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+         'title', 
+         'get_authors',
+         'get_categories',
+         'price', 
+         'stock',
+         ]
 
+    @admin.display(description="Authors")
+    def get_authors(self, obj):
+        return ", ".join(author.name for author in obj.authors.all())
 
-
+    @admin.display(description="Categories")
+    def get_categories(self, obj):
+            return ", ".join(category.name for category in obj.categories.all())
