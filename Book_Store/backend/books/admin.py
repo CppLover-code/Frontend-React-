@@ -31,12 +31,6 @@ class BookAdmin(admin.ModelAdmin):
 
     ordering = [
          'title',
-         '-title',
-         'price',
-         '-price',
-         'stock',
-         '-stock',
-
     ]
 
     @admin.display(description="Authors")
