@@ -60,8 +60,10 @@ class BookAdmin(admin.ModelAdmin):
           ),
     ]
     """
-    readonlyfields - пока нет полей
-    inline tabular - только для один ко многим foreign key, таковых пока нет
+    атрибуты (опции) класса ModelAdmin
+    readonly_fields - пока нет полей, поля только для чтения.
+    InlineModelAdmin TabularInline - только для один ко многим foreign key, таковых пока нет,
+    встроенное редактирование связанных моделей.
     """
 
     @admin.display(description="Authors")
