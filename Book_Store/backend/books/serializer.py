@@ -6,4 +6,4 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         
         model = Book
-        fields = "_all__"
+        fields = "__all__"
