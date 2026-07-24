@@ -33,6 +33,33 @@ class BookAdmin(admin.ModelAdmin):
          'title',
     ]
 
+    fieldsets = [
+         (
+              "Basic information",
+              {
+                   "fields": ("title", "authors", "categories",),
+              },
+         ),
+         (
+               "Description",
+               {
+                    "fields": ("description",),
+               },
+          ),
+          (
+               "Selling",
+               {
+                    "fields": ("price", "stock",),
+               },
+          ),
+          (
+               "Cover",
+               {
+                    "fields": ("cover",),
+               },
+          ),
+    ]
+
     @admin.display(description="Authors")
     def get_authors(self, obj):
         return ", ".join(author.name for author in obj.authors.all())
