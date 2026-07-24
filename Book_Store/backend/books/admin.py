@@ -59,6 +59,10 @@ class BookAdmin(admin.ModelAdmin):
                },
           ),
     ]
+    """
+    readonlyfields - пока нет полей
+    inline tabular - только для один ко многим foreign key, таковых пока нет
+    """
 
     @admin.display(description="Authors")
     def get_authors(self, obj):
