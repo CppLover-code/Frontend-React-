@@ -76,15 +76,29 @@ class LoginView(generics.GenericAPIView):
 
 class LogoutView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
-    
+
     def post(self, request):
-        response = Response(
-            {"message": "Logged out successfully"},
-            status=status.HTTP_200_OK,
-        )
-        
-        response.delete_cookie("refresh_token")
-        return response
+        refresh_token = request.COOKIES.get("refresh_token")
+
+        if not refresh_token:
+            raise AuthenticationFailed("Refresh token отсутствует.")
+
+        try:
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            response = Response(
+                {"message": "Logged out successfully"},
+                status=status.HTTP_200_OK,
+            )
+
+            response.delete_cookie("refresh_token")
+            return response
+
+        except TokenError:
+            raise AuthenticationFailed(
+                "Недействительный или просроченный refresh token."
+            )
     
 class RefreshView(generics.GenericAPIView):
     permission_classes = [AllowAny]
