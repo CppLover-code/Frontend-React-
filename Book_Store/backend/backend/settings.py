@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-+&bvdos#rsdzqy)e)@4e8cjshs&wc7*hbg49l*8b^l4-pv@+s^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -63,6 +66,7 @@ INSTALLED_APPS = [
     "users",
     "books",
     "drf_yasg",
+     "rest_framework_simplejwt.token_blacklist",
 ]
 
 MIDDLEWARE = [
