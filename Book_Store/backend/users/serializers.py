@@ -1,8 +1,21 @@
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import generics
 
 User = get_user_model()
+
+class EmptySerializer(serializers.Serializer):
+    pass
+
+class LogoutView(generics.GenericAPIView):
+    serializer_class = EmptySerializer
+    permission_classes = [IsAuthenticated]
+    
+class RefreshView(generics.GenericAPIView):
+    serializer_class = EmptySerializer
+    permission_classes = [AllowAny]
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)

@@ -1,3 +1,4 @@
+from .utils import create_auth_response
 from django.contrib.auth import get_user_model
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -13,34 +14,18 @@ User = get_user_model()
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
-
-    def create(self, request, *args, **kwargs):
+    
+    def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         user = serializer.save()
 
-        refresh = RefreshToken.for_user(user)
-        access = str(refresh.access_token)
-
-        response = Response(
-            {
-                "access": access,
-                "user": UserSerializer(user).data,
-            },
-            status=status.HTTP_201_CREATED,
-        )
-
-        response.set_cookie(
-            key="refresh_token",
-            value=str(refresh),
-            httponly=True,
-            secure=False,      
-            samesite="Lax",
-            max_age=60 * 60 * 24 * 7,
-        )
-
-        return response
+        return create_auth_response(
+        user=user,
+        serializer=UserSerializer,
+        status_code=status.HTTP_201_CREATED,
+    )
     
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
@@ -52,27 +37,11 @@ class LoginView(generics.GenericAPIView):
         
         user = serializer.validated_data["user"]
         
-        refresh = RefreshToken.for_user(user)
-        access = str(refresh.access_token)
-        
-        response = Response(
-            {
-                "access": access,
-                "user": UserSerializer(user).data,
-            },
-            status=status.HTTP_200_OK,
-        )
-        
-        response.set_cookie(
-            key="refresh_token",
-            value=str(refresh),
-            httponly=True,
-            secure=False,
-            samesite="Lax",
-            max_age=60 * 60 * 24 * 7,
-        )
-        
-        return response 
+        return create_auth_response(
+            user=user,
+            serializer=UserSerializer,
+            status_code=status.HTTP_200_OK,
+        )   
 
 class LogoutView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
@@ -81,7 +50,7 @@ class LogoutView(generics.GenericAPIView):
         refresh_token = request.COOKIES.get("refresh_token")
 
         if not refresh_token:
-            raise AuthenticationFailed("Refresh token отсутствует.")
+            raise AuthenticationFailed("Refresh token is missing")
 
         try:
             token = RefreshToken(refresh_token)
@@ -97,7 +66,7 @@ class LogoutView(generics.GenericAPIView):
 
         except TokenError:
             raise AuthenticationFailed(
-                "Недействительный или просроченный refresh token."
+                "Invalid or expired refresh token"
             )
     
 class RefreshView(generics.GenericAPIView):
