@@ -24,3 +24,8 @@ class BookViewSet(ModelViewSet):
     ordering_fields = ["title", "price", "stock"]
     ordering = ["title"]
     
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        return context
+    
