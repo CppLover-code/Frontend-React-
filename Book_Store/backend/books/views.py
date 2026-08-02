@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .permissions import IsAdminOrReadOnly
 from .filters import BookFilter
 from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
@@ -14,6 +15,7 @@ class BookViewSet(ModelViewSet):
     filterset_class = BookFilter
     
     filter_backends = [
+        DjangoFilterBackend,
         SearchFilter,
         OrderingFilter,
     ]
