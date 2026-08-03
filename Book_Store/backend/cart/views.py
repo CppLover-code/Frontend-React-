@@ -83,3 +83,11 @@ class DeleteCartItemView(generics.GenericAPIView):
         cart_item = get_object_or_404(CartItem, pk=pk, cart=request.user.cart)
         cart_item.delete()
         return Response(status=status.HTTP_200_OK)
+    
+class ClearCartView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self,request):
+        cart = request.user.cart
+        cart.items.all().delete()
+        return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
