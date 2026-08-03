@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "users",
     "books",
+    "cart",
     "drf_yasg",
     "rest_framework_simplejwt.token_blacklist",
     "django_filters",
