@@ -47,3 +47,11 @@ class CartSerializer(serializers.ModelSerializer):
             item.quantity
             for item in obj.items.all()
         )
+        
+class AddToCartSerializer(serializers.Serializer):
+    book_id = serializers.IntegerField()
+    quantity = serializers.IntegerField(min_value=1)
+    
+class UpdateCartItemSerializer(serializers.Serializer):
+    quantity = serializers.IntegerField(min_value=1)
+    
