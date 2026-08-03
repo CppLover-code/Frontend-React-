@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from .models import Cart
 from books.models import Book
 from .models import CartItem
-from .serializers import AddToCartSerializer, CartSerializer
+from .serializers import AddToCartSerializer, CartSerializer, UpdateCartItemSerializer
 
 
 class CartView(generics.RetrieveAPIView):
@@ -55,4 +55,31 @@ class AddToCartView(generics.GenericAPIView):
         return Response(CartSerializer(cart).data, status=status.HTTP_200_OK) 
     
 class UpdateCartItemView(generics.GenericAPIView):
+    serializer_class = UpdateCartItemSerializer
+    permission_classes = [IsAuthenticated]
     
+    def patch(self,request,pk):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        quantity = serializer.validated_data["quantity"]
+        
+        cart_item = get_object_or_404(CartItem, pk=pk, cart=request.user.cart)
+        
+        if quantity > cart_item.book.stock:
+            return Response(
+                {
+                    "detail": f"Only {cart_item.book.stock} item(s) left in stock."
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        cart_item.quantity = quantity
+        cart_item.save()
+        return Response(CartSerializer(request.user.cart).data, status=status.HTTP_200_OK)
+
+class DeleteCartItemView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    
+    def delete(self,request,pk):
+        cart_item = get_object_or_404(CartItem, pk=pk, cart=request.user.cart)
+        cart_item.delete()
+        return Response(status=status.HTTP_200_OK)
