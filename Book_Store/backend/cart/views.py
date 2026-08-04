@@ -8,7 +8,12 @@ from .models import Cart
 from books.models import Book
 from .models import CartItem
 from .serializers import AddToCartSerializer, CartSerializer, UpdateCartItemSerializer
-from .services import add_book_to_cart
+from .services import (
+    add_book_to_cart, 
+    update_cart_item,
+    delete_cart_item,
+    clear_cart,
+)
 
 
 class CartView(generics.RetrieveAPIView):
@@ -35,31 +40,25 @@ class UpdateCartItemView(generics.GenericAPIView):
     serializer_class = UpdateCartItemSerializer
     permission_classes = [IsAuthenticated]
     
-    def patch(self,request,pk):
+    def patch(self, request, pk):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        quantity = serializer.validated_data["quantity"]
-        
-        cart_item = get_object_or_404(CartItem, pk=pk, cart=request.user.cart)
-        
-        if quantity > cart_item.book.stock:
-            return Response(
-                {
-                    "detail": f"Only {cart_item.book.stock} item(s) left in stock."
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        cart_item.quantity = quantity
-        cart_item.save()
-        return Response(CartSerializer(request.user.cart).data, status=status.HTTP_200_OK)
+        cart = update_cart_item(
+            user=request.user,
+            cart_item_id=pk,
+            quantity=serializer.validated_data["quantity"],
+        )
+        return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
 
 class DeleteCartItemView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
     
-    def delete(self,request,pk):
-        cart_item = get_object_or_404(CartItem, pk=pk, cart=request.user.cart)
-        cart_item.delete()
-        return Response(status=status.HTTP_200_OK)
+    def delete(self, request, pk):
+        cart = delete_cart_item(
+            user=request.user,
+            cart_item_id=pk,
+        )
+        return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
     
 class ClearCartView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
