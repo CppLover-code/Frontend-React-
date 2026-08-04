@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "users",
     "books",
     "cart",
+    "orders",
     "drf_yasg",
     "rest_framework_simplejwt.token_blacklist",
     "django_filters",
