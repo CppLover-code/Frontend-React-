@@ -63,7 +63,10 @@ class DeleteCartItemView(generics.GenericAPIView):
 class ClearCartView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
-    def delete(self,request):
-        cart = request.user.cart
-        cart.items.all().delete()
-        return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
+    def delete(self, request):
+        cart = clear_cart(request.user)
+
+        return Response(
+            CartSerializer(cart).data,
+            status=status.HTTP_200_OK,
+        )
