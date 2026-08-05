@@ -19,5 +19,11 @@ def create_order(user):
             }
         )
     
-   
+    with transaction.atomic():
+        
+        order = Order.objects.create(
+            user=user,
+        )
+        
+    return order
         
