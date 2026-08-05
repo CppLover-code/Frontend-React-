@@ -50,7 +50,6 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "order",
-        "book",
         "book_title",
         "quantity",
         "price",
@@ -66,10 +65,16 @@ class OrderItemAdmin(admin.ModelAdmin):
         "-order__created_at",
     )
     
-    def has_add_permission(self, request):
-        return False
+    readonly_fields = (
+    "book",
+    "book_title",
+    "book_cover",
+    "quantity",
+    "price",
+    "subtotal",
+    )
     
-    def has_change_permission(self, request, obj=None):
+    def has_add_permission(self, request):
         return False
     
     def has_delete_permission(self, request, obj=None):
