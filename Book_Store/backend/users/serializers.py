@@ -9,14 +9,6 @@ User = get_user_model()
 class EmptySerializer(serializers.Serializer):
     pass
 
-class LogoutView(generics.GenericAPIView):
-    serializer_class = EmptySerializer
-    permission_classes = [IsAuthenticated]
-    
-class RefreshView(generics.GenericAPIView):
-    serializer_class = EmptySerializer
-    permission_classes = [AllowAny]
-
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     

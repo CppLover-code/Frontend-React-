@@ -6,7 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import LoginSerializer
 from rest_framework.exceptions import AuthenticationFailed
-from .serializers import RegisterSerializer, UserSerializer
+from .serializers import LoginSerializer, RegisterSerializer, UserSerializer, EmptySerializer
 
 User = get_user_model()
 
@@ -45,6 +45,8 @@ class LoginView(generics.GenericAPIView):
         )   
 
 class LogoutView(generics.GenericAPIView):
+    
+    serializer_class = EmptySerializer
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -71,6 +73,8 @@ class LogoutView(generics.GenericAPIView):
             )
     
 class RefreshView(generics.GenericAPIView):
+    
+    serializer_class = EmptySerializer
     permission_classes = [AllowAny]
     
     def post(self, request):

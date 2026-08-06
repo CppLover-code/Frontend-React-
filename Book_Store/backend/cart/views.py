@@ -37,6 +37,9 @@ class AddToCartView(generics.GenericAPIView):
         return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
     
 class UpdateCartItemView(generics.GenericAPIView):
+    
+    queryset = CartItem.objects.all()
+    
     serializer_class = UpdateCartItemSerializer
     permission_classes = [IsAuthenticated]
     
@@ -51,6 +54,9 @@ class UpdateCartItemView(generics.GenericAPIView):
         return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
 
 class DeleteCartItemView(generics.GenericAPIView):
+    
+    queryset = CartItem.objects.all()
+    
     permission_classes = [IsAuthenticated]
     
     def delete(self, request, pk):
