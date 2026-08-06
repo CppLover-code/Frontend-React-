@@ -34,5 +34,5 @@ class OrderSerializer(serializers.ModelSerializer):
             "items",
         ]
         
-class CreateOrderSerializer(serializers.ModelSerializer):
+class CreateOrderSerializer(serializers.Serializer):
     pass
