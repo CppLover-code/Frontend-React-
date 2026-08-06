@@ -39,8 +39,8 @@ urlpatterns = [
 
     path("api/", include("books.urls")),
     path("api/", include("users.urls")),
-    path("api/cart/", include("cart.urls")),
-    #path("api/orders/", include("orders.urls")),
+    path("api/", include("cart.urls")),
+    path("api/", include("orders.urls")),
 
     path(
         "swagger/",
