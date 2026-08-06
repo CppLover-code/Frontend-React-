@@ -19,9 +19,12 @@ class OrderViewSet(ModelViewSet):
     http_method_names = ["get", "post"]
     
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Order.objects.none()
+
         if self.request.user.is_staff:
             return Order.objects.all()
-        
+
         return Order.objects.filter(user=self.request.user)
     
     def get_serializer_class(self):
