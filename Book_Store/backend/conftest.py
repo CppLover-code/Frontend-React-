@@ -40,6 +40,17 @@ def admin_user():
         password="12345678",
     )
 
+@pytest.fixture
+def authenticated_client(api_client, user):
+    api_client.force_authenticate(user=user)
+    return api_client
+
+
+@pytest.fixture
+def admin_client(api_client, admin_user):
+    api_client.force_authenticate(user=admin_user)
+    return api_client
+
 
 # --------------------
 # Books
@@ -81,3 +92,50 @@ def book(author, category):
 @pytest.fixture
 def cart(user):
     return Cart.objects.create(user=user)
+
+# --------------------
+# Additional books
+# --------------------
+
+@pytest.fixture
+def second_author():
+    return Author.objects.create(
+        name="J. K. Rowling",
+    )
+
+
+@pytest.fixture
+def second_category():
+    return Category.objects.create(
+        name="Fantasy",
+    )
+
+
+@pytest.fixture
+def second_book(second_author, second_category):
+    book = Book.objects.create(
+        title="Harry Potter",
+        description="Wizard school",
+        price=Decimal("39.99"),
+        stock=5,
+    )
+
+    book.authors.add(second_author)
+    book.categories.add(second_category)
+
+    return book
+
+
+@pytest.fixture
+def third_book(author, category):
+    book = Book.objects.create(
+        title="Animal Farm",
+        description="Political satire",
+        price=Decimal("9.99"),
+        stock=25,
+    )
+
+    book.authors.add(author)
+    book.categories.add(category)
+
+    return book
