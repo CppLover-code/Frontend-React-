@@ -1,7 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from .models import Book
 from .serializer import BookSerializer
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .permissions import IsAdminOrReadOnly
 from .filters import BookFilter
 from rest_framework.filters import SearchFilter, OrderingFilter
