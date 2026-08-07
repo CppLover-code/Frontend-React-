@@ -12,7 +12,7 @@ from .services import create_order
 
 class OrderViewSet(ModelViewSet):
     
-    queryset = Order.objects.all()
+    queryset = Order.objects.order_by("-created_at")
 
     permission_classes = [IsAuthenticated]
     
@@ -20,12 +20,16 @@ class OrderViewSet(ModelViewSet):
     
     def get_queryset(self):
         if getattr(self, "swagger_fake_view", False):
-            return Order.objects.none()
+           return Order.objects.none()
 
         if self.request.user.is_staff:
-            return Order.objects.all()
+            return Order.objects.all().order_by("-created_at")
 
-        return Order.objects.filter(user=self.request.user)
+        return (
+            Order.objects
+            .filter(user=self.request.user)
+            .order_by("-created_at")
+        )
     
     def get_serializer_class(self):
         if self.action == "create":
