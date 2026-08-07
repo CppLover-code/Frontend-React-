@@ -91,7 +91,7 @@ def book(author, category):
 
 @pytest.fixture
 def cart(user):
-    return Cart.objects.create(user=user)
+    return user.cart
 
 # --------------------
 # Additional books
