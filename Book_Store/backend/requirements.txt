@@ -1,0 +1,22 @@
+# Core
+Django==6.0.7
+djangorestframework==3.17.1
+
+# Auth (JWT)
+djangorestframework_simplejwt==5.5.1
+
+# API docs (Swagger / ReDoc)
+drf-yasg==1.21.15
+
+# Filtering / search / ordering
+django-filter==26.1
+
+# Database (PostgreSQL)
+psycopg[binary]==3.3.4
+
+# Images (ImageField для обложек книг)
+pillow==12.3.0
+
+# Testing
+pytest==9.1.1
+pytest-django==4.13.0
