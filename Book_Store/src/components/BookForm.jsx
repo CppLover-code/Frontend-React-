@@ -1,7 +1,8 @@
 import { useState } from "react"
 import useBook from "../hooks/useBook";
 import "../styles/BookForm.css"
-import { initialBooks } from "../data/books";
+import useNotification from "../hooks/useNotification";
+
 
 const initialFormData = {
     title: "",
@@ -40,14 +41,19 @@ function BookForm( {mode = "create", book = null}) {
     const [formData, setFormData] = useState(() => {
         if (mode === "edit" && book) {
             return {
-                ...book,
-                price: String(book.price),
-                stock: String(book.stock)
+               title: book.title,
+               authorIds: book.authors.map(author => author.id),
+               categoryIds: book.categories.map(category => category.id),
+               price: String(book.price),
+               stock: String(book.stock),
+               description: book.description,
+               cover: book.cover ?? ""
             };
         }
 
         return initialFormData;
     });
+
     const [errors, setErrors] = useState(initialErrors);
     const [newAuthorName, setNewAuthorName] = useState("");
     const [newCategoryName, setNewCategoryName] = useState("");
@@ -103,31 +109,38 @@ function BookForm( {mode = "create", book = null}) {
     // --------------------------------------------------
     // FORM HANDLERS
     // --------------------------------------------------
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
 
-        if (!validateForm()) {
-            return;
-        }
+        if (!validateForm()) return;
 
-        if (mode === "create") {
-            addBook({
-                ...formData,
-                price: Number(formData.price),
-                stock: Number(formData.stock)
-            });
-            setFormData(initialFormData);
-            setNewAuthorName("");
-            setNewCategoryName("");
-        }
-        else {
-            updateBook(formData.id, {
-                ...formData,
-                price: Number(formData.price),
-                stock: Number(formData.stock)
-            });
-        }
+        const payload = {
+            ...formData,
+            price: Number(formData.price),
+            stock: Number(formData.stock)
+        };
 
+        try {
+            if (mode === "create") {
+                await addBook(payload);
+                setFormData(initialFormData);
+                setNewAuthorName("");
+                setNewCategoryName("");
+                showNotification({
+                    message: "Book created!",
+                    type: "success" });
+            }
+            else {
+                await updateBook(book.id, payload);
+                showNotification({
+                    message: "Book updated!",
+                    type: "success" });
+            }
+        } catch {
+            showNotification({
+                message: "Failed to save book",
+                type: "error" });
+        }
     }
 
     function handleChange(event) {
@@ -153,7 +166,7 @@ function BookForm( {mode = "create", book = null}) {
         }
     }
 
-    function handleAddAuthor() {
+    async function handleAddAuthor() {
 
         if (!newAuthorName.trim()) {
             setErrors({
@@ -163,12 +176,17 @@ function BookForm( {mode = "create", book = null}) {
             return;
         }
 
-        const author = addAuthor(newAuthorName);
-
-        toggleAuthor(author.id);
-
-        setNewAuthorName("");
-        setErrors({ ...errors, newAuthorName: "" });
+        try {
+            const author = await addAuthor(newAuthorName);
+            toggleAuthor(author.id);
+            setNewAuthorName("");
+            setErrors({ ...errors, newAuthorName: "" });
+        } catch {
+            setErrors({
+                ...errors,
+                newAuthorName: "Failed to add author"
+            });
+        }
     }
 
 
@@ -190,7 +208,7 @@ function BookForm( {mode = "create", book = null}) {
         }
     }
 
-    function handleAddCategory() {
+    async function handleAddCategory() {
 
         if (!newCategoryName.trim()) {
             setErrors({
@@ -200,12 +218,18 @@ function BookForm( {mode = "create", book = null}) {
             return;
         }
 
-        const category = addCategory(newCategoryName);
+        try {
+            const category = await addCategory(newCategoryName);
 
-        toggleCategory(category.id);
-
-        setNewCategoryName("");
-        setErrors({ ...errors, newCategoryName: "" });
+            toggleCategory(category.id);
+            setNewCategoryName("");
+            setErrors({ ...errors, newCategoryName: "" });
+        } catch {
+            setErrors({
+                ...errors,
+                newCategoryName: "Failed to add category"
+            });
+        }
     }
 
     // --------------------------------------------------
