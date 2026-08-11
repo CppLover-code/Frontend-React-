@@ -28,21 +28,22 @@ function BookPage()
         description
     } = book;
 
-    function handleDelete() {
-
-        const confirmed = window.confirm (
+    async function handleDelete() {
+        const confirmed = window.confirm(
             "Are you sure you want to delete this book?"
         );
-
-        if (!confirmed) {
-            return;
+        if (!confirmed) return;
+        try {
+            await deleteBook(book.id);
+            showNotification({
+                message: "Book deleted successfully!",
+                type: "success" });
+            navigate("/books");
+        } catch {
+            showNotification({
+                message: "Failed to delete book",
+                type: "error" });
         }
-
-        deleteBook(book.id);
-        showNotification({
-            message: "Book deleted successfully!", 
-            type: "success"});
-        navigate("/books");
     }
 
     return (
