@@ -1,223 +1,160 @@
 import { createContext, useState, useEffect } from "react";
-import { initialBooks } from "../data/books";
-import { initialAuthors } from "../data/authors";
-import { initialCategories } from "../data/categories";
+import * as booksApi from "../api/books";
 
 const BookContext = createContext();
 
 function BookProvider({ children }) {
-    // при первом взапуске приложения реакт проверяет состояния - состояния нет,
-    // поэтому вызывает функцию и берет ее результат как начальное значение
-    // при втором запуске - состояние уже есть, поэтому реакт будет игнорировать эту функцию
-    // и просто возвращает сохраненное состояние
 
     // --------------------------------------------------
-    // STATE
+    // Data from the server
     // --------------------------------------------------
-    const [books, setBooks] = useState(() => {
+    const [books, setBooks] = useState([]);
+    const [count, setCount] = useState(0);
+    const [authors, setAuthors] = useState([]);
+    const [categories, setCategories] = useState([]);
 
-        const savedBooks = localStorage.getItem("books");
+    // Current request state
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-        if (savedBooks) return JSON.parse(savedBooks);
-
-        return initialBooks;
-    });
-
-    const [authors, setAuthors] = useState(() => {
-
-        const savedAuthors = localStorage.getItem("authors");
-
-        if (savedAuthors) return JSON.parse(savedAuthors);
-
-        return initialAuthors;
-    });
-
-    const [categories, setCategories] = useState(() => {
-
-        const savedCategories = localStorage.getItem("categories");
-
-        if (savedCategories) return JSON.parse(savedCategories);
-
-        return initialCategories;
-    });
-
+    // --------------------------------------------------
+    // Selection parameters: modified by the UI, executed by the server
+    // --------------------------------------------------
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategoryId, setSelectedCategoryId] = useState(0);
     const [selectedSort, setSelectedSort] = useState("default");
+    const [page, setPage] = useState(1);
 
-    // --------------------------------------------------
-    // OPTIONS
-    // --------------------------------------------------
-    const categoryOptions = [{id: 0, name: "All"}, ...categories];
+   // Reload counter: CRUD operations increment it
+    // so that the load effect triggers again
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    // the values ​​match DRF's `ordering` parameter
     const sortOptions = [
         { value: "default", label: "Default" },
-        { value: "title-asc", label: "Title (A-Z)" },
-        { value: "title-desc", label: "Title (Z-A)" },
-        { value: "price-asc", label: "Price (Low → High)" },
-        { value: "price-desc", label: "Price (High → Low)" }
+        { value: "title", label: "Title (A-Z)" },
+        { value: "-title", label: "Title (Z-A)" },
+        { value: "price", label: "Price (Low → High)" },
+        { value: "-price", label: "Price (High → Low)" },
     ];
 
+    const categoryOptions = [{ id: 0, name: "All" }, ...categories];
+
     // --------------------------------------------------
+    // Loading reference data (once at startup)
+    // --------------------------------------------------
+    useEffect(() => {
 
-    //Преобразование книги, вместо id будут храниться объекты
-    function resolveBook(book) {
+        async function loadRefs() {
+            try {
+                const [authorsData, categoriesData] = await Promise.all([
+                    booksApi.getAuthors(),
+                    booksApi.getCategories(),
+                ]);
 
-        const resolvedAuthors = book.authorIds.map(authorId => 
-            authors.find(author => author.id === authorId));
-
-        const resolvedCategories = book.categoryIds.map(categoryId => 
-            categories.find(category => category.id === categoryId));
-
-        return {
-            ...book,
-            authors: resolvedAuthors,
-            categories: resolvedCategories
+                setAuthors(authorsData);
+                setCategories(categoriesData);
+            } catch (err) {
+                setError(err);
+            }
         }
-    }
 
-    // функция поиска по id и отправка преобразованной книги
-    function getBook(id) {
+        loadRefs();
+    }, []);
 
-        const book = books.find(book => book.id === Number(id));
-
-        if (!book) return null;
-
-        return resolveBook(book);
-    }
-    // DERIVED STATE
     // --------------------------------------------------
-    // Search
-    const normalizedSearch = searchQuery.trim().toLowerCase();
-    const searchedBooks = !normalizedSearch
-        ? books
-        : books.filter(book => {
-            const normalizedTitle = book.title.trim().toLowerCase();
-            return normalizedTitle.includes(normalizedSearch);
-        });
+    // Loading books (whenever settings are changed)
     // --------------------------------------------------
-
-    // Filter  
-    const categoryBooks = selectedCategoryId === 0
-        ? searchedBooks
-        : searchedBooks.filter(book => book.categoryIds.includes(selectedCategoryId));
-    // --------------------------------------------------
-
-    // Sort 
-    const sortedBooks = [...categoryBooks];
-
-    switch (selectedSort) {
-        case "title-asc":
-            sortedBooks.sort((a, b) =>
-                a.title.localeCompare(b.title));
-            break;
-
-        case "title-desc":
-            sortedBooks.sort((a, b) =>
-                b.title.localeCompare(a.title));
-            break;
-
-        case "price-asc":
-            sortedBooks.sort((a, b) =>
-                a.price - b.price);
-            break;
-
-        case "price-desc":
-            sortedBooks.sort((a, b) =>
-                b.price - a.price);
-            break;
-
-        case "default":
-            break;
-    }
-
-    const visibleBooks = sortedBooks.map(book => resolveBook(book));
-    // --------------------------------------------------
-
-    
-    // --------------------------------------------------
-    // PERSISTENCE
-    // --------------------------------------------------
-    // каждый раз, когда меняется books, authors, categories, данные сохраняются
     useEffect(() => {
 
-        localStorage.setItem(
-            "books",
-            JSON.stringify(books)
-        );
+        let ignore = false;
 
-    }, [books]);
+        async function loadBooks() {
+            setLoading(true);
+            setError(null);
 
-    useEffect(() => {
+            const params = { page };
 
-        localStorage.setItem(
-            "authors",
-            JSON.stringify(authors)
-        );
-    }, [authors]);
+            if (searchQuery.trim()) params.search = searchQuery.trim();
+            if (selectedCategoryId !== 0) params.categories = selectedCategoryId;
+            if (selectedSort !== "default") params.ordering = selectedSort;
 
-    useEffect(() => {
+            try {
+                const data = await booksApi.getBooks(params);
 
-        localStorage.setItem(
-            "categories",
-            JSON.stringify(categories)
-        );
-    }, [categories]);
+                if (!ignore) {
+                    setBooks(data.results);
+                    setCount(data.count);
+                }
+            } catch (err) {
+                if (!ignore) setError(err);
+            } finally {
+                if (!ignore) setLoading(false);
+            }
+        }
+
+        loadBooks();
+
+        // cleanup: if the parameters changed before the response arrived,
+        // the outdated response is ignored
+        return () => {
+            ignore = true;
+        };
+    }, [searchQuery, selectedCategoryId, selectedSort, page, refreshKey]);
+
+    // --------------------------------------------------
+    // Wrappers around setters: new search/filter — always starts from page 1.
+    // --------------------------------------------------
+    function updateSearchQuery(value) {
+        setSearchQuery(value);
+        setPage(1);
+    }
+
+    function updateSelectedCategoryId(id) {
+        setSelectedCategoryId(id);
+        setPage(1);
+    }
+
+    function updateSelectedSort(value) {
+        setSelectedSort(value);
+        setPage(1);
+    }
 
     // --------------------------------------------------
     // CRUD
     // --------------------------------------------------
-    function addBook(formData) {
+    async function addBook(formData) {
+        await booksApi.createBook({
+            title: formData.title,
+            description: formData.description,
+            price: formData.price,
+            stock: formData.stock,
+            author_ids: formData.authorIds,
+            category_ids: formData.categoryIds,
+        });
 
-        const {
-            title,
-            authorIds,
-            categoryIds,
-            price,
-            stock,
-            description,
-            cover
-        } = formData;
-
-        const newBook =
-        {
-            id: books.length + 1,
-            title,
-            authorIds,
-            categoryIds,
-            price: Number(price),
-            stock: Number(stock),
-            description,
-            cover
-        };
-
-        setBooks([...books, newBook]) // оператор spread
+        setRefreshKey(key => key + 1);
     }
 
-    function deleteBook(id) {
-        setBooks(
-            // оставляем все книги, кроме той, что нужно удалить
-            books.filter(book => book.id !== id)
-        );
+    async function updateBook(id, formData) {
+        await booksApi.updateBook(id, {
+            title: formData.title,
+            description: formData.description,
+            price: formData.price,
+            stock: formData.stock,
+            author_ids: formData.authorIds,
+            category_ids: formData.categoryIds,
+        });
+
+        setRefreshKey(key => key + 1);
     }
 
-    function updateBook(id, formData) {
-        setBooks(prevBooks =>
-            prevBooks.map(book => {
-
-                if (book.id === id) {
-                    return {
-                        ...book,
-                        ...formData
-                    };
-                }
-
-                return book;
-            })
-        );
+    async function deleteBook(id) {
+        await booksApi.deleteBook(id);
+        setRefreshKey(key => key + 1);
     }
 
-    function addAuthor(name) {
-
+    async function addAuthor(name) {
         const normalizedName = name.trim();
 
         const existingAuthor = authors.find(
@@ -225,20 +162,14 @@ function BookProvider({ children }) {
         );
 
         if (existingAuthor) return existingAuthor;
-        else {
-            const newAuthor = {
-                id: authors.length + 1,
-                name: normalizedName
-            };
 
-            setAuthors([...authors, newAuthor]);
+        const newAuthor = await booksApi.createAuthor(normalizedName);
+        setAuthors([...authors, newAuthor]);
 
-            return newAuthor;
-        }
+        return newAuthor;
     }
 
-    function addCategory(name) {
-
+    async function addCategory(name) {
         const normalizedName = name.trim();
 
         const existingCategory = categories.find(
@@ -246,55 +177,48 @@ function BookProvider({ children }) {
         );
 
         if (existingCategory) return existingCategory;
-        else {
-            const newCategory = {
-                id: categories.length + 1,
-                name: normalizedName
-            };
 
-            setCategories([...categories, newCategory]);
+        const newCategory = await booksApi.createCategory(normalizedName);
+        setCategories([...categories, newCategory]);
 
-            return newCategory;
-        }
+        return newCategory;
     }
 
     // --------------------------------------------------
     // Provider
     // --------------------------------------------------
-
     return (
         <BookContext.Provider
-            value={
-                {
-                    books,
-                    visibleBooks,
-                    getBook,
+            value={{
+                visibleBooks: books,
+                count,
+                loading,
+                error,
 
-                    authors,
-                    setAuthors,
+                authors,
+                categories,
 
-                    categories,
-                    setCategories,
+                searchQuery,
+                setSearchQuery: updateSearchQuery,
 
-                    searchQuery,
-                    setSearchQuery,
+                selectedCategoryId,
+                setSelectedCategoryId: updateSelectedCategoryId,
+                categoryOptions,
 
-                    selectedCategoryId,
-                    setSelectedCategoryId,
-                    categoryOptions,
+                selectedSort,
+                setSelectedSort: updateSelectedSort,
+                sortOptions,
 
-                    selectedSort,
-                    setSelectedSort,
-                    sortOptions,
+                page,
+                setPage,
 
-                    addBook,
-                    updateBook,
-                    deleteBook,
+                addBook,
+                updateBook,
+                deleteBook,
 
-                    addAuthor,
-                    addCategory
-                }
-            }>
+                addAuthor,
+                addCategory,
+            }}>
 
             {children}
 
@@ -302,4 +226,4 @@ function BookProvider({ children }) {
     );
 }
 
-export { BookContext, BookProvider }
+export { BookContext, BookProvider };

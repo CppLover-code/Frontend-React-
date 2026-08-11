@@ -1,19 +1,22 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useBook from "../hooks/useBook";
+import useBookDetail from "../hooks/useBookDetail";
 import useNotification from "../hooks/useNotification";
 
 function BookPage()
 {
     const { showNotification } = useNotification();
     const { addToCart } = useCart();
-    const { getBook, deleteBook } = useBook();
-    
+    const { deleteBook } = useBook();
+    const { book, loading, error } = useBookDetail(id); 
     const {id} = useParams();
 
     const navigate = useNavigate();
 
-    const book = getBook(id);
+    if (loading) return <h2>Loading...</h2>;
+    if (error?.status === 404) return <h2>Book not found!</h2>;
+    if (error) return <h2>Something went wrong :(</h2>;
 
     if(!book) return (<h2>Book not found!</h2>)
 
