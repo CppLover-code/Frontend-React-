@@ -9,16 +9,14 @@ function BookPage()
     const { showNotification } = useNotification();
     const { addToCart } = useCart();
     const { deleteBook } = useBook();
-    const { book, loading, error } = useBookDetail(id); 
     const {id} = useParams();
+    const { book, loading, error } = useBookDetail(id); 
 
     const navigate = useNavigate();
 
     if (loading) return <h2>Loading...</h2>;
     if (error?.status === 404) return <h2>Book not found!</h2>;
     if (error) return <h2>Something went wrong :(</h2>;
-
-    if(!book) return (<h2>Book not found!</h2>)
 
     const {
         title,

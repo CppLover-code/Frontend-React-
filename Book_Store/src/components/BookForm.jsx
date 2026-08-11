@@ -33,6 +33,7 @@ function BookForm( {mode = "create", book = null}) {
     // CONTEXT
     // --------------------------------------------------
     const { addBook, updateBook, authors, categories, addAuthor, addCategory } = useBook();
+    const { showNotification } = useNotification();
 
 
     // --------------------------------------------------
