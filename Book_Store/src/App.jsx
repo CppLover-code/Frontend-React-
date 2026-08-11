@@ -30,10 +30,11 @@ function App() {
           <Route path="/books/:id" element={<BookPage />} />
 
           <Route element={<ProtectedRoute />}>
-
-            <Route path="/books/:id/edit" element={<EditBook />} />
             <Route path="/cart" element={<CartPage />} />
-            
+          </Route>
+          
+          <Route element={<ProtectedRoute staffOnly={true} />}>
+            <Route path="/books/:id/edit" element={<EditBook />} />
           </Route>
 
           <Route path="/about" element={<AboutPage />} />

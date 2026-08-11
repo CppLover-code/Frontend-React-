@@ -3,9 +3,11 @@ import useCart from "../hooks/useCart";
 import useBook from "../hooks/useBook";
 import useBookDetail from "../hooks/useBookDetail";
 import useNotification from "../hooks/useNotification";
+import useAuth from "../hooks/useAuth";
 
 function BookPage()
 {
+    const { user } = useAuth();
     const { showNotification } = useNotification();
     const { addToCart } = useCart();
     const { deleteBook } = useBook();
@@ -44,6 +46,21 @@ function BookPage()
         }
     }
 
+    async function handleAddToCart() {
+        try {
+            await addToCart(book);
+            showNotification({
+                message: "Book added to cart",
+                type: "success"
+            });
+        } catch {
+            showNotification({
+                message: "Please log in to add books to cart",
+                type: "error"
+            });
+        }
+    }
+
     return (
         <>
             <h1>Book Page</h1>
@@ -69,13 +86,17 @@ function BookPage()
             <h3>Description:</h3>
             <p>{description}</p>
 
-            <button onClick={() => addToCart(book)}>Add to Cart</button>
-
-            <button onClick={() => handleDelete()}>Delete</button>
-
-            <Link to={`/books/${id}/edit`}>
-                <button>Edit</button>
-            </Link>
+            {!user?.is_staff && (
+                <button onClick={handleAddToCart}>Add to Cart</button>
+            )}
+            {user?.is_staff && (
+                <>
+                    <button onClick={() => handleDelete()}>Delete</button>
+                    <Link to={`/books/${id}/edit`}>
+                        <button>Edit</button>
+                    </Link>
+                </>
+            )}
         </>
     );
 }

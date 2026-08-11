@@ -28,7 +28,7 @@ function Header()
                     <NavLink to="/login">Login</NavLink>
                 )}
                 
-                <NavLink to="/cart">Cart</NavLink>
+                {!user?.is_staff && <NavLink to="/cart">Cart</NavLink>}
 
             </nav>
 

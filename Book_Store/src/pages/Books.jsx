@@ -1,13 +1,16 @@
 import BookList from "../components/BookList";
 import BookControls from "../components/BookControls";
 import BookForm from "../components/BookForm";
+import useAuth from "../hooks/useAuth";
 
 function Books()
 {
+    const { user } = useAuth();
+    
     return( 
         <div className="book-controls">
             <BookControls />
-            <BookForm  mode="create"/>
+            {user?.is_staff && <BookForm mode="create" />}
             <BookList />  
         </div>
     );

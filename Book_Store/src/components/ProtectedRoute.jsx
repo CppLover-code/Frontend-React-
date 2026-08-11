@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
-function ProtectedRoute() {
+function ProtectedRoute({staffOnly = false}) {
 
     const { user, initializing } = useAuth();
     const location = useLocation();
@@ -15,6 +15,15 @@ function ProtectedRoute() {
                 to="/login"
                 replace
                 state={{ from: location.pathname }}
+            />
+        );
+    }
+
+    if (staffOnly && !user.is_staff) {
+        return (
+            <Navigate
+                to="/"
+                replace
             />
         );
     }

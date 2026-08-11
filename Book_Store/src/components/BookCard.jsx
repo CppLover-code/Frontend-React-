@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useNotification from "../hooks/useNotification";
+import useAuth from "../hooks/useAuth";
 
 function BookCard({book}) 
 {
     const {addToCart} = useCart();
     const { showNotification } = useNotification();
+    const { user } = useAuth();
 
     const {
         id,
@@ -53,7 +55,9 @@ function BookCard({book})
 
             <Link to={`/books/${id}`}>Details</Link>
 
-            <button onClick={handleAddToCart}>Add to Cart</button>
+            {!user?.is_staff && (
+                <button onClick={handleAddToCart}>Add to Cart</button>
+            )}
 
         </article>
     );
