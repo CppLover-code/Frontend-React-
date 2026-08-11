@@ -73,8 +73,8 @@ def test_admin_can_create_book(admin_client, author, category):
         "description": "Magic book",
         "price": "29.99",
         "stock": 15,
-        "authors": [author.id],
-        "categories": [category.id],
+        "author_ids": [author.id],
+        "category_ids": [category.id],
     }
 
     response = admin_client.post(url, data, format="json")
@@ -105,8 +105,8 @@ def test_authenticated_user_cannot_create_book(
         "description": "Magic book",
         "price": "29.99",
         "stock": 15,
-        "authors": [author.id],
-        "categories": [category.id],
+        "author_ids": [author.id],
+        "category_ids": [category.id],
     }
 
     response = authenticated_client.post(url, data, format="json")

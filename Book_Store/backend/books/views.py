@@ -5,6 +5,8 @@ from .permissions import IsAdminOrReadOnly
 from .filters import BookFilter
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from .serializer import AuthorSerializer, CategorySerializer
+from .models import Author, Category
 
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
@@ -27,4 +29,14 @@ class BookViewSet(ModelViewSet):
         context = super().get_serializer_context()
         context["request"] = self.request
         return context
+    
+class AuthorViewSet(ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAdminOrReadOnly]
     
