@@ -9,6 +9,7 @@ import BookPage from "./pages/BookPage";
 import EditBook from "./pages/EditBook";
 import MainLayout from "./layouts/MainLayout";
 import Notification from "./components/Notification";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
@@ -28,13 +29,18 @@ function App() {
 
           <Route path="/books/:id" element={<BookPage />} />
 
-          <Route path="/books/:id/edit" element={<EditBook />} />
+          <Route element={<ProtectedRoute />}>
+
+            <Route path="/books/:id/edit" element={<EditBook />} />
+            <Route path="/cart" element={<CartPage />} />
+            
+          </Route>
 
           <Route path="/about" element={<AboutPage />} />
 
           <Route path="/login" element={<LoginPage />} />
 
-          <Route path="/cart" element={<CartPage />} />
+          
 
         </Route>
 

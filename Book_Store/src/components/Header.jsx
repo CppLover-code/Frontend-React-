@@ -1,8 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import "../styles/Header.css"
+import useAuth from "../hooks/useAuth";
 
 function Header()
 {
+    const { user, logout } = useAuth();
+
     return (
         <header className="header">
 
@@ -16,7 +19,14 @@ function Header()
 
                 <NavLink to="/about">About</NavLink>
 
-                <NavLink to="/login">Login</NavLink>
+                {user ? (
+                    <>
+                        <span>Hi, {user.username}</span>
+                        <button onClick={logout}>Logout</button>
+                    </>
+                ) : (
+                    <NavLink to="/login">Login</NavLink>
+                )}
                 
                 <NavLink to="/cart">Cart</NavLink>
 
