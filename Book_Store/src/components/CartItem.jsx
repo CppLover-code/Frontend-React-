@@ -1,15 +1,9 @@
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 
-function CartItem({item})
-{
-    const { 
-        id,
-        title,
-        authors,
-        price,
-        quantity  
-    }   = item;
+function CartItem({ item }) {
+
+    const { id, book, quantity, subtotal } = item;
 
     const {
         removeFromCart,
@@ -17,20 +11,18 @@ function CartItem({item})
         increaseQuantity
     } = useCart();
 
-    const subtotal = quantity * price;
-
-    return(
+    return (
         <article>
 
-            <Link to={`/books/${id}`}>{title}</Link>
+            <Link to={`/books/${book.id}`}>{book.title}</Link>
 
-            <p>Authors: {authors.join(", ")}</p>
+            <p>Authors: {book.authors.map(author => author.name).join(", ")}</p>
 
-            <p>Price: ${price}</p>
+            <p>Price: ${book.price}</p>
 
             <p>Quantity: {quantity}</p>
 
-            <p>Subtotal: ${subtotal.toFixed(2)}</p>
+            <p>Subtotal: ${Number(subtotal).toFixed(2)}</p>
 
             <button onClick={() => removeFromCart(id)}>Remove</button>
 
@@ -39,7 +31,7 @@ function CartItem({item})
             <button onClick={() => decreaseQuantity(id)}>-</button>
 
         </article>
-    );  
+    );
 }
 
 export default CartItem;

@@ -6,7 +6,7 @@ function CartList()
 {
     const { cart } = useCart();
 
-    if(cart.length === 0)
+    if(cart.items.length === 0)
     {
         return(
             <>
@@ -19,7 +19,7 @@ function CartList()
         <>
             <h2>CartList</h2>
 
-            {cart.map(item => (
+            {cart.items.map(item => (
 
                 <CartItem
                     key={item.id}

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
+import useNotification from "../hooks/useNotification";
 
 function BookCard({book}) 
 {
     const {addToCart} = useCart();
+    const { showNotification } = useNotification();
 
     const {
         id,
@@ -17,6 +19,23 @@ function BookCard({book})
 
     const authorNames = authors.map(author => author.name).join(", ");
     const categoryNames = categories.map(category => category.name).join(", ");
+
+    async function handleAddToCart() {
+        try {
+            await addToCart(book);
+            showNotification({
+                message: "Book added to cart",
+                type: "success"
+            });
+        } catch {
+            showNotification({
+                message: "Please log in to add books to cart",
+                type: "error"
+            });
+        }
+    }
+
+
     return (
         <article>
 
@@ -34,7 +53,7 @@ function BookCard({book})
 
             <Link to={`/books/${id}`}>Details</Link>
 
-            <button onClick={() => addToCart(book)}>Add to Cart</button>
+            <button onClick={handleAddToCart}>Add to Cart</button>
 
         </article>
     );
