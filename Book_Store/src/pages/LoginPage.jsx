@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
 
@@ -62,6 +63,11 @@ function LoginPage() {
             <button type="submit" disabled={submitting}>
                 {submitting ? "Logging in..." : "Login"}
             </button>
+
+            <p>
+                No account? <Link to="/register">Register</Link>
+            </p>
+
         </form>
     );
 }
