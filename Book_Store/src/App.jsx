@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
 import BookPage from "./pages/BookPage";
 import EditBook from "./pages/EditBook";
+import RegisterPage from "./pages/RegisterPage";
 import MainLayout from "./layouts/MainLayout";
 import Notification from "./components/Notification";
 import ProtectedRoute from "./components/ProtectedRoute";
