@@ -19,6 +19,11 @@ function Header()
 
                 <NavLink to="/about">About</NavLink>
 
+
+                {user && <NavLink to="/orders">Orders</NavLink>}
+
+                {!user?.is_staff && <NavLink to="/cart">Cart</NavLink>}
+
                 {user ? (
                     <>
                         <span>Hi, {user.username}</span>
@@ -28,7 +33,7 @@ function Header()
                     <NavLink to="/login">Login</NavLink>
                 )}
                 
-                {!user?.is_staff && <NavLink to="/cart">Cart</NavLink>}
+                
 
             </nav>
 

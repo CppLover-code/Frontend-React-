@@ -10,6 +10,8 @@ function BookProvider({ children }) {
     // --------------------------------------------------
     const [books, setBooks] = useState([]);
     const [count, setCount] = useState(0);
+    const [hasNext, setHasNext] = useState(false);
+    const [hasPrev, setHasPrev] = useState(false);
     const [authors, setAuthors] = useState([]);
     const [categories, setCategories] = useState([]);
 
@@ -84,6 +86,8 @@ function BookProvider({ children }) {
 
                 if (!ignore) {
                     setBooks(data.results);
+                    setHasNext(Boolean(data.next));
+                    setHasPrev(Boolean(data.previous));
                     setCount(data.count);
                 }
             } catch (err) {
@@ -211,6 +215,8 @@ function BookProvider({ children }) {
 
                 page,
                 setPage,
+                hasNext,
+                hasPrev,
 
                 addBook,
                 updateBook,

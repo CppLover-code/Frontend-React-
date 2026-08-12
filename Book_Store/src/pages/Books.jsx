@@ -2,6 +2,7 @@ import BookList from "../components/BookList";
 import BookControls from "../components/BookControls";
 import BookForm from "../components/BookForm";
 import useAuth from "../hooks/useAuth";
+import Pagination from "../components/Pagination";
 
 function Books()
 {
@@ -12,6 +13,7 @@ function Books()
             <BookControls />
             {user?.is_staff && <BookForm mode="create" />}
             <BookList />  
+            <Pagination />
         </div>
     );
 }

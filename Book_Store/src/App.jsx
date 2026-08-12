@@ -11,6 +11,7 @@ import RegisterPage from "./pages/RegisterPage";
 import MainLayout from "./layouts/MainLayout";
 import Notification from "./components/Notification";
 import ProtectedRoute from "./components/ProtectedRoute";
+import OrdersPage from "./pages/OrdersPage";
 
 // Компонент — это обычная JavaScript-функция, которая возвращает JSX.
 // App - это компонент.
@@ -32,8 +33,9 @@ function App() {
 
           <Route element={<ProtectedRoute />}>
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
           </Route>
-          
+
           <Route element={<ProtectedRoute staffOnly={true} />}>
             <Route path="/books/:id/edit" element={<EditBook />} />
           </Route>
