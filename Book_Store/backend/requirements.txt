@@ -26,3 +26,6 @@ pytest-django==4.13.0
 
 # Env configuration
 django-environ==0.14.0
+
+# Production WSGI server
+gunicorn==26.0.0

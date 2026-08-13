@@ -16,13 +16,22 @@ services:
     env_file: ./backend/.env
     environment:
       DB_HOST: db
-    ports:
-      - "9000:8000"
+      DEBUG: "False"
     depends_on:
       db:
         condition: service_healthy
     volumes:
       - ./backend/media:/app/media
-
+      - static_volume:/app/staticfiles
+  frontend:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    volumes:
+      - static_volume:/staticfiles
+      - ./backend/media:/media
 volumes:
   postgres_data:
+  static_volume:
