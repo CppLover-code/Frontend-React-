@@ -6,7 +6,10 @@ from .models import Cart
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_cart(sender, instance, created, **kwargs):
+def create_cart(sender, instance, created, raw=False, **kwargs):
+
+    if created and raw:
+        return
 
     if created:
         Cart.objects.create(user=instance)
