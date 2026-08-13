@@ -7,17 +7,24 @@ from cart.validators import validate_stock
 
 from .models import Order, OrderItem
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 def create_order(user):
     cart = user.cart
     
     cart_items = cart.items.select_related("book")
     
     if not cart_items.exists():
+        logger.warning("Order attempt with empty cart by user %s", user.username)
         raise ValidationError(
             {
                 "detail": "Your cart is empty."
             }
         )
+        
+    items_count = cart_items.count()
     
     with transaction.atomic():
         
@@ -57,6 +64,11 @@ def create_order(user):
             
         # Delete the cart items
         cart_items.delete()
+        
+        logger.info(
+            "Order %s created by user %s: %s items, total %s",
+            order.id, user.username, items_count, total_price
+        )
             
     return order
         
