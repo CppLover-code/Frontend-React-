@@ -31,6 +31,7 @@ __pycache__/
 
 # Secrets
 backend/.env
+backend/seed.json
 
 # Uploaded files
 backend/media/

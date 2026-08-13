@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import * as booksApi from "../api/books";
+import { ApiError } from "../api/client";
 
 const BookContext = createContext();
 
@@ -91,7 +92,13 @@ function BookProvider({ children }) {
                     setCount(data.count);
                 }
             } catch (err) {
-                if (!ignore) setError(err);
+                if (ignore) return;
+                
+                if (err instanceof ApiError && err.status === 404 && page > 1) {
+                    setPage(page - 1);
+                } else {
+                    setError(err);
+                }
             } finally {
                 if (!ignore) setLoading(false);
             }
@@ -155,7 +162,12 @@ function BookProvider({ children }) {
 
     async function deleteBook(id) {
         await booksApi.deleteBook(id);
-        setRefreshKey(key => key + 1);
+
+        if (books.length === 1 && page > 1) {
+            setPage(page - 1);
+        } else {
+            setRefreshKey(key => key + 1);
+        }
     }
 
     async function addAuthor(name) {
