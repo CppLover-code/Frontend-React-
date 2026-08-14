@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useRef } from "react";
 import * as cartApi from "../api/cart";
 import * as ordersApi from "../api/orders";
 import useAuth from "../hooks/useAuth";
@@ -60,27 +60,31 @@ function CartProvider({ children }) {
         setCart(updatedCart);
     }
 
-    async function increaseQuantity(itemId) {
-        const item = cart.items.find(item => item.id === itemId);
+    // Количество меняем через delta-эндпоинт: сервер сам читает
+    // текущее значение, поэтому нет гонки "read-modify-write".
+    // Падение количества до нуля сервер трактует как удаление позиции.
+    //
+    // lastQuantityRequestId защищает от устаревших ответов: при двух
+    // быстрых кликах состояние обновит только ответ на последний запрос
+    // (каждый ответ содержит корзину целиком).
+    const lastQuantityRequestId = useRef(0);
 
-        if (!item) return;
+    async function changeQuantity(itemId, delta) {
+        const requestId = ++lastQuantityRequestId.current;
 
-        const updatedCart = await cartApi.updateCartItem(itemId, item.quantity + 1);
-        setCart(updatedCart);
+        const updatedCart = await cartApi.changeCartItemQuantity(itemId, delta);
+
+        if (requestId === lastQuantityRequestId.current) {
+            setCart(updatedCart);
+        }
     }
 
-    async function decreaseQuantity(itemId) {
-        const item = cart.items.find(item => item.id === itemId);
+    function increaseQuantity(itemId) {
+        return changeQuantity(itemId, 1);
+    }
 
-        if (!item) return;
-
-        // количество 1 и минус - значит, убрать позицию
-        if (item.quantity === 1) {
-            return removeFromCart(itemId);
-        }
-
-        const updatedCart = await cartApi.updateCartItem(itemId, item.quantity - 1);
-        setCart(updatedCart);
+    function decreaseQuantity(itemId) {
+        return changeQuantity(itemId, -1);
     }
 
     async function checkout() {

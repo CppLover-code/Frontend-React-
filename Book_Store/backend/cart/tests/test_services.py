@@ -6,6 +6,7 @@ from cart.models import CartItem
 from cart.services import (
     add_book_to_cart,
     update_cart_item,
+    change_cart_item_quantity,
     delete_cart_item,
     clear_cart,
 )
@@ -117,6 +118,74 @@ def test_update_cart_item_not_enough_stock(user, book):
             user=user,
             cart_item_id=item.id,
             quantity=book.stock + 1,
+        )
+
+
+# ==========================================
+# change_cart_item_quantity
+# ==========================================
+
+@pytest.mark.django_db
+def test_change_quantity_increments(user, book):
+    """
+    Positive delta should increase quantity.
+    """
+
+    item = CartItem.objects.create(
+        cart=user.cart,
+        book=book,
+        quantity=2,
+    )
+
+    change_cart_item_quantity(
+        user=user,
+        cart_item_id=item.id,
+        delta=1,
+    )
+
+    item.refresh_from_db()
+
+    assert item.quantity == 3
+
+
+@pytest.mark.django_db
+def test_change_quantity_to_zero_removes_item(user, book):
+    """
+    Dropping quantity to zero should remove the item.
+    """
+
+    item = CartItem.objects.create(
+        cart=user.cart,
+        book=book,
+        quantity=1,
+    )
+
+    change_cart_item_quantity(
+        user=user,
+        cart_item_id=item.id,
+        delta=-1,
+    )
+
+    assert CartItem.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_change_quantity_not_enough_stock(user, book):
+    """
+    ValidationError should be raised if new quantity exceeds stock.
+    """
+
+    item = CartItem.objects.create(
+        cart=user.cart,
+        book=book,
+        quantity=book.stock,
+    )
+
+    with pytest.raises(ValidationError):
+        change_cart_item_quantity(
+            user=user,
+            cart_item_id=item.id,
+            delta=1,
         )
 
 

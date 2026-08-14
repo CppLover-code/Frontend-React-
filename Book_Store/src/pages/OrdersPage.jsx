@@ -8,14 +8,24 @@ function OrdersPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const [page, setPage] = useState(1);
+    const [hasNext, setHasNext] = useState(false);
+    const [hasPrev, setHasPrev] = useState(false);
+
     useEffect(() => {
         let ignore = false;
 
         async function loadOrders() {
-            try {
-                const data = await getOrders();
+            setLoading(true);
 
-                if (!ignore) setOrders(data.results);
+            try {
+                const data = await getOrders(page);
+
+                if (!ignore) {
+                    setOrders(data.results);
+                    setHasNext(Boolean(data.next));
+                    setHasPrev(Boolean(data.previous));
+                }
             } catch (err) {
                 if (!ignore) setError(err);
             } finally {
@@ -28,7 +38,7 @@ function OrdersPage() {
         return () => {
             ignore = true;
         };
-    }, []);
+    }, [page]);
 
     if (loading) return <h2>Loading...</h2>;
     if (error) return <h2>Failed to load orders :(</h2>;
@@ -74,6 +84,24 @@ function OrdersPage() {
 
                 </article>
             ))}
+
+            <div className="pagination">
+                <button
+                    onClick={() => setPage(page - 1)}
+                    disabled={!hasPrev}
+                >
+                    ← Prev
+                </button>
+
+                <span> Page {page} </span>
+
+                <button
+                    onClick={() => setPage(page + 1)}
+                    disabled={!hasNext}
+                >
+                    Next →
+                </button>
+            </div>
         </>
     );
 }

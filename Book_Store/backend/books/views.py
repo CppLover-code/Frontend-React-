@@ -1,12 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
-from .models import Book
-from .serializer import BookSerializer
-from .permissions import IsAdminOrReadOnly
-from .filters import BookFilter
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializer import AuthorSerializer, CategorySerializer
-from .models import Author, Category
+
+from .models import Book, Author, Category
+from .serializers import BookSerializer, AuthorSerializer, CategorySerializer
+from .permissions import IsAdminOrReadOnly
+from .filters import BookFilter
 
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()

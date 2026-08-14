@@ -84,6 +84,60 @@ def test_update_cart_item(authenticated_client, user, book):
 
 
 # ==========================================
+# Change quantity by delta
+# ==========================================
+
+@pytest.mark.django_db
+def test_change_cart_item_quantity(authenticated_client, user, book):
+    """
+    User can change quantity by delta.
+    """
+
+    item = CartItem.objects.create(
+        cart=user.cart,
+        book=book,
+        quantity=2,
+    )
+
+    response = authenticated_client.post(
+        f"/api/cart/item/{item.id}/change/",
+        {
+            "delta": 1,
+        },
+        format="json",
+    )
+
+    assert response.status_code == 200
+
+    item.refresh_from_db()
+
+    assert item.quantity == 3
+
+
+@pytest.mark.django_db
+def test_change_cart_item_quantity_zero_delta_rejected(authenticated_client, user, book):
+    """
+    Zero delta should be rejected with 400.
+    """
+
+    item = CartItem.objects.create(
+        cart=user.cart,
+        book=book,
+        quantity=2,
+    )
+
+    response = authenticated_client.post(
+        f"/api/cart/item/{item.id}/change/",
+        {
+            "delta": 0,
+        },
+        format="json",
+    )
+
+    assert response.status_code == 400
+
+
+# ==========================================
 # Delete item
 # ==========================================
 

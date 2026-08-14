@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Cart, CartItem
-from books.serializer import BookSerializer
+from books.serializers import BookSerializer
 
 
 class CartItemSerializer(serializers.ModelSerializer):
@@ -54,5 +54,14 @@ class AddToCartSerializer(serializers.Serializer):
     
 class UpdateCartItemSerializer(serializers.Serializer):
     quantity = serializers.IntegerField(min_value=1)
+
+class ChangeCartItemQuantitySerializer(serializers.Serializer):
+    delta = serializers.IntegerField()
+
+    def validate_delta(self, value):
+        if value == 0:
+            raise serializers.ValidationError("delta cannot be zero.")
+        return value
+    
 
 

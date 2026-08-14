@@ -4,10 +4,16 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from .models import CartItem
-from .serializers import AddToCartSerializer, CartSerializer, UpdateCartItemSerializer
+from .serializers import (
+    AddToCartSerializer,
+    CartSerializer,
+    ChangeCartItemQuantitySerializer,
+    UpdateCartItemSerializer,
+)
 from .services import (
     add_book_to_cart, 
     update_cart_item,
+    change_cart_item_quantity,
     delete_cart_item,
     clear_cart,
 )
@@ -47,6 +53,23 @@ class UpdateCartItemView(generics.GenericAPIView):
             user=request.user,
             cart_item_id=pk,
             quantity=serializer.validated_data["quantity"],
+        )
+        return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
+
+class ChangeCartItemQuantityView(generics.GenericAPIView):
+
+    queryset = CartItem.objects.all()
+
+    serializer_class = ChangeCartItemQuantitySerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        cart = change_cart_item_quantity(
+            user=request.user,
+            cart_item_id=pk,
+            delta=serializer.validated_data["delta"],
         )
         return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
 

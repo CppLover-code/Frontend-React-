@@ -12,6 +12,13 @@ export function updateCartItem(itemId, quantity) {
     return api.patch(`/cart/item/${itemId}/`, { quantity });
 }
 
+// Атомарное изменение количества на сервере (+1 / -1):
+// сервер сам читает текущее значение под блокировкой,
+// поэтому быстрые клики не теряются
+export function changeCartItemQuantity(itemId, delta) {
+    return api.post(`/cart/item/${itemId}/change/`, { delta });
+}
+
 export function removeCartItem(itemId) {
     return api.delete(`/cart/item/${itemId}/delete/`);
 }

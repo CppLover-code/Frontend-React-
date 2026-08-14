@@ -2,6 +2,17 @@ import { useState } from "react"
 import useBook from "../hooks/useBook";
 import "../styles/BookForm.css"
 import useNotification from "../hooks/useNotification";
+import { ApiError } from "../api/client";
+
+
+// Достаёт текст ошибки поля name из ответа DRF (400),
+// например: {"name": ["author with this name already exists."]}
+function getServerNameError(err) {
+    if (err instanceof ApiError && err.status === 400 && err.data?.name) {
+        return Array.isArray(err.data.name) ? err.data.name[0] : String(err.data.name);
+    }
+    return null;
+}
 
 
 const initialFormData = {
@@ -19,7 +30,6 @@ const initialErrors = {
     categoryIds: "",
     price: "",
     stock: "",
-    description: "",
     newAuthorName: "",
     newCategoryName: ""
 };
@@ -182,10 +192,10 @@ function BookForm( {mode = "create", book = null}) {
             toggleAuthor(author.id);
             setNewAuthorName("");
             setErrors({ ...errors, newAuthorName: "" });
-        } catch {
+        } catch (err) {
             setErrors({
                 ...errors,
-                newAuthorName: "Failed to add author"
+                newAuthorName: getServerNameError(err) ?? "Failed to add author"
             });
         }
     }
@@ -225,10 +235,10 @@ function BookForm( {mode = "create", book = null}) {
             toggleCategory(category.id);
             setNewCategoryName("");
             setErrors({ ...errors, newCategoryName: "" });
-        } catch {
+        } catch (err) {
             setErrors({
                 ...errors,
-                newCategoryName: "Failed to add category"
+                newCategoryName: getServerNameError(err) ?? "Failed to add category"
             });
         }
     }
@@ -282,6 +292,7 @@ function BookForm( {mode = "create", book = null}) {
                 type="text"
                 value={newAuthorName}
                 onChange={(event) => setNewAuthorName(event.target.value)}
+                className={errors.newAuthorName ? "error" : ""}
             />
             <button
                 type="button"
@@ -289,6 +300,11 @@ function BookForm( {mode = "create", book = null}) {
             >
                 Add author
             </button>
+            {errors.newAuthorName && (
+                <p className="error-message">
+                    {errors.newAuthorName}
+                </p>
+            )}
 
             <br />
             <br />
@@ -319,6 +335,7 @@ function BookForm( {mode = "create", book = null}) {
                 type="text"
                 value={newCategoryName}
                 onChange={(event) => setNewCategoryName(event.target.value)}
+                className={errors.newCategoryName ? "error" : ""}
             />
             <button
                 type="button"
@@ -326,6 +343,11 @@ function BookForm( {mode = "create", book = null}) {
             >
                 Add category
             </button>
+            {errors.newCategoryName && (
+                <p className="error-message">
+                    {errors.newCategoryName}
+                </p>
+            )}
 
             <br />
             <br />
@@ -372,13 +394,7 @@ function BookForm( {mode = "create", book = null}) {
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
-                className={errors.description ? "error" : ""}
             />
-            {errors.description && (
-                <p className="error-message">
-                    {errors.description}
-                </p>
-            )}
 
             <br />
             <br />
