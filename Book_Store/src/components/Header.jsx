@@ -1,5 +1,4 @@
 import { Link, NavLink } from "react-router-dom";
-import "../styles/Header.css"
 import useAuth from "../hooks/useAuth";
 
 function Header()
