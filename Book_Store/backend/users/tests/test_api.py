@@ -285,3 +285,61 @@ def test_refresh_after_logout(user, api_client):
     )
 
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    
+    
+    
+@pytest.mark.django_db
+def test_refresh_rotates_token(user, api_client):
+    """
+    Refresh should set a new refresh cookie (rotation).
+    """
+
+    login = api_client.post(
+        reverse("login"),
+        {
+            "username": user.username,
+            "password": "12345678",
+        },
+        format="json",
+    )
+
+    old_refresh = login.cookies["refresh_token"].value
+
+    api_client.cookies["refresh_token"] = old_refresh
+
+    response = api_client.post(
+        reverse("refresh"),
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+    assert "refresh_token" in response.cookies
+    assert response.cookies["refresh_token"].value != old_refresh
+
+
+@pytest.mark.django_db
+def test_old_refresh_rejected_after_rotation(user, api_client):
+    """
+    Used refresh token should be blacklisted and rejected.
+    """
+
+    login = api_client.post(
+        reverse("login"),
+        {
+            "username": user.username,
+            "password": "12345678",
+        },
+        format="json",
+    )
+
+    old_refresh = login.cookies["refresh_token"].value
+
+    api_client.cookies["refresh_token"] = old_refresh
+
+    first = api_client.post(reverse("refresh"))
+    assert first.status_code == status.HTTP_200_OK
+
+    # подсовываем старый токен еще раз - должен быть отвергнут
+    api_client.cookies["refresh_token"] = old_refresh
+
+    second = api_client.post(reverse("refresh"))
+    assert second.status_code == status.HTTP_401_UNAUTHORIZED

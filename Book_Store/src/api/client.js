@@ -48,6 +48,17 @@ async function rawRequest(path, { method = "GET", body } = {}) {
     return data;
 }
 
+let refreshPromise = null;
+function refreshAccessToken() {
+    if (!refreshPromise) {
+        refreshPromise = rawRequest("/users/refresh/", { method: "POST" })
+            .finally(() => {
+                refreshPromise = null;
+            });
+    }
+    return refreshPromise;
+}
+
 // Умный запрос: при 401 пробует обновить access-токен и повторить
 async function request(path, options = {}) {
     try {
@@ -60,7 +71,7 @@ async function request(path, options = {}) {
 
         let refreshData;
         try {
-            refreshData = await rawRequest("/users/refresh/", { method: "POST" });
+            refreshData = await refreshAccessToken();
         } catch {
             // refresh-cookie нет или она истекла - пользователь действительно не залогинен,
             // пробрасываем исходную ошибку

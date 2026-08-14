@@ -1,4 +1,4 @@
-from .utils import create_auth_response
+from .utils import create_auth_response, set_refresh_cookie
 from django.contrib.auth import get_user_model
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -73,27 +73,37 @@ class LogoutView(generics.GenericAPIView):
             )
     
 class RefreshView(generics.GenericAPIView):
-    
+
     serializer_class = EmptySerializer
     permission_classes = [AllowAny]
-    
+
     def post(self, request):
         refresh_token = request.COOKIES.get("refresh_token")
-        
+
         if not refresh_token:
             raise AuthenticationFailed("Refresh token is required")
-        
+
         try:
             refresh = RefreshToken(refresh_token)
-            access = str(refresh.access_token)
-            return Response(
-                {
-                    "access": access,
-                },
-                status=status.HTTP_200_OK,
-            )
         except TokenError:
             raise AuthenticationFailed("Invalid refresh token")
+
+        refresh.blacklist()
+
+        refresh.set_jti()
+        refresh.set_exp()
+        refresh.set_iat()
+
+        response = Response(
+            {
+                "access": str(refresh.access_token),
+            },
+            status=status.HTTP_200_OK,
+        )
+
+        set_refresh_cookie(response, refresh)
+
+        return response
 
 class MeView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
