@@ -39,26 +39,39 @@ function BookCard({book})
 
 
     return (
-        <article>
-
-            <h3>Title: {title}</h3>
-
-            <p>Authors: {authorNames}</p>
-
-            <p>Categories: {categoryNames}</p>
-
-            <p>Price: ${price}</p>
-
-            <p>Stock: {stock}</p>
-
-            <p>Description: {description}</p>
-
-            <Link to={`/books/${id}`}>Details</Link>
-
-            {!user?.is_staff && (
-                <button onClick={handleAddToCart}>Add to Cart</button>
-            )}
-
+        <article className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+    
+            <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+    
+            <p className="text-sm text-gray-600">{authorNames}</p>
+    
+            <p className="text-xs text-gray-400">{categoryNames}</p>
+    
+            <p className="line-clamp-2 text-sm text-gray-600">{description}</p>
+    
+            <div className="mt-auto flex items-center justify-between pt-2">
+                <span className="text-xl font-bold text-teal-700">${price}</span>
+                <span className="text-xs text-gray-400">In stock: {stock}</span>
+            </div>
+    
+            <div className="flex gap-2">
+                <Link
+                    to={`/books/${id}`}
+                    className="flex-1 rounded-md border border-teal-700 px-3 py-2 text-center text-sm font-medium text-teal-700 transition-colors hover:bg-teal-50"
+                >
+                    Details
+                </Link>
+    
+                {!user?.is_staff && (
+                    <button
+                        onClick={handleAddToCart}
+                        className="flex-1 cursor-pointer rounded-md bg-teal-700 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800"
+                    >
+                        Add to Cart
+                    </button>
+                )}
+            </div>
+    
         </article>
     );
 }

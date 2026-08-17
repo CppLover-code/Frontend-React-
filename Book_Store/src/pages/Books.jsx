@@ -9,7 +9,8 @@ function Books()
     const { user } = useAuth();
     
     return( 
-        <div className="book-controls">
+        <div className="space-y-6">
+            <h1 className="text-3xl font-bold text-gray-900">Books</h1>
             <BookControls />
             {user?.is_staff && <BookForm mode="create" />}
             <BookList />  
