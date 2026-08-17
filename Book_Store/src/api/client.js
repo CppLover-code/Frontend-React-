@@ -21,8 +21,9 @@ class ApiError extends Error {
 async function rawRequest(path, { method = "GET", body } = {}) {
 
     const headers = {};
+    const isFormData = body instanceof FormData;
 
-    if (body !== undefined) {
+    if (body !== undefined && !isFormData) {
         headers["Content-Type"] = "application/json";
     }
 
@@ -34,7 +35,11 @@ async function rawRequest(path, { method = "GET", body } = {}) {
         method,
         headers,
         credentials: "include",
-        body: body !== undefined ? JSON.stringify(body) : undefined,
+        body: body === undefined
+            ? undefined
+            : isFormData
+                ? body
+                : JSON.stringify(body),
     });
 
     if (response.status === 204) return null;

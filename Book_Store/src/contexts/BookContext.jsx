@@ -130,33 +130,38 @@ function BookProvider({ children }) {
         setSelectedSort(value);
         setPage(1);
     }
+    // --------------------------------------------------
+    // Collector
+    // --------------------------------------------------
+
+    function toBookFormData(formData) {
+        const data = new FormData();
+    
+        data.append("title", formData.title);
+        data.append("description", formData.description);
+        data.append("price", formData.price);
+        data.append("stock", formData.stock);
+    
+        formData.authorIds.forEach((id) => data.append("author_ids", id));
+        formData.categoryIds.forEach((id) => data.append("category_ids", id));
+    
+        if (formData.coverFile) {
+            data.append("cover", formData.coverFile);
+        }
+    
+        return data;
+    }
 
     // --------------------------------------------------
     // CRUD
     // --------------------------------------------------
     async function addBook(formData) {
-        await booksApi.createBook({
-            title: formData.title,
-            description: formData.description,
-            price: formData.price,
-            stock: formData.stock,
-            author_ids: formData.authorIds,
-            category_ids: formData.categoryIds,
-        });
-
+        await booksApi.createBook(toBookFormData(formData));
         setRefreshKey(key => key + 1);
     }
-
+    
     async function updateBook(id, formData) {
-        await booksApi.updateBook(id, {
-            title: formData.title,
-            description: formData.description,
-            price: formData.price,
-            stock: formData.stock,
-            author_ids: formData.authorIds,
-            category_ids: formData.categoryIds,
-        });
-
+        await booksApi.updateBook(id, toBookFormData(formData));
         setRefreshKey(key => key + 1);
     }
 

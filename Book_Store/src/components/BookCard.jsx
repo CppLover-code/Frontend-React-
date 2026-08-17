@@ -41,17 +41,17 @@ function BookCard({ book }) {
     return (
         <article className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
 
-            {cover ? (
-                <img
-                    src={cover}
-                    alt={title}
-                    className="mb-1 h-56 w-full rounded-md object-cover"
-                />
-            ) : (
-                <div className="mb-1 flex h-56 w-full items-center justify-center rounded-md bg-gray-100 text-4xl">
-                    📚
-                </div>
-            )}
+            <div className="mb-1 flex h-56 w-full items-center justify-center rounded-md bg-white">
+                {cover ? (
+                    <img
+                        src={cover}
+                        alt={title}
+                        className="max-h-full max-w-full object-contain"
+                    />
+                ) : (
+                    <span className="text-4xl">📚</span>
+                )}
+            </div>
 
             <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
 

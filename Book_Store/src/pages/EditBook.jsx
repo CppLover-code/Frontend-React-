@@ -7,8 +7,8 @@ function EditBook() {
 
     const { book, loading, error } = useBookDetail(id);
 
-    if (loading) return <h2>Loading...</h2>;
-    if (error) return <h2>Book not found</h2>;
+    if (loading) return <p className="py-12 text-center text-gray-500">Loading...</p>;
+    if (error) return <p className="py-12 text-center text-red-600">Book not found</p>;
 
     return (
         <BookForm

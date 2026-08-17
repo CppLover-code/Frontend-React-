@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import useNotification from "../hooks/useNotification";
-import "../styles/Notification.css"
 
 function Notification() {
 
