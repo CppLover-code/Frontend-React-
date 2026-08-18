@@ -37,7 +37,10 @@ class AddToCartView(generics.GenericAPIView):
             user=request.user,
             **serializer.validated_data,
         )
-        return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
+        return Response(
+        CartSerializer(cart, context={"request": request}).data,
+        status=status.HTTP_200_OK,
+        )
     
 class UpdateCartItemView(generics.GenericAPIView):
     
@@ -54,7 +57,10 @@ class UpdateCartItemView(generics.GenericAPIView):
             cart_item_id=pk,
             quantity=serializer.validated_data["quantity"],
         )
-        return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
+        return Response(
+        CartSerializer(cart, context={"request": request}).data,
+        status=status.HTTP_200_OK,
+        )
 
 class ChangeCartItemQuantityView(generics.GenericAPIView):
 
@@ -71,7 +77,10 @@ class ChangeCartItemQuantityView(generics.GenericAPIView):
             cart_item_id=pk,
             delta=serializer.validated_data["delta"],
         )
-        return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
+        return Response(
+        CartSerializer(cart, context={"request": request}).data,
+        status=status.HTTP_200_OK,
+        )
 
 class DeleteCartItemView(generics.GenericAPIView):
     
@@ -84,7 +93,10 @@ class DeleteCartItemView(generics.GenericAPIView):
             user=request.user,
             cart_item_id=pk,
         )
-        return Response(CartSerializer(cart).data, status=status.HTTP_200_OK)
+        return Response(
+        CartSerializer(cart, context={"request": request}).data,
+        status=status.HTTP_200_OK,
+        )
     
 class ClearCartView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
@@ -93,6 +105,6 @@ class ClearCartView(generics.GenericAPIView):
         cart = clear_cart(request.user)
 
         return Response(
-            CartSerializer(cart).data,
-            status=status.HTTP_200_OK,
+        CartSerializer(cart, context={"request": request}).data,
+        status=status.HTTP_200_OK,
         )

@@ -6,29 +6,31 @@ function CartList()
 {
     const { cart } = useCart();
 
-    if(cart.items.length === 0)
+    if (cart.items.length === 0)
     {
-        return(
-            <>
-                <h2>🛒 Your cart is empty</h2>
-                <Link to="/books">Browse books</Link>
-            </>
+        return (
+            <div className="rounded-lg border border-gray-200 bg-white p-8 text-center shadow-sm">
+                <p className="text-lg font-medium text-gray-900">Your cart is empty</p>
+                <Link
+                    to="/books"
+                    className="mt-3 inline-block text-sm font-medium text-teal-700 hover:underline"
+                >
+                    Browse books
+                </Link>
+            </div>
         );
     }
-    return(
-        <>
-            <h2>CartList</h2>
 
+    return (
+        <div className="space-y-3">
             {cart.items.map(item => (
-
                 <CartItem
                     key={item.id}
                     item={item}
                 />
-
             ))}
-        </>
-    );  
+        </div>
+    );
 }
 
 export default CartList;
