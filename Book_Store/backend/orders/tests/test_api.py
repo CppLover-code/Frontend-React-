@@ -179,3 +179,67 @@ def test_cart_becomes_empty_after_order(
 
     assert response.status_code == 201
     assert cart.items.count() == 0
+    
+# ==========================================
+# Pay order
+# ==========================================
+
+@pytest.mark.django_db
+def test_create_order_requires_profile(authenticated_client, user, cart, book):
+    user.first_name = ""
+    user.save(update_fields=["first_name"])
+
+    CartItem.objects.create(cart=cart, book=book, quantity=1)
+
+    response = authenticated_client.post("/api/orders/")
+
+    assert response.status_code == 400
+
+
+@pytest.mark.django_db
+def test_pay_order(authenticated_client, user, cart, book):
+    CartItem.objects.create(cart=cart, book=book, quantity=1)
+    create = authenticated_client.post("/api/orders/")
+    order_id = create.data["id"]
+
+    response = authenticated_client.post(f"/api/orders/{order_id}/pay/")
+
+    assert response.status_code == 200
+    assert response.data["status"] == "paid"
+
+
+@pytest.mark.django_db
+def test_user_cannot_ship_order(authenticated_client, user, cart, book):
+    CartItem.objects.create(cart=cart, book=book, quantity=1)
+    create = authenticated_client.post("/api/orders/")
+    authenticated_client.post(f"/api/orders/{create.data['id']}/pay/")
+
+    response = authenticated_client.post(
+        f"/api/orders/{create.data['id']}/status/",
+        {"status": "shipped"},
+        format="json",
+    )
+
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_admin_can_ship_paid_order(admin_client, user, cart, book):
+    from rest_framework.test import APIClient
+
+    buyer = APIClient()
+    buyer.force_authenticate(user=user)
+    CartItem.objects.create(cart=cart, book=book, quantity=1)
+    create = buyer.post("/api/orders/")
+    buyer.post(f"/api/orders/{create.data['id']}/pay/")
+
+    response = admin_client.post(
+        f"/api/orders/{create.data['id']}/status/",
+        {"status": "shipped"},
+        format="json",
+    )
+
+    assert response.status_code == 200
+    assert response.data["status"] == "shipped"
+    
+    

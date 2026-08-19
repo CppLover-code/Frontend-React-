@@ -29,6 +29,12 @@ class OrderSerializer(serializers.ModelSerializer):
             "user",
             "status",
             "total_price",
+            "shipping_first_name",
+            "shipping_last_name",
+            "shipping_phone",
+            "shipping_city",
+            "shipping_street",
+            "shipping_postal_code",
             "created_at",
             "updated_at",
             "items",
@@ -36,3 +42,6 @@ class OrderSerializer(serializers.ModelSerializer):
         
 class CreateOrderSerializer(serializers.Serializer):
     pass
+
+class UpdateOrderStatusSerializer(serializers.Serializer):
+    status = serializers.ChoiceField(choices=Order.OrderStatus.choices)

@@ -29,6 +29,13 @@ class Order(models.Model):
         default=0,
         )
     
+    shipping_first_name = models.CharField(max_length=150, blank=True)
+    shipping_last_name = models.CharField(max_length=150, blank=True)
+    shipping_phone = models.CharField(max_length=15, blank=True)
+    shipping_city = models.CharField(max_length=100, blank=True)
+    shipping_street = models.CharField(max_length=200, blank=True)
+    shipping_postal_code = models.CharField(max_length=20, blank=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

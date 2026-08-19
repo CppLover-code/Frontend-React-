@@ -29,6 +29,12 @@ def user():
         username="user",
         email="user@test.com",
         password="12345678",
+        first_name="Test",
+        last_name="User",
+        phone="1234567890",
+        city="Baku",
+        street="Nizami 1",
+        postal_code="AZ1000",
     )
 
 

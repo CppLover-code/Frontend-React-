@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import useNotification from "../hooks/useNotification";
+import { Navigate } from "react-router-dom";
 
 const fieldClass =
     "rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200";
@@ -78,6 +79,10 @@ function ProfilePage() {
     function handleCancel() {
         resetFromUser();
         setEditing(false);
+    }
+
+    if (user.is_staff) {
+        return <Navigate to="/" replace />;
     }
 
     return (

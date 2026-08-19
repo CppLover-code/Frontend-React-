@@ -26,9 +26,15 @@ function Header() {
                     {!user?.is_staff && <NavLink to="/cart" className={navLinkClass}>Cart</NavLink>}
                     {user ? (
                         <>
-                            <NavLink to="/profile" className={navLinkClass}>
-                                Hi, {user.username}
-                            </NavLink>
+                            {user.is_staff ? (
+                                <span className="ml-2 px-3 py-2 text-sm text-teal-100">
+                                    Hi, {user.username}
+                                </span>
+                            ) : (
+                                <NavLink to="/profile" className={navLinkClass}>
+                                    Hi, {user.username}
+                                </NavLink>
+                            )}
                             <button
                                 onClick={logout}
                                 className="ml-1 cursor-pointer rounded-md bg-teal-900 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-950"
