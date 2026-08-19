@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { getBook } from "../api/books";
+import useBook from "./useBook";
 
 function useBookDetail(id) {
+    const { refreshKey } = useBook();
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -28,7 +30,7 @@ function useBookDetail(id) {
         return () => {
             ignore = true;
         };
-    }, [id]);
+    }, [id, refreshKey]);
 
     return { book, loading, error };
 }

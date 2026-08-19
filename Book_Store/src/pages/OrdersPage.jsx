@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getOrders, payOrder, updateOrderStatus } from "../api/orders";
 import useAuth from "../hooks/useAuth";
 import useNotification from "../hooks/useNotification";
+import useBook from "../hooks/useBook";
 
 function OrdersPage() {
 
@@ -17,6 +18,8 @@ function OrdersPage() {
     const { user } = useAuth();
     const { showNotification } = useNotification();
     const [ refreshKey, setRefreshKey ] = useState(0);
+
+    const { refreshBooks } = useBook();
 
     useEffect(() => {
         let ignore = false;
@@ -61,6 +64,9 @@ function OrdersPage() {
             await updateOrderStatus(orderId, status);
             showNotification({ message: `Order ${status}`, type: "success" });
             setRefreshKey((key) => key + 1);
+            if (status === "cancelled") {
+                refreshBooks();
+            }
         } catch {
             showNotification({ message: "Failed to update status", type: "error" });
         }

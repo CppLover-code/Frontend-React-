@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CartList from "../components/CartList";
 import useCart from "../hooks/useCart";
+import useBook from "../hooks/useBook";
 import useNotification from "../hooks/useNotification";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -24,6 +25,7 @@ function CartPage() {
     const { user } = useAuth();
     const navigate = useNavigate();
     const profileComplete = isProfileComplete(user);
+    const { refreshBooks } = useBook();
 
     const [placingOrder, setPlacingOrder] = useState(false);
 
@@ -35,6 +37,7 @@ function CartPage() {
 
         try {
             await checkout();
+            refreshBooks();
 
             showNotification({
                 message: "Order placed successfully!",

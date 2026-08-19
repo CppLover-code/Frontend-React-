@@ -174,6 +174,9 @@ function BookProvider({ children }) {
             setRefreshKey(key => key + 1);
         }
     }
+    function refreshBooks() {
+        setRefreshKey(key => key + 1);
+    }
 
     async function addAuthor(name) {
         const normalizedName = name.trim();
@@ -238,6 +241,9 @@ function BookProvider({ children }) {
                 addBook,
                 updateBook,
                 deleteBook,
+
+                refreshBooks,
+                refreshKey,
 
                 addAuthor,
                 addCategory,

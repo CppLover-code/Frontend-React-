@@ -4,11 +4,12 @@ import useBook from "../hooks/useBook";
 import useBookDetail from "../hooks/useBookDetail";
 import useNotification from "../hooks/useNotification";
 import useAuth from "../hooks/useAuth";
+import { ApiError } from "../api/client";
 
 function BookPage() {
     const { user } = useAuth();
     const { showNotification } = useNotification();
-    const { addToCart } = useCart();
+    const { addToCart, cart } = useCart();
     const { deleteBook } = useBook();
     const { id } = useParams();
     const { book, loading, error } = useBookDetail(id);
@@ -28,6 +29,11 @@ function BookPage() {
         description,
         cover
     } = book;
+
+    const quantityInCart =
+        cart?.items.find((item) => item.book.id === book.id)?.quantity ?? 0;
+    const soldOut = stock === 0;
+    const cartFull = quantityInCart >= stock;
 
     async function handleDelete() {
         const confirmed = window.confirm(
@@ -54,13 +60,21 @@ function BookPage() {
             await addToCart(book);
             showNotification({
                 message: "Book added to cart",
-                type: "success"
+                type: "success",
             });
-        } catch {
-            showNotification({
-                message: "Please log in to add books to cart",
-                type: "error"
-            });
+        } catch (err) {
+            let message = "Failed to add book to cart";
+
+            if (err instanceof ApiError && err.status === 401) {
+                message = "Please log in to add books to cart";
+            } else if (
+                err instanceof ApiError &&
+                typeof err.data?.detail === "string"
+            ) {
+                message = err.data.detail;
+            }
+
+            showNotification({ message, type: "error" });
         }
     }
 
@@ -116,12 +130,20 @@ function BookPage() {
                     <div className="flex gap-2 border-t border-gray-100 pt-4">
 
                         {!user?.is_staff && (
-                            <button
-                                onClick={handleAddToCart}
-                                className="cursor-pointer rounded-md bg-teal-700 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800"
-                            >
-                                Add to Cart
-                            </button>
+                            soldOut ? (
+                                <span className="rounded-md bg-gray-100 px-5 py-2 text-sm font-medium text-gray-500">
+                                    Out of stock
+                                </span>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={handleAddToCart}
+                                    disabled={cartFull}
+                                    className="cursor-pointer rounded-md bg-teal-700 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-40"
+                                >
+                                    Add to Cart
+                                </button>
+                            )
                         )}
 
                         {user?.is_staff && (
