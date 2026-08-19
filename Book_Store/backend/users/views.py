@@ -105,9 +105,10 @@ class RefreshView(generics.GenericAPIView):
 
         return response
 
-class MeView(generics.RetrieveAPIView):
+class MeView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
+    http_method_names = ["get", "patch"]
     
     def get_object(self):
         return self.request.user

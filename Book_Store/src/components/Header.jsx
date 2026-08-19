@@ -5,13 +5,12 @@ function navLinkClass({ isActive }) {
     return [
         "rounded-md px-3 py-2 text-sm font-medium transition-colors",
         isActive
-                ? "bg-teal-800 text-white"
-                : "text-teal-100 hover:bg-teal-600 hover:text-white",
+            ? "bg-teal-800 text-white"
+            : "text-teal-100 hover:bg-teal-600 hover:text-white",
     ].join(" ");
 }
 
-function Header()
-{
+function Header() {
     const { user, logout } = useAuth();
     return (
         <header className="bg-teal-700 shadow-md">
@@ -27,9 +26,9 @@ function Header()
                     {!user?.is_staff && <NavLink to="/cart" className={navLinkClass}>Cart</NavLink>}
                     {user ? (
                         <>
-                            <span className="ml-2 text-sm text-teal-100">
+                            <NavLink to="/profile" className={navLinkClass}>
                                 Hi, {user.username}
-                            </span>
+                            </NavLink>
                             <button
                                 onClick={logout}
                                 className="ml-1 cursor-pointer rounded-md bg-teal-900 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-950"

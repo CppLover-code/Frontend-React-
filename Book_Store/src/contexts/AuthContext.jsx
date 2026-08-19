@@ -53,9 +53,15 @@ function AuthProvider({ children }) {
         }
     }
 
+    async function updateProfile(data) {
+        const updated = await authApi.updateMe(data);
+        setUser(updated);
+        return updated;
+    }
+
     return (
         <AuthContext.Provider
-            value={{ user, initializing, login, register, logout }}>
+            value={{ user, initializing, login, register, logout, updateProfile }}>
 
             {children}
 

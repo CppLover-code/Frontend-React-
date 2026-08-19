@@ -26,7 +26,22 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username", "email", "is_staff")
+        fields = (
+            "id",
+            "username",
+            "email",
+            "is_staff",
+            "phone",
+            "city",
+            "street",
+            "postal_code",
+        )
+        extra_kwargs = {
+            "id": {"read_only": True},
+            "username": {"read_only": True},
+            "email": {"read_only": True},
+            "is_staff": {"read_only": True},
+        }
         
 
 class LoginSerializer(serializers.Serializer):

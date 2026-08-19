@@ -343,3 +343,35 @@ def test_old_refresh_rejected_after_rotation(user, api_client):
 
     second = api_client.post(reverse("refresh"))
     assert second.status_code == status.HTTP_401_UNAUTHORIZED
+    
+@pytest.mark.django_db
+def test_me_returns_profile_fields(authenticated_client):
+    response = authenticated_client.get(reverse("me"))
+
+    assert response.status_code == status.HTTP_200_OK
+    assert "phone" in response.data
+    assert "city" in response.data
+    assert "street" in response.data
+    assert "postal_code" in response.data
+
+
+@pytest.mark.django_db
+def test_me_patch_updates_profile(authenticated_client):
+    response = authenticated_client.patch(
+        reverse("me"),
+        {
+            "phone": "1234567890",
+            "city": "Baku",
+            "street": "Nizami 12",
+            "postal_code": "AZ1000",
+            "username": "hacker",
+            "is_staff": True,
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.data["phone"] == "1234567890"
+    assert response.data["city"] == "Baku"
+    assert response.data["username"] == "user"
+    assert response.data["is_staff"] is False

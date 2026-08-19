@@ -25,3 +25,7 @@ export async function logout() {
 export function getMe() {
     return api.get("/users/me/");
 }
+
+export function updateMe(data) {
+    return api.patch("/users/me/", data);
+}
