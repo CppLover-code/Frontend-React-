@@ -242,4 +242,26 @@ def test_admin_can_ship_paid_order(admin_client, user, cart, book):
     assert response.status_code == 200
     assert response.data["status"] == "shipped"
     
-    
+
+@pytest.mark.django_db
+def test_cancel_paid_order_restores_stock(admin_client, user, cart, book):
+    from rest_framework.test import APIClient
+
+    buyer = APIClient()
+    buyer.force_authenticate(user=user)
+    CartItem.objects.create(cart=cart, book=book, quantity=2)
+    create = buyer.post("/api/orders/")
+    buyer.post(f"/api/orders/{create.data['id']}/pay/")
+
+    book.refresh_from_db()
+    assert book.stock == 8
+
+    response = admin_client.post(
+        f"/api/orders/{create.data['id']}/status/",
+        {"status": "cancelled"},
+        format="json",
+    )
+
+    assert response.status_code == 200
+    book.refresh_from_db()
+    assert book.stock == 10

@@ -1,11 +1,13 @@
 from decimal import Decimal
 
+from django.db.models import F
 from django.db import transaction
 from rest_framework.exceptions import ValidationError
 
 from cart.validators import validate_stock
 
 from .models import Order, OrderItem
+from books.models import Book
 
 import logging
 
@@ -91,6 +93,12 @@ def create_order(user):
             
     return order
 
+def restore_stock(order):
+    for item in order.items.exclude(book_id=None):
+        Book.objects.filter(pk=item.book_id).update(
+            stock=F("stock") + item.quantity
+        )
+
 ADMIN_TRANSITIONS = {
     Order.OrderStatus.PENDING: [Order.OrderStatus.CANCELLED],
     Order.OrderStatus.PAID: [
@@ -120,7 +128,12 @@ def transition_order(order, new_status):
             "detail": f"Cannot change status from {order.status} to {new_status}.",
         })
 
-    order.status = new_status
-    order.save(update_fields=["status", "updated_at"])
+    with transaction.atomic():
+        order.status = new_status
+        order.save(update_fields=["status", "updated_at"])
+
+        if new_status == Order.OrderStatus.CANCELLED:
+            restore_stock(order)
+
     return order
         

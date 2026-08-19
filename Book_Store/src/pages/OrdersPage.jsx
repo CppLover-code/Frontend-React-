@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getOrders } from "../api/orders";
+import { getOrders, payOrder, updateOrderStatus } from "../api/orders";
+import useAuth from "../hooks/useAuth";
+import useNotification from "../hooks/useNotification";
 
 function OrdersPage() {
 
@@ -11,6 +13,10 @@ function OrdersPage() {
     const [page, setPage] = useState(1);
     const [hasNext, setHasNext] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
+
+    const { user } = useAuth();
+    const { showNotification } = useNotification();
+    const [ refreshKey, setRefreshKey ] = useState(0);
 
     useEffect(() => {
         let ignore = false;
@@ -38,7 +44,27 @@ function OrdersPage() {
         return () => {
             ignore = true;
         };
-    }, [page]);
+    }, [page, refreshKey]);
+
+    async function handlePay(orderId) {
+        try {
+            await payOrder(orderId);
+            showNotification({ message: "Payment successful", type: "success" });
+            setRefreshKey((key) => key + 1);
+        } catch {
+            showNotification({ message: "Payment failed", type: "error" });
+        }
+    }
+
+    async function handleStatus(orderId, status) {
+        try {
+            await updateOrderStatus(orderId, status);
+            showNotification({ message: `Order ${status}`, type: "success" });
+            setRefreshKey((key) => key + 1);
+        } catch {
+            showNotification({ message: "Failed to update status", type: "error" });
+        }
+    }
 
     if (loading) return <p className="py-12 text-center text-gray-500">Loading...</p>;
     if (error) return <p className="py-12 text-center text-red-600">Failed to load orders :(</p>;
@@ -59,7 +85,9 @@ function OrdersPage() {
 
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-gray-900">My Orders</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+                {user.is_staff ? "Orders" : "My Orders"}
+            </h1>
 
             {orders.map(order => (
                 <article
@@ -91,6 +119,54 @@ function OrdersPage() {
                     <p className="text-right font-bold text-gray-900">
                         Total: ${Number(order.total_price).toFixed(2)}
                     </p>
+
+                    <p className="text-sm text-gray-500">
+                        Ship to: {order.shipping_first_name} {order.shipping_last_name},{" "}
+                        {order.shipping_street}, {order.shipping_city}{" "}
+                        {order.shipping_postal_code}, {order.shipping_phone}
+                    </p>
+
+                    {!user.is_staff && order.status === "pending" && (
+                        <button
+                            type="button"
+                            onClick={() => handlePay(order.id)}
+                            className="cursor-pointer rounded-md bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800"
+                        >
+                            Pay
+                        </button>
+                    )}
+
+                    {user.is_staff && (
+                        <div className="flex flex-wrap gap-2">
+                            {order.status === "paid" && (
+                                <button
+                                    type="button"
+                                    onClick={() => handleStatus(order.id, "shipped")}
+                                    className="cursor-pointer rounded-md bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800"
+                                >
+                                    Mark shipped
+                                </button>
+                            )}
+                            {order.status === "shipped" && (
+                                <button
+                                    type="button"
+                                    onClick={() => handleStatus(order.id, "delivered")}
+                                    className="cursor-pointer rounded-md bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800"
+                                >
+                                    Mark delivered
+                                </button>
+                            )}
+                            {(order.status === "pending" || order.status === "paid") && (
+                                <button
+                                    type="button"
+                                    onClick={() => handleStatus(order.id, "cancelled")}
+                                    className="cursor-pointer rounded-md border border-red-600 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                                >
+                                    Cancel
+                                </button>
+                            )}
+                        </div>
+                    )}
                 </article>
             ))}
 
