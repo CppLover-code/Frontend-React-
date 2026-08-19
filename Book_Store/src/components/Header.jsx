@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useTheme from "../hooks/useTheme";
 
 function navLinkClass({ isActive }) {
     return [
@@ -12,6 +13,8 @@ function navLinkClass({ isActive }) {
 
 function Header() {
     const { user, logout } = useAuth();
+    const { theme, toggleTheme } = useTheme();
+
     return (
         <header className="bg-teal-700 shadow-md">
             <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-3">
@@ -24,6 +27,14 @@ function Header() {
                     <NavLink to="/about" className={navLinkClass}>About</NavLink>
                     {user && <NavLink to="/orders" className={navLinkClass}>Orders</NavLink>}
                     {!user?.is_staff && <NavLink to="/cart" className={navLinkClass}>Cart</NavLink>}
+                    <button
+                        type="button"
+                        onClick={toggleTheme}
+                        aria-label="Toggle theme"
+                        className="ml-1 cursor-pointer rounded-md px-3 py-2 text-sm font-medium text-teal-100 transition-colors hover:bg-teal-600 hover:text-white"
+                    >
+                        {theme === "dark" ? "☀️" : "🌙"}
+                    </button>
                     {user ? (
                         <>
                             {user.is_staff ? (

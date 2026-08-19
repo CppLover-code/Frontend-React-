@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useNotification from "../hooks/useNotification";
 import useAuth from "../hooks/useAuth";
-import { ApiError } from "../api/api";
+import { ApiError } from "../api/client";
 
 function BookCard({ book }) {
-    const { addToCart } = useCart();
+    const { addToCart, cart } = useCart();
     const { showNotification } = useNotification();
     const { user } = useAuth();
 
