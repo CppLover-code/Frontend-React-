@@ -14,6 +14,8 @@ function ProfilePage() {
     const [street, setStreet] = useState(user.street ?? "");
     const [postalCode, setPostalCode] = useState(user.postal_code ?? "");
     const [submitting, setSubmitting] = useState(false);
+    const [firstName, setFirstName] = useState(user.first_name ?? "");
+    const [lastName, setLastName] = useState(user.last_name ?? "");
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -21,6 +23,8 @@ function ProfilePage() {
 
         try {
             await updateProfile({
+                first_name: firstName,
+                last_name: lastName,
                 phone,
                 city,
                 street,

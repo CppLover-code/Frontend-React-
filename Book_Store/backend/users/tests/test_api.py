@@ -349,6 +349,8 @@ def test_me_returns_profile_fields(authenticated_client):
     response = authenticated_client.get(reverse("me"))
 
     assert response.status_code == status.HTTP_200_OK
+    assert "first_name" in response.data
+    assert "last_name" in response.data
     assert "phone" in response.data
     assert "city" in response.data
     assert "street" in response.data
@@ -360,6 +362,8 @@ def test_me_patch_updates_profile(authenticated_client):
     response = authenticated_client.patch(
         reverse("me"),
         {
+            "first_name": "John",
+            "last_name": "Doe",
             "phone": "1234567890",
             "city": "Baku",
             "street": "Nizami 12",
