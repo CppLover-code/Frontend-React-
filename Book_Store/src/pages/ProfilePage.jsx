@@ -4,11 +4,11 @@ import useNotification from "../hooks/useNotification";
 import { Navigate } from "react-router-dom";
 
 const fieldClass =
-    "rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200";
+    "rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800";
 
 function ProfileField({ label, value, editing, onChange }) {
     return (
-        <label className="flex flex-col gap-1 text-sm font-medium text-gray-600">
+        <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
             {label}
             {editing ? (
                 <input
@@ -18,7 +18,7 @@ function ProfileField({ label, value, editing, onChange }) {
                     className={fieldClass}
                 />
             ) : (
-                <p className="rounded-md bg-gray-50 px-3 py-2 text-sm font-medium text-gray-900">
+                <p className="rounded-md bg-gray-50 px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100">
                     {value.trim() ? value : "—"}
                 </p>
             )}
@@ -89,18 +89,18 @@ function ProfilePage() {
         <div className="mx-auto max-w-md">
             <form
                 onSubmit={handleSubmit}
-                className="space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
+                className="space-y-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-6 shadow-sm"
             >
-                <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Profile</h1>
 
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600">
+                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
                     Username
-                    <input type="text" value={user.username} disabled className={`${fieldClass} bg-gray-100`} />
+                    <input type="text" value={user.username} disabled className={`${fieldClass} bg-gray-100 dark:bg-gray-800`} />
                 </label>
 
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600">
+                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
                     Email
-                    <input type="email" value={user.email} disabled className={`${fieldClass} bg-gray-100`} />
+                    <input type="email" value={user.email} disabled className={`${fieldClass} bg-gray-100 dark:bg-gray-800`} />
                 </label>
 
                 <ProfileField
@@ -150,7 +150,7 @@ function ProfilePage() {
                         <button
                             type="button"
                             onClick={handleCancel}
-                            className="flex-1 cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                            className="flex-1 cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
                         >
                             Cancel
                         </button>

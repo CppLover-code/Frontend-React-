@@ -334,29 +334,29 @@ function BookForm({ mode = "create", book = null }) {
     return (
         <form
             onSubmit={handleSubmit}
-            className="space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
+            className="space-y-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-6 shadow-sm"
         >
-            <h2 className="text-lg font-semibold text-gray-900">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 {mode === "create" ? "Add a book" : "Edit book"}
             </h2>
 
-            <label className="flex flex-col gap-1 text-sm font-medium text-gray-600">
+            <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
                 Title
                 <input
                     type="text"
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    className={`rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 ${errors.title
+                    className={`rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800 ${errors.title
                         ? "border-red-500"
-                        : "border-gray-300 focus:border-teal-500"
+                        : "border-gray-300 focus:border-teal-500 dark:border-gray-600"
                         }`}
                 />
                 {errors.title && <p className="text-sm text-red-600">{errors.title}</p>}
             </label>
 
             <fieldset>
-                <legend className="mb-2 text-sm font-medium text-gray-600">Authors</legend>
+                <legend className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-300">Authors</legend>
 
                 {formData.authorIds.length > 0 && (
                     <div className="mb-2 flex flex-wrap gap-2">
@@ -366,7 +366,7 @@ function BookForm({ mode = "create", book = null }) {
                             return (
                                 <span
                                     key={id}
-                                    className="flex items-center gap-1 rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700"
+                                    className="flex items-center gap-1 rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700 dark:bg-teal-950 dark:text-teal-300"
                                 >
                                     {author.name}
                                     <button
@@ -395,16 +395,16 @@ function BookForm({ mode = "create", book = null }) {
                             }
                         }}
                         placeholder="Type an author name"
-                        className={`flex-1 rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 ${errors.newAuthorName
+                        className={`flex-1 rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800 ${errors.newAuthorName
                             ? "border-red-500"
-                            : "border-gray-300 focus:border-teal-500"
+                            : "border-gray-300 focus:border-teal-500 dark:border-gray-600"
                             }`}
                     />
                     <button
                         type="button"
                         onClick={handleAuthorButton}
                         disabled={!newAuthorName.trim() || authorAlreadySelected}
-                        className="cursor-pointer rounded-md border border-teal-700 px-3 py-2 text-sm font-medium text-teal-700 hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="cursor-pointer rounded-md border border-teal-700 px-3 py-2 text-sm font-medium text-teal-700 hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-950"
                     >
                         {matchedAuthor ? (authorAlreadySelected ? "Added" : "Select") : "Add"}
                     </button>
@@ -412,7 +412,7 @@ function BookForm({ mode = "create", book = null }) {
                 {errors.newAuthorName && <p className="mt-1 text-sm text-red-600">{errors.newAuthorName}</p>}
 
                 {authorSuggestions.length > 0 && (
-                    <ul className="mt-1 divide-y divide-gray-100 rounded-md border border-gray-200 bg-white text-sm shadow-sm">
+                    <ul className="mt-1 divide-y divide-gray-100 rounded-md border border-gray-200 bg-white text-sm shadow-sm dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
                         {authorSuggestions.map(author => (
                             <li key={author.id}>
                                 <button
@@ -421,7 +421,7 @@ function BookForm({ mode = "create", book = null }) {
                                         addAuthorId(author.id);
                                         setNewAuthorName("");
                                     }}
-                                    className="w-full cursor-pointer px-3 py-2 text-left hover:bg-teal-50"
+                                    className="w-full cursor-pointer px-3 py-2 text-left hover:bg-teal-50 dark:text-gray-100 dark:hover:bg-teal-950"
                                 >
                                     {author.name}
                                 </button>
@@ -432,7 +432,7 @@ function BookForm({ mode = "create", book = null }) {
             </fieldset>
 
             <fieldset>
-                <legend className="mb-2 text-sm font-medium text-gray-600">Categories</legend>
+                <legend className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-300">Categories</legend>
 
                 {formData.categoryIds.length > 0 && (
                     <div className="mb-2 flex flex-wrap gap-2">
@@ -442,7 +442,7 @@ function BookForm({ mode = "create", book = null }) {
                             return (
                                 <span
                                     key={id}
-                                    className="flex items-center gap-1 rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700"
+                                    className="flex items-center gap-1 rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700 dark:bg-teal-950 dark:text-teal-300"
                                 >
                                     {category.name}
                                     <button
@@ -471,16 +471,16 @@ function BookForm({ mode = "create", book = null }) {
                             }
                         }}
                         placeholder="Type a category name"
-                        className={`flex-1 rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 ${errors.newCategoryName
+                        className={`flex-1 rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800 ${errors.newCategoryName
                                 ? "border-red-500"
-                                : "border-gray-300 focus:border-teal-500"
+                                : "border-gray-300 focus:border-teal-500 dark:border-gray-600"
                             }`}
                     />
                     <button
                         type="button"
                         onClick={handleCategoryButton}
                         disabled={!newCategoryName.trim() || categoryAlreadySelected}
-                        className="cursor-pointer rounded-md border border-teal-700 px-3 py-2 text-sm font-medium text-teal-700 hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="cursor-pointer rounded-md border border-teal-700 px-3 py-2 text-sm font-medium text-teal-700 hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-950"
                     >
                         {matchedCategory ? (categoryAlreadySelected ? "Added" : "Select") : "Add"}
                     </button>
@@ -488,7 +488,7 @@ function BookForm({ mode = "create", book = null }) {
                 {errors.newCategoryName && <p className="mt-1 text-sm text-red-600">{errors.newCategoryName}</p>}
 
                 {categorySuggestions.length > 0 && (
-                    <ul className="mt-1 divide-y divide-gray-100 rounded-md border border-gray-200 bg-white text-sm shadow-sm">
+                    <ul className="mt-1 divide-y divide-gray-100 rounded-md border border-gray-200 bg-white text-sm shadow-sm dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
                         {categorySuggestions.map(category => (
                             <li key={category.id}>
                                 <button
@@ -497,7 +497,7 @@ function BookForm({ mode = "create", book = null }) {
                                         addCategoryId(category.id);
                                         setNewCategoryName("");
                                     }}
-                                    className="w-full cursor-pointer px-3 py-2 text-left hover:bg-teal-50"
+                                    className="w-full cursor-pointer px-3 py-2 text-left hover:bg-teal-50 dark:text-gray-100 dark:hover:bg-teal-950"
                                 >
                                     {category.name}
                                 </button>
@@ -507,55 +507,55 @@ function BookForm({ mode = "create", book = null }) {
                 )}
             </fieldset>
             <div className="grid gap-4 sm:grid-cols-2">
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600">
+                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
                     Price
                     <input
                         type="text"
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
-                        className={`rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 ${errors.price
+                        className={`rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800 ${errors.price
                             ? "border-red-500"
-                            : "border-gray-300 focus:border-teal-500"
+                            : "border-gray-300 focus:border-teal-500 dark:border-gray-600"
                             }`}
                     />
                     {errors.price && <p className="text-sm text-red-600">{errors.price}</p>}
                 </label>
 
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600">
+                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
                     Stock
                     <input
                         type="text"
                         name="stock"
                         value={formData.stock}
                         onChange={handleChange}
-                        className={`rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 ${errors.stock
+                        className={`rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800 ${errors.stock
                             ? "border-red-500"
-                            : "border-gray-300 focus:border-teal-500"
+                            : "border-gray-300 focus:border-teal-500 dark:border-gray-600"
                             }`}
                     />
                     {errors.stock && <p className="text-sm text-red-600">{errors.stock}</p>}
                 </label>
             </div>
 
-            <label className="flex flex-col gap-1 text-sm font-medium text-gray-600">
+            <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
                 Description
                 <textarea
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
                     rows={4}
-                    className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200"
+                    className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800"
                 />
             </label>
 
-            <label className="flex flex-col gap-1 text-sm font-medium text-gray-600">
+            <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
                 Cover
                 <input
                     type="file"
                     accept="image/*"
                     onChange={handleCoverChange}
-                    className="text-sm text-gray-600 file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-teal-700 file:px-3 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-teal-800"
+                    className="text-sm text-gray-600 dark:text-gray-300 file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-teal-700 file:px-3 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-teal-800"
                 />
             </label>
 

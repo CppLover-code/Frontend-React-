@@ -53,9 +53,9 @@ function BookCard({ book }) {
 
 
     return (
-        <article className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+        <article className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-4 shadow-sm transition-shadow hover:shadow-md">
 
-            <div className="mb-1 flex h-56 w-full items-center justify-center rounded-md bg-white">
+            <div className="mb-1 flex h-56 w-full items-center justify-center rounded-md bg-white dark:bg-gray-900">
                 {cover ? (
                     <img
                         src={cover}
@@ -67,30 +67,30 @@ function BookCard({ book }) {
                 )}
             </div>
 
-            <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
 
-            <p className="text-sm text-gray-600">{authorNames}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-300">{authorNames}</p>
 
-            <p className="text-xs text-gray-400">{categoryNames}</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500">{categoryNames}</p>
 
-            <p className="line-clamp-2 text-sm text-gray-600">{description}</p>
+            <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-300">{description}</p>
 
             <div className="mt-auto flex items-center justify-between pt-2">
-                <span className="text-xl font-bold text-teal-700">${price}</span>
-                <span className="text-xs text-gray-400">In stock: {stock}</span>
+                <span className="text-xl font-bold text-teal-700 dark:text-teal-400">${price}</span>
+                <span className="text-xs text-gray-400 dark:text-gray-500">In stock: {stock}</span>
             </div>
 
             <div className="flex gap-2">
                 <Link
                     to={`/books/${id}`}
-                    className="flex-1 rounded-md border border-teal-700 px-3 py-2 text-center text-sm font-medium text-teal-700 transition-colors hover:bg-teal-50"
+                    className="flex-1 rounded-md border border-teal-700 px-3 py-2 text-center text-sm font-medium text-teal-700 transition-colors hover:bg-teal-50 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-950"
                 >
                     Details
                 </Link>
 
                 {!user?.is_staff && (
                     soldOut ? (
-                        <span className="flex-1 rounded-md bg-gray-100 px-3 py-2 text-center text-sm font-medium text-gray-500">
+                        <span className="flex-1 rounded-md bg-gray-100 px-3 py-2 text-center text-sm font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
                             Out of stock
                         </span>
                     ) : (

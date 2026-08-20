@@ -72,16 +72,16 @@ function OrdersPage() {
         }
     }
 
-    if (loading) return <p className="py-12 text-center text-gray-500">Loading...</p>;
+    if (loading) return <p className="py-12 text-center text-gray-500 dark:text-gray-400">Loading...</p>;
     if (error) return <p className="py-12 text-center text-red-600">Failed to load orders :(</p>;
 
     if (orders.length === 0) {
         return (
-            <div className="rounded-lg border border-gray-200 bg-white p-8 text-center shadow-sm">
-                <p className="text-lg font-medium text-gray-900">You have no orders yet</p>
+            <div className="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-8 text-center shadow-sm">
+                <p className="text-lg font-medium text-gray-900 dark:text-gray-100">You have no orders yet</p>
                 <Link
                     to="/books"
-                    className="mt-3 inline-block text-sm font-medium text-teal-700 hover:underline"
+                    className="mt-3 inline-block text-sm font-medium text-teal-700 dark:text-teal-400 hover:underline"
                 >
                     Browse books
                 </Link>
@@ -91,29 +91,29 @@ function OrdersPage() {
 
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                 {user.is_staff ? "Orders" : "My Orders"}
             </h1>
 
             {orders.map(order => (
                 <article
                     key={order.id}
-                    className="space-y-3 rounded-lg border border-gray-200 bg-white p-5 shadow-sm"
+                    className="space-y-3 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-5 shadow-sm"
                 >
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                        <h2 className="text-lg font-semibold text-gray-900">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                             Order #{order.id}
                         </h2>
-                        <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-medium capitalize text-teal-700">
+                        <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-medium capitalize text-teal-700 dark:bg-teal-950 dark:text-teal-300">
                             {order.status}
                         </span>
                     </div>
 
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                         Placed: {new Date(order.created_at).toLocaleString()}
                     </p>
 
-                    <ul className="divide-y divide-gray-100 text-sm text-gray-700">
+                    <ul className="divide-y divide-gray-100 text-sm text-gray-700 dark:divide-gray-700 dark:text-gray-300">
                         {order.items.map(item => (
                             <li key={item.id} className="flex justify-between py-2">
                                 <span>{item.book_title} × {item.quantity}</span>
@@ -122,11 +122,11 @@ function OrdersPage() {
                         ))}
                     </ul>
 
-                    <p className="text-right font-bold text-gray-900">
+                    <p className="text-right font-bold text-gray-900 dark:text-gray-100">
                         Total: ${Number(order.total_price).toFixed(2)}
                     </p>
 
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                         Ship to: {order.shipping_first_name} {order.shipping_last_name},{" "}
                         {order.shipping_street}, {order.shipping_city}{" "}
                         {order.shipping_postal_code}, {order.shipping_phone}
@@ -166,7 +166,7 @@ function OrdersPage() {
                                 <button
                                     type="button"
                                     onClick={() => handleStatus(order.id, "cancelled")}
-                                    className="cursor-pointer rounded-md border border-red-600 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                                    className="cursor-pointer rounded-md border border-red-600 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-950"
                                 >
                                     Cancel
                                 </button>
@@ -180,17 +180,17 @@ function OrdersPage() {
                 <button
                     onClick={() => setPage(page - 1)}
                     disabled={!hasPrev}
-                    className="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
                 >
                     ← Prev
                 </button>
 
-                <span className="text-sm text-gray-600">Page {page}</span>
+                <span className="text-sm text-gray-600 dark:text-gray-300">Page {page}</span>
 
                 <button
                     onClick={() => setPage(page + 1)}
                     disabled={!hasNext}
-                    className="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
                 >
                     Next →
                 </button>

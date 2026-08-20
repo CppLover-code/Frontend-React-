@@ -29,7 +29,7 @@ function CartPage() {
 
     const [placingOrder, setPlacingOrder] = useState(false);
 
-    if (loading || !cart) return <p className="py-12 text-center text-gray-500">Loading...</p>;
+    if (loading || !cart) return <p className="py-12 text-center text-gray-500 dark:text-gray-400">Loading...</p>;
     if (error) return <p className="py-12 text-center text-red-600">Something went wrong :(</p>;
 
     async function handleCheckout() {
@@ -56,14 +56,14 @@ function CartPage() {
 
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-gray-900">Cart</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Cart</h1>
 
             <CartList />
 
             {cart.items.length > 0 && (
-                <div className="space-y-3 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+                <div className="space-y-3 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-4 shadow-sm">
                     <div className="flex flex-wrap items-center justify-between gap-4">
-                        <p className="text-xl font-bold text-gray-900">
+                        <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                             Total: ${Number(cart.total_price).toFixed(2)}
                         </p>
 
@@ -77,7 +77,7 @@ function CartPage() {
                     </div>
 
                     {!profileComplete && (
-                        <p className="text-sm text-amber-700">
+                        <p className="text-sm text-amber-700 dark:text-amber-400">
                             Fill in your name and shipping address in{" "}
                             <Link to="/profile" className="font-medium underline">
                                 your profile

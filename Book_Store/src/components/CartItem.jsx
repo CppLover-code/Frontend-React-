@@ -12,9 +12,9 @@ function CartItem({ item }) {
     } = useCart();
 
     return (
-        <article className="flex flex-wrap items-center gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+        <article className="flex flex-wrap items-center gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-4 shadow-sm">
 
-            <div className="flex h-20 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gray-50">
+            <div className="flex h-20 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gray-50 dark:bg-gray-800">
                 {book.cover ? (
                     <img
                         src={book.cover}
@@ -29,20 +29,20 @@ function CartItem({ item }) {
             <div className="min-w-0 flex-1">
                 <Link
                     to={`/books/${book.id}`}
-                    className="font-semibold text-gray-900 hover:text-teal-700"
+                    className="font-semibold text-gray-900 hover:text-teal-700 dark:text-gray-100 dark:hover:text-teal-400"
                 >
                     {book.title}
                 </Link>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                     {book.authors.map(author => author.name).join(", ")}
                 </p>
-                <p className="text-sm text-gray-500">${book.price} each</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">${book.price} each</p>
             </div>
 
             <div className="flex items-center gap-2">
                 <button
                     onClick={() => decreaseQuantity(id)}
-                    className="h-8 w-8 cursor-pointer rounded-md border border-gray-300 text-lg leading-none hover:bg-gray-100"
+                    className="h-8 w-8 cursor-pointer rounded-md border border-gray-300 text-lg leading-none hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
                 >
                     −
                 </button>
@@ -50,13 +50,13 @@ function CartItem({ item }) {
                 <button
                     onClick={() => increaseQuantity(id)}
                     disabled={quantity >= book.stock}
-                    className="h-8 w-8 cursor-pointer rounded-md border border-gray-300 text-lg leading-none hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="h-8 w-8 cursor-pointer rounded-md border border-gray-300 text-lg leading-none hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-600 dark:hover:bg-gray-800"
                 >
                     +
                 </button>
             </div>
 
-            <p className="w-20 text-right font-semibold text-teal-700">
+            <p className="w-20 text-right font-semibold text-teal-700 dark:text-teal-400">
                 ${Number(subtotal).toFixed(2)}
             </p>
 

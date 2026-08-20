@@ -10,7 +10,7 @@ function Books()
     
     return( 
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-gray-900">Books</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Books</h1>
             <BookControls />
             {user?.is_staff && <BookForm mode="create" />}
             <BookList />  
