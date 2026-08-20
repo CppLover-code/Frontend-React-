@@ -16,9 +16,9 @@ function BookPage() {
 
     const navigate = useNavigate();
 
-    if (loading) return <p className="py-12 text-center text-gray-500 dark:text-gray-400">Loading...</p>;
-    if (error?.status === 404) return <p className="py-12 text-center text-gray-500 dark:text-gray-400">Book not found!</p>;
-    if (error) return <p className="py-12 text-center text-red-600">Something went wrong :(</p>;
+    if (loading) return <p className="status-message">Loading...</p>;
+    if (error?.status === 404) return <p className="status-message">Book not found!</p>;
+    if (error) return <p className="status-error">Something went wrong :(</p>;
 
     const {
         title,
@@ -83,27 +83,29 @@ function BookPage() {
 
             <Link
                 to="/books"
-                className="text-sm font-medium text-teal-700 dark:text-teal-400 hover:underline"
+                className="link-accent text-sm uppercase tracking-[0.12em]"
             >
                 ← Back to books
             </Link>
 
-            <article className="grid gap-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-6 shadow-sm md:grid-cols-[240px_1fr]">
+            <article className="grid gap-8 md:grid-cols-[240px_1fr]">
                 {cover ? (
-                    <img
-                        src={cover}
-                        alt={title}
-                        className="w-full rounded-md object-cover"
-                    />
+                    <div className="border border-cover-border bg-shelf p-[12%] dark:border-night-border dark:bg-night-shelf">
+                        <img
+                            src={cover}
+                            alt={title}
+                            className="w-full object-contain"
+                        />
+                    </div>
                 ) : (
-                    <div className="flex min-h-72 items-center justify-center rounded-md bg-gray-100 text-6xl dark:bg-gray-800">
+                    <div className="flex min-h-72 items-center justify-center border border-cover-border bg-shelf text-6xl dark:border-night-border dark:bg-night-shelf">
                         📚
                     </div>
                 )}
                 <div className="space-y-5">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">{title}</h1>
+                    <h1 className="page-title">{title}</h1>
 
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <p className="text-muted dark:text-faint">
                         {authors
                             .map(author => author.name)
                             .join(", ")}
@@ -113,7 +115,7 @@ function BookPage() {
                         {categories.map(category => (
                             <span
                                 key={category.id}
-                                className="rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700 dark:bg-teal-950 dark:text-teal-300"
+                                className="chip"
                             >
                                 {category.name}
                             </span>
@@ -121,17 +123,17 @@ function BookPage() {
                     </div>
 
                     <div className="flex items-baseline gap-4">
-                        <span className="text-2xl font-bold text-teal-700 dark:text-teal-400">${price}</span>
-                        <span className="text-sm text-gray-400 dark:text-gray-500">In stock: {stock}</span>
+                        <span className="font-heading text-[1.6em] text-gold dark:text-accent">${price}</span>
+                        <span className="text-sm text-faint">In stock: {stock}</span>
                     </div>
 
-                    <p className="leading-relaxed text-gray-700 dark:text-gray-300">{description}</p>
+                    <p className="leading-[2] text-muted dark:text-faint">{description}</p>
 
-                    <div className="flex gap-2 border-t border-gray-100 pt-4 dark:border-gray-700">
+                    <div className="flex gap-2 border-t border-line pt-6 dark:border-night-border">
 
                         {!user?.is_staff && (
                             soldOut ? (
-                                <span className="rounded-md bg-gray-100 px-5 py-2 text-sm font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                                <span className="bg-paper-muted px-5 py-3 text-xs font-bold uppercase tracking-wide text-muted dark:bg-night-shelf dark:text-faint">
                                     Out of stock
                                 </span>
                             ) : (
@@ -139,7 +141,7 @@ function BookPage() {
                                     type="button"
                                     onClick={handleAddToCart}
                                     disabled={cartFull}
-                                    className="cursor-pointer rounded-md bg-teal-700 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-40"
+                                    className="btn-primary"
                                 >
                                     Add to Cart
                                 </button>
@@ -150,14 +152,14 @@ function BookPage() {
                             <>
                                 <Link
                                     to={`/books/${id}/edit`}
-                                    className="rounded-md border border-teal-700 px-5 py-2 text-sm font-medium text-teal-700 transition-colors hover:bg-teal-50 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-950"
+                                    className="btn-outline"
                                 >
                                     Edit
                                 </Link>
 
                                 <button
                                     onClick={handleDelete}
-                                    className="cursor-pointer rounded-md bg-red-600 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700"
+                                    className="btn-danger"
                                 >
                                     Delete
                                 </button>

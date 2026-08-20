@@ -9,8 +9,12 @@ function Books()
     const { user } = useAuth();
     
     return( 
-        <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Books</h1>
+        <div className="space-y-10">
+            <div>
+                <p className="section-kicker">Catalog</p>
+                <h1 className="page-title mt-1">Books</h1>
+                <span className="title-underline" />
+            </div>
             <BookControls />
             {user?.is_staff && <BookForm mode="create" />}
             <BookList />  

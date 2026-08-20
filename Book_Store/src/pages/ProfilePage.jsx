@@ -4,11 +4,11 @@ import useNotification from "../hooks/useNotification";
 import { Navigate } from "react-router-dom";
 
 const fieldClass =
-    "rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800";
+    "input-field";
 
 function ProfileField({ label, value, editing, onChange }) {
     return (
-        <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+        <label className="field-label">
             {label}
             {editing ? (
                 <input
@@ -18,7 +18,7 @@ function ProfileField({ label, value, editing, onChange }) {
                     className={fieldClass}
                 />
             ) : (
-                <p className="rounded-md bg-gray-50 px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100">
+                <p className="border border-line bg-paper-muted px-3 py-2 text-sm font-medium text-ink dark:border-night-border dark:bg-night dark:text-paper">
                     {value.trim() ? value : "—"}
                 </p>
             )}
@@ -89,18 +89,18 @@ function ProfilePage() {
         <div className="mx-auto max-w-md">
             <form
                 onSubmit={handleSubmit}
-                className="space-y-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-6 shadow-sm"
+                className="card-surface space-y-4 p-6"
             >
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Profile</h1>
+                <h1 className="page-title text-[2rem]">Profile</h1>
 
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                <label className="field-label">
                     Username
-                    <input type="text" value={user.username} disabled className={`${fieldClass} bg-gray-100 dark:bg-gray-800`} />
+                    <input type="text" value={user.username} disabled className={`${fieldClass} bg-paper-muted dark:bg-night-shelf`} />
                 </label>
 
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                <label className="field-label">
                     Email
-                    <input type="email" value={user.email} disabled className={`${fieldClass} bg-gray-100 dark:bg-gray-800`} />
+                    <input type="email" value={user.email} disabled className={`${fieldClass} bg-paper-muted dark:bg-night-shelf`} />
                 </label>
 
                 <ProfileField
@@ -150,14 +150,14 @@ function ProfilePage() {
                         <button
                             type="button"
                             onClick={handleCancel}
-                            className="flex-1 cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
+                            className="btn-muted flex-1"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
                             disabled={submitting}
-                            className="flex-1 cursor-pointer rounded-md bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-40"
+                            className="btn-primary flex-1"
                         >
                             {submitting ? "Saving..." : "Save"}
                         </button>
@@ -166,7 +166,7 @@ function ProfilePage() {
                     <button
                         type="button"
                         onClick={() => setEditing(true)}
-                        className="w-full cursor-pointer rounded-md bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800"
+                        className="btn-primary w-full"
                     >
                         Edit
                     </button>

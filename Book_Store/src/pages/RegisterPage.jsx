@@ -49,72 +49,72 @@ function RegisterPage() {
         <div className="mx-auto max-w-md">
             <form
                 onSubmit={handleSubmit}
-                className="space-y-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-6 shadow-sm"
+                className="card-surface space-y-4 p-6"
             >
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Register</h1>
+                <h1 className="page-title text-[2rem]">Register</h1>
     
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                <label className="field-label">
                     Username
                     <input
                         type="text"
                         value={username}
                         onChange={(event) => setUsername(event.target.value)}
-                        className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800"
+                        className="input-field"
                     />
                     {serverErrors.username && (
-                        <p className="text-sm text-red-600">{serverErrors.username[0]}</p>
+                        <p className="text-sm text-red-700">{serverErrors.username[0]}</p>
                     )}
                 </label>
     
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                <label className="field-label">
                     Email
                     <input
                         type="email"
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
-                        className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800"
+                        className="input-field"
                     />
                     {serverErrors.email && (
-                        <p className="text-sm text-red-600">{serverErrors.email[0]}</p>
+                        <p className="text-sm text-red-700">{serverErrors.email[0]}</p>
                     )}
                 </label>
     
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                <label className="field-label">
                     Password
                     <input
                         type="password"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
-                        className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800"
+                        className="input-field"
                     />
                     {serverErrors.password && (
-                        <p className="text-sm text-red-600">{serverErrors.password[0]}</p>
+                        <p className="text-sm text-red-700">{serverErrors.password[0]}</p>
                     )}
                 </label>
     
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                <label className="field-label">
                     Confirm password
                     <input
                         type="password"
                         value={confirmPassword}
                         onChange={(event) => setConfirmPassword(event.target.value)}
-                        className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800"
+                        className="input-field"
                     />
                 </label>
     
-                {localError && <p className="text-sm text-red-600">{localError}</p>}
+                {localError && <p className="text-sm text-red-700">{localError}</p>}
     
                 <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full cursor-pointer rounded-md bg-teal-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="btn-primary w-full"
                 >
                     {submitting ? "Registering..." : "Register"}
                 </button>
     
-                <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-center text-sm text-muted dark:text-faint">
                     Already have an account?{" "}
-                    <Link to="/login" className="font-medium text-teal-700 dark:text-teal-400 hover:underline">
+                    <Link to="/login" className="link-accent">
                         Login
                     </Link>
                 </p>

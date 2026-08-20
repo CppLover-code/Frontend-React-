@@ -12,9 +12,9 @@ function CartItem({ item }) {
     } = useCart();
 
     return (
-        <article className="flex flex-wrap items-center gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-4 shadow-sm">
+        <article className="card-surface flex flex-wrap items-center gap-4 p-4">
 
-            <div className="flex h-20 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gray-50 dark:bg-gray-800">
+            <div className="flex h-20 w-16 shrink-0 items-center justify-center overflow-hidden border border-cover-border bg-shelf dark:border-night-border dark:bg-night-shelf">
                 {book.cover ? (
                     <img
                         src={book.cover}
@@ -29,20 +29,20 @@ function CartItem({ item }) {
             <div className="min-w-0 flex-1">
                 <Link
                     to={`/books/${book.id}`}
-                    className="font-semibold text-gray-900 hover:text-teal-700 dark:text-gray-100 dark:hover:text-teal-400"
+                    className="font-heading text-[1.1em] text-gold hover:text-ink-deep dark:text-accent dark:hover:text-paper"
                 >
                     {book.title}
                 </Link>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-muted dark:text-faint">
                     {book.authors.map(author => author.name).join(", ")}
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">${book.price} each</p>
+                <p className="text-sm text-faint">${book.price} each</p>
             </div>
 
             <div className="flex items-center gap-2">
                 <button
                     onClick={() => decreaseQuantity(id)}
-                    className="h-8 w-8 cursor-pointer rounded-md border border-gray-300 text-lg leading-none hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
+                    className="h-8 w-8 cursor-pointer border border-line text-lg leading-none hover:bg-paper-muted dark:border-night-border dark:hover:bg-night"
                 >
                     −
                 </button>
@@ -50,19 +50,19 @@ function CartItem({ item }) {
                 <button
                     onClick={() => increaseQuantity(id)}
                     disabled={quantity >= book.stock}
-                    className="h-8 w-8 cursor-pointer rounded-md border border-gray-300 text-lg leading-none hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-600 dark:hover:bg-gray-800"
+                    className="h-8 w-8 cursor-pointer border border-line text-lg leading-none hover:bg-paper-muted disabled:cursor-not-allowed disabled:opacity-40 dark:border-night-border dark:hover:bg-night"
                 >
                     +
                 </button>
             </div>
 
-            <p className="w-20 text-right font-semibold text-teal-700 dark:text-teal-400">
+            <p className="w-20 text-right font-heading text-[1.2em] text-gold dark:text-accent">
                 ${Number(subtotal).toFixed(2)}
             </p>
 
             <button
                 onClick={() => removeFromCart(id)}
-                className="cursor-pointer text-sm text-red-600 hover:underline"
+                className="cursor-pointer text-sm uppercase tracking-wide text-red-700 hover:underline"
             >
                 Remove
             </button>

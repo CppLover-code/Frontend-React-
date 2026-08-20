@@ -7,7 +7,7 @@ function ProtectedRoute({staffOnly = false}) {
     const location = useLocation();
 
     // сессия еще восстанавливается - рано принимать решение
-    if (initializing) return <h2>Loading...</h2>;
+    if (initializing) return <h2 className="status-message">Loading...</h2>;
 
     if (!user) {
         return (

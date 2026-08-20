@@ -334,29 +334,26 @@ function BookForm({ mode = "create", book = null }) {
     return (
         <form
             onSubmit={handleSubmit}
-            className="space-y-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-6 shadow-sm"
+            className="card-surface space-y-4 p-6"
         >
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h2 className="font-heading text-[1.5em] text-ink dark:text-paper">
                 {mode === "create" ? "Add a book" : "Edit book"}
             </h2>
 
-            <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+            <label className="field-label">
                 Title
                 <input
                     type="text"
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    className={`rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800 ${errors.title
-                        ? "border-red-500"
-                        : "border-gray-300 focus:border-teal-500 dark:border-gray-600"
-                        }`}
+                    className={`input-field ${errors.title ? "border-red-500" : ""}`}
                 />
-                {errors.title && <p className="text-sm text-red-600">{errors.title}</p>}
+                {errors.title && <p className="text-sm text-red-700">{errors.title}</p>}
             </label>
 
             <fieldset>
-                <legend className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-300">Authors</legend>
+                <legend className="mb-2 text-sm font-medium text-muted dark:text-faint">Authors</legend>
 
                 {formData.authorIds.length > 0 && (
                     <div className="mb-2 flex flex-wrap gap-2">
@@ -366,7 +363,7 @@ function BookForm({ mode = "create", book = null }) {
                             return (
                                 <span
                                     key={id}
-                                    className="flex items-center gap-1 rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700 dark:bg-teal-950 dark:text-teal-300"
+                                    className="chip"
                                 >
                                     {author.name}
                                     <button
@@ -381,7 +378,7 @@ function BookForm({ mode = "create", book = null }) {
                         })}
                     </div>
                 )}
-                {errors.authorIds && <p className="mb-2 text-sm text-red-600">{errors.authorIds}</p>}
+                {errors.authorIds && <p className="mb-2 text-sm text-red-700">{errors.authorIds}</p>}
 
                 <div className="flex gap-2">
                     <input
@@ -395,24 +392,21 @@ function BookForm({ mode = "create", book = null }) {
                             }
                         }}
                         placeholder="Type an author name"
-                        className={`flex-1 rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800 ${errors.newAuthorName
-                            ? "border-red-500"
-                            : "border-gray-300 focus:border-teal-500 dark:border-gray-600"
-                            }`}
+                        className={`input-field flex-1 ${errors.newAuthorName ? "border-red-500" : ""}`}
                     />
                     <button
                         type="button"
                         onClick={handleAuthorButton}
                         disabled={!newAuthorName.trim() || authorAlreadySelected}
-                        className="cursor-pointer rounded-md border border-teal-700 px-3 py-2 text-sm font-medium text-teal-700 hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-950"
+                        className="btn-outline btn-sm"
                     >
                         {matchedAuthor ? (authorAlreadySelected ? "Added" : "Select") : "Add"}
                     </button>
                 </div>
-                {errors.newAuthorName && <p className="mt-1 text-sm text-red-600">{errors.newAuthorName}</p>}
+                {errors.newAuthorName && <p className="mt-1 text-sm text-red-700">{errors.newAuthorName}</p>}
 
                 {authorSuggestions.length > 0 && (
-                    <ul className="mt-1 divide-y divide-gray-100 rounded-md border border-gray-200 bg-white text-sm shadow-sm dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
+                    <ul className="mt-1 divide-y divide-line border border-line bg-white text-sm dark:divide-night-border dark:border-night-border dark:bg-night-card">
                         {authorSuggestions.map(author => (
                             <li key={author.id}>
                                 <button
@@ -421,7 +415,7 @@ function BookForm({ mode = "create", book = null }) {
                                         addAuthorId(author.id);
                                         setNewAuthorName("");
                                     }}
-                                    className="w-full cursor-pointer px-3 py-2 text-left hover:bg-teal-50 dark:text-gray-100 dark:hover:bg-teal-950"
+                                    className="w-full cursor-pointer px-3 py-2 text-left hover:bg-paper-muted dark:text-paper dark:hover:bg-night"
                                 >
                                     {author.name}
                                 </button>
@@ -432,7 +426,7 @@ function BookForm({ mode = "create", book = null }) {
             </fieldset>
 
             <fieldset>
-                <legend className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-300">Categories</legend>
+                <legend className="mb-2 text-sm font-medium text-muted dark:text-faint">Categories</legend>
 
                 {formData.categoryIds.length > 0 && (
                     <div className="mb-2 flex flex-wrap gap-2">
@@ -442,7 +436,7 @@ function BookForm({ mode = "create", book = null }) {
                             return (
                                 <span
                                     key={id}
-                                    className="flex items-center gap-1 rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700 dark:bg-teal-950 dark:text-teal-300"
+                                    className="chip"
                                 >
                                     {category.name}
                                     <button
@@ -457,7 +451,7 @@ function BookForm({ mode = "create", book = null }) {
                         })}
                     </div>
                 )}
-                {errors.categoryIds && <p className="mb-2 text-sm text-red-600">{errors.categoryIds}</p>}
+                {errors.categoryIds && <p className="mb-2 text-sm text-red-700">{errors.categoryIds}</p>}
 
                 <div className="flex gap-2">
                     <input
@@ -471,24 +465,21 @@ function BookForm({ mode = "create", book = null }) {
                             }
                         }}
                         placeholder="Type a category name"
-                        className={`flex-1 rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800 ${errors.newCategoryName
-                                ? "border-red-500"
-                                : "border-gray-300 focus:border-teal-500 dark:border-gray-600"
-                            }`}
+                        className={`input-field flex-1 ${errors.newCategoryName ? "border-red-500" : ""}`}
                     />
                     <button
                         type="button"
                         onClick={handleCategoryButton}
                         disabled={!newCategoryName.trim() || categoryAlreadySelected}
-                        className="cursor-pointer rounded-md border border-teal-700 px-3 py-2 text-sm font-medium text-teal-700 hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-950"
+                        className="btn-outline btn-sm"
                     >
                         {matchedCategory ? (categoryAlreadySelected ? "Added" : "Select") : "Add"}
                     </button>
                 </div>
-                {errors.newCategoryName && <p className="mt-1 text-sm text-red-600">{errors.newCategoryName}</p>}
+                {errors.newCategoryName && <p className="mt-1 text-sm text-red-700">{errors.newCategoryName}</p>}
 
                 {categorySuggestions.length > 0 && (
-                    <ul className="mt-1 divide-y divide-gray-100 rounded-md border border-gray-200 bg-white text-sm shadow-sm dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
+                    <ul className="mt-1 divide-y divide-line border border-line bg-white text-sm dark:divide-night-border dark:border-night-border dark:bg-night-card">
                         {categorySuggestions.map(category => (
                             <li key={category.id}>
                                 <button
@@ -497,7 +488,7 @@ function BookForm({ mode = "create", book = null }) {
                                         addCategoryId(category.id);
                                         setNewCategoryName("");
                                     }}
-                                    className="w-full cursor-pointer px-3 py-2 text-left hover:bg-teal-50 dark:text-gray-100 dark:hover:bg-teal-950"
+                                    className="w-full cursor-pointer px-3 py-2 text-left hover:bg-paper-muted dark:text-paper dark:hover:bg-night"
                                 >
                                     {category.name}
                                 </button>
@@ -507,55 +498,49 @@ function BookForm({ mode = "create", book = null }) {
                 )}
             </fieldset>
             <div className="grid gap-4 sm:grid-cols-2">
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                <label className="field-label">
                     Price
                     <input
                         type="text"
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
-                        className={`rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800 ${errors.price
-                            ? "border-red-500"
-                            : "border-gray-300 focus:border-teal-500 dark:border-gray-600"
-                            }`}
+                        className={`input-field ${errors.price ? "border-red-500" : ""}`}
                     />
-                    {errors.price && <p className="text-sm text-red-600">{errors.price}</p>}
+                    {errors.price && <p className="text-sm text-red-700">{errors.price}</p>}
                 </label>
 
-                <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+                <label className="field-label">
                     Stock
                     <input
                         type="text"
                         name="stock"
                         value={formData.stock}
                         onChange={handleChange}
-                        className={`rounded-md border bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800 ${errors.stock
-                            ? "border-red-500"
-                            : "border-gray-300 focus:border-teal-500 dark:border-gray-600"
-                            }`}
+                        className={`input-field ${errors.stock ? "border-red-500" : ""}`}
                     />
-                    {errors.stock && <p className="text-sm text-red-600">{errors.stock}</p>}
+                    {errors.stock && <p className="text-sm text-red-700">{errors.stock}</p>}
                 </label>
             </div>
 
-            <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+            <label className="field-label">
                 Description
                 <textarea
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
                     rows={4}
-                    className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-teal-800"
+                    className="input-field"
                 />
             </label>
 
-            <label className="flex flex-col gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+            <label className="field-label">
                 Cover
                 <input
                     type="file"
                     accept="image/*"
                     onChange={handleCoverChange}
-                    className="text-sm text-gray-600 dark:text-gray-300 file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-teal-700 file:px-3 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-teal-800"
+                    className="text-sm text-muted dark:text-faint file:mr-3 file:cursor-pointer file:border-0 file:bg-accent file:px-3 file:py-2 file:text-xs file:font-bold file:uppercase file:tracking-wide file:text-white hover:file:bg-ink-deep"
                 />
             </label>
 
@@ -563,13 +548,13 @@ function BookForm({ mode = "create", book = null }) {
                 <img
                     src={coverPreview}
                     alt="Cover preview"
-                    className="h-40 w-auto rounded-md object-contain"
+                    className="h-40 w-auto border border-cover-border bg-shelf object-contain p-3 dark:border-night-border dark:bg-night-shelf"
                 />
             )}
 
             <button
                 type="submit"
-                className="cursor-pointer rounded-md bg-teal-700 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800"
+                className="btn-primary"
             >
                 {mode === "create" ? "Add Book" : "Save Changes"}
             </button>

@@ -1,7 +1,7 @@
 function Footer()
 {
     return(
-        <footer className="border-t border-gray-200 bg-white py-4 text-center text-sm text-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+        <footer className="border-t border-line bg-paper py-10 text-center text-sm text-muted dark:border-night-border dark:bg-night dark:text-faint">
             © 2026 Book Store
         </footer>
     );

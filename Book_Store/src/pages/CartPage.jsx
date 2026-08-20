@@ -29,8 +29,8 @@ function CartPage() {
 
     const [placingOrder, setPlacingOrder] = useState(false);
 
-    if (loading || !cart) return <p className="py-12 text-center text-gray-500 dark:text-gray-400">Loading...</p>;
-    if (error) return <p className="py-12 text-center text-red-600">Something went wrong :(</p>;
+    if (loading || !cart) return <p className="status-message">Loading...</p>;
+    if (error) return <p className="status-error">Something went wrong :(</p>;
 
     async function handleCheckout() {
         setPlacingOrder(true);
@@ -56,28 +56,32 @@ function CartPage() {
 
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Cart</h1>
+            <div>
+                <p className="section-kicker">Your bag</p>
+                <h1 className="page-title mt-1">Cart</h1>
+                <span className="title-underline" />
+            </div>
 
             <CartList />
 
             {cart.items.length > 0 && (
-                <div className="space-y-3 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-4 shadow-sm">
+                <div className="card-surface space-y-3 p-6">
                     <div className="flex flex-wrap items-center justify-between gap-4">
-                        <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                        <p className="font-heading text-[1.5em] text-gold dark:text-accent">
                             Total: ${Number(cart.total_price).toFixed(2)}
                         </p>
 
                         <button
                             onClick={handleCheckout}
                             disabled={placingOrder || !profileComplete}
-                            className="cursor-pointer rounded-md bg-teal-700 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-40"
+                            className="btn-primary"
                         >
                             {placingOrder ? "Placing order..." : "Checkout"}
                         </button>
                     </div>
 
                     {!profileComplete && (
-                        <p className="text-sm text-amber-700 dark:text-amber-400">
+                        <p className="text-sm text-gold dark:text-accent">
                             Fill in your name and shipping address in{" "}
                             <Link to="/profile" className="font-medium underline">
                                 your profile

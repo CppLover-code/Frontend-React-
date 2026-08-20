@@ -53,9 +53,9 @@ function BookCard({ book }) {
 
 
     return (
-        <article className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 p-4 shadow-sm transition-shadow hover:shadow-md">
+        <article className="group flex flex-col">
 
-            <div className="mb-1 flex h-56 w-full items-center justify-center rounded-md bg-white dark:bg-gray-900">
+            <div className="relative mb-1 flex h-72 w-full items-center justify-center overflow-hidden border border-cover-border bg-shelf p-[12%] dark:border-night-border dark:bg-night-shelf">
                 {cover ? (
                     <img
                         src={cover}
@@ -67,30 +67,32 @@ function BookCard({ book }) {
                 )}
             </div>
 
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
+            <div className="mt-8 mb-8 text-center">
+                <h3 className="font-heading text-[1.4em] font-medium text-gold dark:text-accent">{title}</h3>
 
-            <p className="text-sm text-gray-600 dark:text-gray-300">{authorNames}</p>
+                <p className="text-sm text-muted dark:text-faint">{authorNames}</p>
 
-            <p className="text-xs text-gray-400 dark:text-gray-500">{categoryNames}</p>
+                <p className="text-xs uppercase tracking-wide text-faint">{categoryNames}</p>
 
-            <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-300">{description}</p>
+                <p className="mt-2 line-clamp-2 text-sm text-muted dark:text-faint">{description}</p>
 
-            <div className="mt-auto flex items-center justify-between pt-2">
-                <span className="text-xl font-bold text-teal-700 dark:text-teal-400">${price}</span>
-                <span className="text-xs text-gray-400 dark:text-gray-500">In stock: {stock}</span>
+                <div className="mt-3 flex items-center justify-center gap-4">
+                    <span className="font-heading text-[1.3em] text-gold dark:text-accent">${price}</span>
+                    <span className="text-xs text-faint">In stock: {stock}</span>
+                </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="mt-auto flex gap-2">
                 <Link
                     to={`/books/${id}`}
-                    className="flex-1 rounded-md border border-teal-700 px-3 py-2 text-center text-sm font-medium text-teal-700 transition-colors hover:bg-teal-50 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-950"
+                    className="btn-outline btn-sm flex-1"
                 >
                     Details
                 </Link>
 
                 {!user?.is_staff && (
                     soldOut ? (
-                        <span className="flex-1 rounded-md bg-gray-100 px-3 py-2 text-center text-sm font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                        <span className="flex-1 bg-paper-muted px-3 py-2 text-center text-xs font-bold uppercase tracking-wide text-muted dark:bg-night-shelf dark:text-faint">
                             Out of stock
                         </span>
                     ) : (
@@ -98,7 +100,7 @@ function BookCard({ book }) {
                             type="button"
                             onClick={handleAddToCart}
                             disabled={cartFull}
-                            className="flex-1 cursor-pointer rounded-md bg-teal-700 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-40"
+                            className="btn-primary btn-sm flex-1"
                         >
                             Add to Cart
                         </button>
