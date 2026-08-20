@@ -536,12 +536,20 @@ function BookForm({ mode = "create", book = null }) {
 
             <label className="field-label">
                 Cover
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleCoverChange}
-                    className="text-sm text-muted dark:text-faint file:mr-3 file:cursor-pointer file:border-0 file:bg-accent file:px-3 file:py-2 file:text-xs file:font-bold file:uppercase file:tracking-wide file:text-white hover:file:bg-ink-deep"
-                />
+                <span className="flex flex-wrap items-center gap-3">
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleCoverChange}
+                        className="sr-only"
+                    />
+                    <span className="btn-primary btn-sm cursor-pointer">
+                        Choose file
+                    </span>
+                    <span className="text-sm font-normal text-muted dark:text-faint">
+                        {coverFile ? coverFile.name : "No file selected"}
+                    </span>
+                </span>
             </label>
 
             {coverPreview && (
