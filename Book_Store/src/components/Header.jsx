@@ -12,6 +12,40 @@ function navLinkClass({ isActive }) {
     ].join(" ");
 }
 
+function SunIcon() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+        >
+            <circle cx="12" cy="12" r="3.5" />
+            <path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M6.2 6.2l1.8 1.8M16 16l1.8 1.8M6.2 17.8l1.8-1.8M16 8l1.8-1.8" />
+        </svg>
+    );
+}
+
+function MoonIcon() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+    );
+}
+
 function Header() {
     const { user, logout } = useAuth();
     const { theme, toggleTheme } = useTheme();
@@ -43,9 +77,9 @@ function Header() {
             type="button"
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="ml-1 cursor-pointer px-3 py-2 text-sm font-medium uppercase tracking-[0.12em] text-ink transition-colors duration-300 hover:text-accent dark:text-paper"
+            className="ml-1 inline-flex cursor-pointer items-center justify-center px-3 py-2 text-ink transition-colors duration-300 hover:text-accent dark:text-paper dark:hover:text-accent"
         >
-            {theme === "dark" ? "☀️" : "🌙"}
+            {theme === "dark" ? <SunIcon /> : <MoonIcon />}
         </button>
     );
 

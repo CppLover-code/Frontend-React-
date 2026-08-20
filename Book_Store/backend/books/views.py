@@ -21,7 +21,7 @@ class BookViewSet(ModelViewSet):
     ]
     
     search_fields = ["title", "description"]
-    ordering_fields = ["title", "price", "stock"]
+    ordering_fields = ["title", "price", "stock", "id"]
     ordering = ["title"]
     
     def get_serializer_context(self):

@@ -1,4 +1,5 @@
 import useBook from "../hooks/useBook";
+import SelectField from "./SelectField";
 
 function CategoryFilter() {
     const {
@@ -8,26 +9,17 @@ function CategoryFilter() {
     } = useBook();
 
     return (
-        <label className="field-label">
+        <div className="field-label">
             Category
-            <select
-                className="input-field"
+            <SelectField
                 value={selectedCategoryId}
-                onChange={(event) =>
-                    setSelectedCategoryId(
-                        Number(event.target.value)
-                    )}>
-    
-                {categoryOptions.map(category => (
-                    <option
-                        key={category.id}
-                        value={category.id}
-                    >
-                        {category.name}
-                    </option>
-                ))}
-            </select>
-        </label>
+                onChange={(value) => setSelectedCategoryId(Number(value))}
+                options={categoryOptions.map((category) => ({
+                    value: category.id,
+                    label: category.name,
+                }))}
+            />
+        </div>
     );
 }
 

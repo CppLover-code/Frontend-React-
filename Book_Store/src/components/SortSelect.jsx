@@ -1,29 +1,22 @@
 import useBook from "../hooks/useBook";
+import SelectField from "./SelectField";
 
 function SortSelect()
 {
     const { selectedSort, setSelectedSort, sortOptions } = useBook();
 
     return (
-        <label className="field-label">
+        <div className="field-label">
             Sorting:
-            <select
-            className="input-field"
+            <SelectField
                 value={selectedSort}
-                onChange={(event) =>
-                    setSelectedSort(event.target.value)
-                }>
-
-                {sortOptions.map(option => (
-                    <option 
-                        key={option.value}
-                        value={option.value}
-                        >
-                            {option.label}
-                    </option>
-                ))}
-            </select>
-        </label>
+                onChange={setSelectedSort}
+                options={sortOptions.map((option) => ({
+                    value: option.value,
+                    label: option.label,
+                }))}
+            />
+        </div>
     );
 }
 
