@@ -17,16 +17,12 @@ function OrdersPage() {
 
     const { user } = useAuth();
     const { showNotification } = useNotification();
-    const [ refreshKey, setRefreshKey ] = useState(0);
-
     const { refreshBooks } = useBook();
 
     useEffect(() => {
         let ignore = false;
 
         async function loadOrders() {
-            setLoading(true);
-
             try {
                 const data = await getOrders(page);
 
@@ -34,6 +30,7 @@ function OrdersPage() {
                     setOrders(data.results);
                     setHasNext(Boolean(data.next));
                     setHasPrev(Boolean(data.previous));
+                    setError(null);
                 }
             } catch (err) {
                 if (!ignore) setError(err);
@@ -47,13 +44,19 @@ function OrdersPage() {
         return () => {
             ignore = true;
         };
-    }, [page, refreshKey]);
+    }, [page]);
+
+    function replaceOrder(updated) {
+        setOrders((current) =>
+            current.map((order) => (order.id === updated.id ? updated : order))
+        );
+    }
 
     async function handlePay(orderId) {
         try {
-            await payOrder(orderId);
+            const updated = await payOrder(orderId);
+            replaceOrder(updated);
             showNotification({ message: "Payment successful", type: "success" });
-            setRefreshKey((key) => key + 1);
         } catch {
             showNotification({ message: "Payment failed", type: "error" });
         }
@@ -61,9 +64,9 @@ function OrdersPage() {
 
     async function handleStatus(orderId, status) {
         try {
-            await updateOrderStatus(orderId, status);
+            const updated = await updateOrderStatus(orderId, status);
+            replaceOrder(updated);
             showNotification({ message: `Order ${status}`, type: "success" });
-            setRefreshKey((key) => key + 1);
             if (status === "cancelled") {
                 refreshBooks();
             }
