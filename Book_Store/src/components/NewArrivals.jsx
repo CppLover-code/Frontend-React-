@@ -88,34 +88,32 @@ function NewArrivals() {
                         </button>
                     )}
 
-                    <div className="grid min-w-0 flex-1 items-center gap-10 md:grid-cols-2 md:gap-12">
-                        <div className="text-left">
-                            <h3 className="font-heading text-4xl leading-tight text-ink md:text-5xl dark:text-paper">
+                    <div className="grid min-w-0 flex-1 items-start gap-10 md:grid-cols-2 md:gap-12">
+                        <div className="flex min-h-[420px] flex-col text-left">
+                            <h3 className="line-clamp-2 font-heading text-4xl leading-tight text-ink md:text-5xl dark:text-paper">
                                 {book.title}
                             </h3>
-                            <p className="mt-3 text-sm uppercase tracking-[0.12em] text-faint">
+                            <p className="mt-3 line-clamp-1 text-sm uppercase tracking-[0.12em] text-faint">
                                 {authorNames}
                             </p>
-                            {book.description && (
-                                <p className="mt-6 line-clamp-4 text-muted dark:text-faint">
-                                    {book.description}
-                                </p>
-                            )}
+                            <p className="mt-6 min-h-[8rem] line-clamp-4 text-muted dark:text-faint">
+                                {book.description}
+                            </p>
                             <Link
                                 to={`/books/${book.id}`}
-                                className="btn-outline btn-sm mt-8"
+                                className="btn-outline btn-sm mt-auto"
                             >
                                 Read more →
                             </Link>
                         </div>
 
                         <div className="flex justify-center md:justify-end">
-                            <div className="flex h-[420px] w-[280px] items-center justify-center border border-cover-border bg-shelf p-8 shadow-[0_20px_50px_rgba(47,47,47,0.08)] dark:border-night-border dark:bg-night-shelf">
+                            <div className="flex h-[420px] w-[280px] shrink-0 items-center justify-center border border-cover-border bg-shelf p-8 shadow-[0_20px_50px_rgba(47,47,47,0.08)] dark:border-night-border dark:bg-night-shelf">
                                 {book.cover ? (
                                     <img
                                         src={book.cover}
                                         alt={book.title}
-                                        className="max-h-full max-w-full object-contain"
+                                        className="h-full w-full object-contain"
                                     />
                                 ) : (
                                     <span className="font-heading text-6xl text-faint">B</span>

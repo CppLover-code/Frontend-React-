@@ -1,58 +1,57 @@
-function CapBooksIcon() {
+function HeartIcon() {
     return (
         <svg viewBox="0 0 64 64" className="h-12 w-12" fill="currentColor" aria-hidden="true">
-            <path d="M8 22 32 12l24 10-24 10L8 22Z" />
-            <path d="M52 24v10c0 4-9 8-20 8s-20-4-20-8V24" fill="none" stroke="currentColor" strokeWidth="2.2" />
-            <rect x="14" y="38" width="10" height="14" rx="1" />
-            <rect x="27" y="36" width="10" height="16" rx="1" />
-            <rect x="40" y="40" width="10" height="12" rx="1" />
+            <path d="M32 52S10 38 10 24a12 12 0 0 1 22-6 12 12 0 0 1 22 6c0 14-22 28-22 28Z" />
         </svg>
     );
 }
 
-function StampIcon() {
+function BulbIcon() {
     return (
-        <svg viewBox="0 0 64 64" className="h-12 w-12" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+        <svg viewBox="0 0 64 64" className="h-12 w-12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+            <path d="M32 8a16 16 0 0 1 8 30v6H24v-6A16 16 0 0 1 32 8Z" />
+            <path d="M26 48h12M28 54h8" />
+            <path d="M32 20v8M24 26l4 3M40 26l-4 3" strokeWidth="1.8" />
+        </svg>
+    );
+}
+
+function CompassIcon() {
+    return (
+        <svg viewBox="0 0 64 64" className="h-12 w-12" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
             <circle cx="32" cy="32" r="22" />
-            <circle cx="32" cy="32" r="16" strokeDasharray="2 3" />
-            <path d="M24 38V26l8 4 8-4v12l-8 4-8-4Z" fill="currentColor" stroke="none" />
+            <path d="m32 16 6 16-6 16-6-16 6-16Z" fill="currentColor" stroke="none" />
+            <circle cx="32" cy="32" r="3" fill="currentColor" stroke="none" />
         </svg>
     );
 }
 
-function BookdoorIcon() {
+function SparklesIcon() {
     return (
         <svg viewBox="0 0 64 64" className="h-12 w-12" fill="currentColor" aria-hidden="true">
-            <path d="M18 12h12v40H18z" />
-            <path d="M34 16c8 0 14 4 14 16s-6 16-14 16V16Z" />
+            <path d="M32 6 36 24 54 28 36 32 32 50 28 32 10 28 28 24Z" />
+            <path d="M48 40 50 48 58 50 50 52 48 60 46 52 38 50 46 48Z" />
+            <path d="M14 42 16 48 22 50 16 52 14 58 12 52 6 50 12 48Z" />
         </svg>
     );
 }
 
-function LibraryIcon() {
+function MugIcon() {
     return (
-        <svg viewBox="0 0 64 64" className="h-12 w-12" fill="currentColor" aria-hidden="true">
-            <path d="M8 40c8-8 16-8 24 0 8-8 16-8 24 0v4c-8-6-16-6-24 2-8-8-16-8-24-2v-4Z" />
-            <path d="M8 28c8-8 16-8 24 0 8-8 16-8 24 0v4c-8-6-16-6-24 2-8-8-16-8-24-2v-4Z" />
-        </svg>
-    );
-}
-
-function FlapriseIcon() {
-    return (
-        <svg viewBox="0 0 64 64" className="h-12 w-12" fill="currentColor" aria-hidden="true">
-            <path d="M8 40c10-14 18-20 24-22 6 2 14 8 24 22H8Z" />
-            <circle cx="32" cy="22" r="4" />
+        <svg viewBox="0 0 64 64" className="h-12 w-12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+            <path d="M16 22h26v22a10 10 0 0 1-10 10H26a10 10 0 0 1-10-10V22Z" />
+            <path d="M42 28h6a8 8 0 0 1 0 16h-6" />
+            <path d="M22 12c0 4 4 4 4 8M30 12c0 4 4 4 4 8" />
         </svg>
     );
 }
 
 const MARKS = [
-    { name: "Bookstore", Icon: CapBooksIcon },
-    { name: "Bookstore", Icon: StampIcon },
-    { name: "bookdoor", Icon: BookdoorIcon },
-    { name: "Library", Icon: LibraryIcon },
-    { name: "Flaprise", Icon: FlapriseIcon },
+    { name: "Love", Icon: HeartIcon },
+    { name: "Inspiration", Icon: BulbIcon },
+    { name: "Journey", Icon: CompassIcon },
+    { name: "Magic", Icon: SparklesIcon },
+    { name: "Cosiness", Icon: MugIcon },
 ];
 
 function PartnerStrip() {

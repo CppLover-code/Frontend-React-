@@ -86,7 +86,12 @@ function Header() {
     return (
         <header ref={headerRef} className="border-b border-line bg-paper dark:border-night-border dark:bg-night">
             <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-5">
-                <Link to="/" className="font-heading text-2xl text-ink dark:text-paper">
+                <Link to="/" className="flex items-center gap-2 font-heading text-2xl text-ink dark:text-paper">
+                    <img
+                        src="/home-mark.png"
+                        alt=""
+                        className="h-8 w-8 object-contain dark:invert"
+                    />
                     Book Store
                 </Link>
                 <nav className="flex flex-wrap items-center gap-1">
