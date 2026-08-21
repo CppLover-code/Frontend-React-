@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getBooks } from "../api/books";
+import CoverFallback from "./CoverFallback";
 
 function ArrowIcon({ direction }) {
     return (
@@ -116,7 +117,7 @@ function NewArrivals() {
                                         className="h-full w-full object-contain"
                                     />
                                 ) : (
-                                    <span className="font-heading text-6xl text-faint">B</span>
+                                    <CoverFallback className="h-24 w-24" />
                                 )}
                             </div>
                         </div>

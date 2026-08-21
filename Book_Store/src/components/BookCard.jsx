@@ -3,6 +3,7 @@ import useCart from "../hooks/useCart";
 import useNotification from "../hooks/useNotification";
 import useAuth from "../hooks/useAuth";
 import { ApiError } from "../api/client";
+import CoverFallback from "./CoverFallback";
 
 function BookCard({ book }) {
     const { addToCart, cart } = useCart();
@@ -63,7 +64,7 @@ function BookCard({ book }) {
                         className="max-h-full max-w-full object-contain"
                     />
                 ) : (
-                    <span className="text-4xl">📚</span>
+                    <CoverFallback className="h-20 w-20" />
                 )}
             </div>
 

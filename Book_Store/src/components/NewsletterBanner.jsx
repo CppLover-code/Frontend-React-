@@ -4,7 +4,7 @@ function NewsletterBanner() {
     }
 
     return (
-        <section className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 bg-paper-muted py-16 dark:bg-night-card">
+        <section className="relative z-10 left-1/2 w-screen max-w-[100vw] -translate-x-1/2 bg-paper-muted py-16 dark:bg-night-card">
             <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2 md:gap-16">
                 <div>
                     <h2 className="font-heading text-4xl leading-tight text-ink md:text-5xl dark:text-paper">

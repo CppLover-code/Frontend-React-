@@ -56,7 +56,7 @@ const MARKS = [
 
 function PartnerStrip() {
     return (
-        <section className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 bg-paper-muted py-12 dark:bg-night-card">
+        <section className="relative z-10 left-1/2 w-screen max-w-[100vw] -translate-x-1/2 bg-paper-muted py-12 dark:bg-night-card">
             <ul className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-12 gap-y-8 px-4 text-faint md:justify-between md:gap-x-6">
                 {MARKS.map((mark, index) => (
                     <li

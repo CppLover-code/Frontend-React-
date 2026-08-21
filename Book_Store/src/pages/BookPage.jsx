@@ -5,6 +5,7 @@ import useBookDetail from "../hooks/useBookDetail";
 import useNotification from "../hooks/useNotification";
 import useAuth from "../hooks/useAuth";
 import { ApiError } from "../api/client";
+import CoverFallback from "../components/CoverFallback";
 
 function BookPage() {
     const { user } = useAuth();
@@ -98,8 +99,8 @@ function BookPage() {
                         />
                     </div>
                 ) : (
-                    <div className="flex min-h-72 items-center justify-center border border-cover-border bg-shelf text-6xl dark:border-night-border dark:bg-night-shelf">
-                        📚
+                    <div className="flex min-h-72 items-center justify-center border border-cover-border bg-shelf dark:border-night-border dark:bg-night-shelf">
+                        <CoverFallback className="h-24 w-24" />
                     </div>
                 )}
                 <div className="space-y-5">

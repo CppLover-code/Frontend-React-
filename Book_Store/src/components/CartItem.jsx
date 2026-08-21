@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
+import CoverFallback from "./CoverFallback";
 
 function CartItem({ item }) {
 
@@ -22,7 +23,7 @@ function CartItem({ item }) {
                         className="max-h-full max-w-full object-contain"
                     />
                 ) : (
-                    <span>📚</span>
+                    <CoverFallback className="h-8 w-8" />
                 )}
             </div>
 
