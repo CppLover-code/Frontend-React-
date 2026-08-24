@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import useBook from "../hooks/useBook";
 import useNotification from "../hooks/useNotification";
 import { ApiError } from "../api/client";
@@ -72,22 +72,6 @@ function BookForm({ mode = "create", book = null }) {
     const [newAuthorName, setNewAuthorName] = useState("");
     const [newCategoryName, setNewCategoryName] = useState("");
     const [coverFile, setCoverFile] = useState(null);
-
-    useEffect(() => {
-        if (mode !== "edit" || !book) return;
-
-        setFormData({
-            title: book.title,
-            authorIds: book.authors.map(author => author.id),
-            categoryIds: book.categories.map(category => category.id),
-            price: String(book.price),
-            stock: String(book.stock),
-            description: book.description,
-            cover: book.cover ?? ""
-        });
-        setCoverFile(null);
-    }, [mode, book]);
-
 
     // --------------------------------------------------
     // VALIDATION

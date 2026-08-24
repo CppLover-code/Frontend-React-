@@ -21,6 +21,7 @@ function CartProvider({ children }) {
         let ignore = false;
 
         if (!user) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- reset cart on logout
             setCart(null);
             return;
         }

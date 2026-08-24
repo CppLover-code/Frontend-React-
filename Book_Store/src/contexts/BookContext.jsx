@@ -32,7 +32,7 @@ function BookProvider({ children }) {
     // so that the load effect triggers again
     const [refreshKey, setRefreshKey] = useState(0);
 
-    // the values ​​match DRF's `ordering` parameter
+    // the values match DRF's `ordering` parameter
     const sortOptions = [
         { value: "default", label: "Default" },
         { value: "title", label: "Title (A-Z)" },

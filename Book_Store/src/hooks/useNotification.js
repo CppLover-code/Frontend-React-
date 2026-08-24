@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NotificationContext, NotificationProvider } from "../contexts/NotificationContext";
+import { NotificationContext } from "../contexts/NotificationContext";
 
 function useNotification()
 {
